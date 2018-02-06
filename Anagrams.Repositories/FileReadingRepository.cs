@@ -61,10 +61,8 @@ namespace Anagrams.Repositories
                         ListHash.Add(wordsOfLine.Item2);
                     }
                 }
-
                 return ListHash;
             }
-
             return ListHash;
         }
 
@@ -93,16 +91,13 @@ namespace Anagrams.Repositories
                 }
                 break;
             }
-
             return new Tuple<string, string>
                 (nameFirst, ReverseString(nameSecond));
         }
 
         private string ReverseString(string name)
         {
-
             if (name == null) { return null; }
-
             string newString = "";
 
             for (var i = name.Length - 1; i >= 0; i--)
@@ -111,7 +106,5 @@ namespace Anagrams.Repositories
             }
             return newString;
         }
-
-
     }
 }

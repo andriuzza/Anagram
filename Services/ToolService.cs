@@ -58,11 +58,6 @@ namespace Services
                 Recursion(null, i, MyArray, 0, null, 0);
             }
             /*-----*/
-
-         /*   foreach (var word in DictionaryList.ToArray())
-            {
-                CheckingIfAnagram(word, null, null);
-            }*/
         }
 
         private bool Recursion(string str, int index, int[] strAllocated, int countingSave, string Zodis, int Pakeisti)
@@ -86,7 +81,6 @@ namespace Services
                     int next = countingSave;
                     if (word == null) { break; }
                     if (word.Length != str.Length) { continue; }
-                    //     Console.WriteLine(str + " " + word );
                     if (CheckingIfAnagram(word, str, strAllocated))
                     {
 
@@ -99,7 +93,6 @@ namespace Services
                 }
             }
 
-            /*-------------*/
             for (var j = 0; j < Name.Length; j++)
             {
                 if (strAllocated[j] != 1)
@@ -119,8 +112,8 @@ namespace Services
         {
             if (Pakeisti == 1 && Zodis != null && ((Zodis.Length + str.Length) == Name.Length))
             {
-                //  var sentence = Zodis + " " + str;
-                // Results.Add(sentence);
+               /*  var sentence = Zodis + " " + str;
+                 Results.Add(sentence);*/
                 Console.WriteLine(Zodis + " " + str);
             }
 
@@ -129,12 +122,10 @@ namespace Services
                 return false;
             }
 
-
             if (!Recursion(null, index, strAllocated, next, str, 1))
             {
                 return false;
             }
-            //   Console.WriteLine();
             return false;
         }
     }
