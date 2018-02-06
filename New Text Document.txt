@@ -1,0 +1,247 @@
+     // string configvalue1 = Properties.Settings.Default.LeastNumberOfLength;
+            // string configvalue2 = Properties.Settings.DefaultMaxNumberOfResults;
+
+
+          //  var tools = new WordsTool(Name.ToLower());
+          //  DictionaryReader nn = new DictionaryReader(tools, Name);
+           // nn.ReadFile();
+         
+            //  tools.ShowValuesOfAnagram();
+
+        }
+
+        public class DictionaryReader
+        {
+      
+            public string Name { get; private set; }
+            private WordsTool _tools { get; set; }
+            private System.IO.StreamReader file = null;
+            public HashSet<string> DictionaryList {get;set;}
+            public DictionaryReader(WordsTool tools, string Name)
+            
+            {
+                this.Name = Name;
+                _tools = tools;
+                DictionaryList = new HashSet<string>();
+            }
+
+            public void ReadFile()
+            {
+                string line;
+                try
+                {
+                    file = new System.IO
+                       .StreamReader(@"C:\Users\andrius.butkevicius\source\repos\Anagrams\Anagrams\zodynas1.txt", System.Text.Encoding.UTF8, true);
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Wrong directory or other problems with reading");
+                }
+                while ((line = file.ReadLine()) != null)
+                {
+                    if (line[0] >= '0' && line[0] <= '9')
+                    {
+                        continue;
+                    }
+
+                    var wordsOfLine = _tools.Parsing(line);
+                    int yra = 0;
+                    int yra2 = 0;
+                    foreach(var a in wordsOfLine.Item1)
+                    {
+                       if(!Name.Contains(a)) { yra = 1; break; }
+                     
+                    }
+
+                    if (wordsOfLine.Item2 != null)
+                    {
+                        foreach (var a in wordsOfLine.Item2)
+                        {
+                            if (!Name.Contains(a)) { yra2 = 1; break; }
+                        }
+                    }
+                    if (yra == 0)
+                    {
+                        DictionaryList.Add(wordsOfLine.Item1);
+                    }
+
+                    if (yra2 == 0 && wordsOfLine.Item2 != null)
+                    {
+                        DictionaryList.Add(wordsOfLine.Item2);
+                    }
+                }
+
+                /*Rekursija */
+                for (var i = 0; i < Name.Length; i++)
+                {
+                    int[] MyArray = new int[Name.Length];
+                    Recursion(null, i, MyArray, 0);
+                }
+                /*-----*/
+
+                foreach (var word in DictionaryList.ToArray())
+                {
+                    _tools.CheckingIfAnagram(word, null, null);
+                }
+            }
+
+            public bool Recursion(string str, int index, int[] strAllocated, int countingSave)
+            {
+                str += Name[index];
+                strAllocated[index] = 1;
+                //   Console.WriteLine(str);
+
+            
+                int countingFirst = 0;
+                foreach(var count in strAllocated)
+                {
+                    if(count == 0) { countingFirst++; }
+                }
+
+
+                /* ---------------------- */
+                if((str.Length >= 4 && countingSave == 0) || (countingSave != 0 && (str.Length) == countingSave))
+                {
+                        foreach(var word in DictionaryList)
+                        {
+                            int next = countingSave;
+                            if(word == null) { break; }
+                            if(word.Length != str.Length) { continue; }
+                        //     Console.WriteLine(str + " " + word );
+                        if (_tools.CheckingIfAnagram(word, str, strAllocated))
+                        {
+
+                            if (str.Equals(word))
+                            {
+                                Console.Write(str + " ");
+                                if (Recursion(null, index, strAllocated, next))
+                                {
+                                    Console.WriteLine(str);
+                                };
+                               Console.WriteLine();
+                                return true;
+                            }
+                        }
+                   }
+                }
+
+                /*-------------*/
+                for (var j = 0; j < Name.Length; j++)
+                {
+                    if (strAllocated[j] != 1)
+                    {
+                        int[] MyArray1 = new int[Name.Length];
+                        for (var g = 0; g < Name.Length; g++)
+                        {
+                            MyArray1[g] = strAllocated[g];
+                        }
+                        Recursion(str, j, MyArray1, countingSave);
+                    }
+                }
+                return false;
+            }
+
+        }
+
+
+    }
+
+
+    public class WordsTool
+    {
+        public string Name { get; private set; }
+        public static HashSet<string> WordAnagram { get; private set; }
+
+        public WordsTool(string Name)
+        {
+            this.Name = Name;
+            WordAnagram = new HashSet<string>();
+        }
+
+        public void ShowValuesOfAnagram()
+        {
+            foreach (var anagram in WordAnagram)
+            {
+                Console.WriteLine(anagram);
+            }
+        }
+
+        public Tuple<string, string> Parsing(string line)
+        {
+            string nameFirst = null;
+            string nameSecond = null;
+
+            for (var i = 0; i < line.Length; i++)
+            {
+                char letter = line[i];
+                if (letter != '	')
+                {
+                    nameFirst += line[i];
+                    continue;
+                }
+                break;
+            }
+
+            for (var i = line.Length - 3; i >= 0; i--)
+            {
+                if (line[i] != '	')
+                {
+                    nameSecond += line[i];
+                    continue;
+                }
+                break;
+            }
+
+            return new Tuple<string, string>
+                (nameFirst, ReverseString(nameSecond));
+        }
+
+        public bool CheckingIfAnagram(string word, string property, int[] array) /*make those two into a class */
+        {
+            if (property == null)
+            {
+                if (word == null) return false;
+
+                if (OrderString(Name).Equals(OrderString(word)))
+                {
+                    WordAnagram.Add(word);
+                    return true;
+                }
+
+                return false;
+            }
+
+            if (word == null) return false;
+
+            if (OrderString(property).Equals(OrderString(word)))
+            {
+                return true;
+            }
+
+            return false;
+
+        }
+
+
+        public string OrderString(string name)
+        {
+            return new string(name.OrderBy(c => c).ToArray());
+        }
+
+        private string ReverseString(string name)
+        {
+            if (name == null) { return null; }
+
+            string newString = "";
+
+            for (var i = name.Length - 1; i >= 0; i--)
+            {
+                newString += name[i];
+            }
+
+            return newString;
+        }
+     }
+}
+
+    
