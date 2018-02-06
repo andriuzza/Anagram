@@ -8,9 +8,7 @@ namespace Anagrams.Repositories
     public class FileReadingRepository : IRepository<string>
     {
         private System.IO.StreamReader file = null;
-        public static HashSet<string> ListHash { get; private set; }
-
-        //files static
+        public HashSet<string> ListHash { get; private set; }
         
         public HashSet<string> GetData(string Name)
         {
@@ -22,7 +20,7 @@ namespace Anagrams.Repositories
                 try
                 {
                     file = new System.IO
-                       .StreamReader(@"C:\Users\andrius.butkevicius\source\repos\Anagrams\Anagrams\zodynas1.txt", System.Text.Encoding.UTF8, true);
+                       .StreamReader(@"C:\Users\andrius.butkevicius\source\repos\Anagrams\Anagrams\zodynas.txt", System.Text.Encoding.UTF8, true);
                 }
                 catch (Exception)
                 {
@@ -38,7 +36,7 @@ namespace Anagrams.Repositories
                     var wordsOfLine = Parsing(line);
                     int yra = 0;
                     int yra2 = 0;
-                    foreach (var a in wordsOfLine.Item1)
+                    foreach (var a in wordsOfLine.Item1.ToLower())
                     {
                         if (!Name.Contains(a)) { yra = 1; break; }
 
@@ -46,7 +44,7 @@ namespace Anagrams.Repositories
 
                     if (wordsOfLine.Item2 != null)
                     {
-                        foreach (var a in wordsOfLine.Item2)
+                        foreach (var a in wordsOfLine.Item2.ToLower())
                         {
                             if (!Name.Contains(a)) { yra2 = 1; break; }
                         }
@@ -63,10 +61,12 @@ namespace Anagrams.Repositories
                 }
                 return ListHash;
             }
+            
+
             return ListHash;
         }
 
-        public Tuple<string, string> Parsing(string line)
+        private Tuple<string, string> Parsing(string line)
         {
             string nameFirst = null;
             string nameSecond = null;

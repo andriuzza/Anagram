@@ -19,7 +19,8 @@ namespace Services
             this.Name = Name;
         }
 
-        public bool CheckingIfAnagram(string word, string property, int[] array)
+
+        private bool CheckingIfAnagram(string word, string property, int[] array)
         {
             if (property == null)
             {
@@ -43,16 +44,17 @@ namespace Services
             return false;
         }
 
-        public string OrderString(string name)
+        private string OrderString(string name)
         {
             return new string(name.OrderBy(c => c).ToArray());
         }
 
         public void SearchForAnagram()
         {
-          DictionaryList =  _repository.GetData(Name);
+           
+            DictionaryList =  _repository.GetData(Name);
             /*Rekursija */
-            for (var i = 0; i < Name.Length; i++)
+           for (var i = 0; i < Name.Length; i++)
             {
                 int[] MyArray = new int[Name.Length];
                 Recursion(null, i, MyArray, 0, null, 0);
@@ -112,8 +114,8 @@ namespace Services
         {
             if (Pakeisti == 1 && Zodis != null && ((Zodis.Length + str.Length) == Name.Length))
             {
-               /*  var sentence = Zodis + " " + str;
-                 Results.Add(sentence);*/
+             //    var sentence = Zodis + " " + str;
+              //   Results.Add(sentence);
                 Console.WriteLine(Zodis + " " + str);
             }
 
