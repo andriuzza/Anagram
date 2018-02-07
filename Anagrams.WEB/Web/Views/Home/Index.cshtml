@@ -1,9 +1,10 @@
-﻿<div class="row">
+﻿@model IEnumerable<string>
+<div class="row">
     <h1>Welcome to Anagram Generator</h1>
-    @if (ViewBag.Model != null)
+    @if (Model != null)
     {
         <ul>
-            @foreach (var anagram in ViewBag.Model)
+            @foreach (var anagram in Model)
 
             {
                 <li>@anagram</li>

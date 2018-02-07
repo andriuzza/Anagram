@@ -18,64 +18,59 @@ namespace Anagrams.Repositories
 
         public HashSet<string> GetData(string Name = null)
         {
-            if (ListHash == null)
+           ListHash = new HashSet<string>();
+           string line;
+
+            try
             {
-                ListHash = new HashSet<string>();
-
-                string line;
-                try
-                {
-                    file = new System.IO
-                       .StreamReader(filePath, System.Text.Encoding.UTF8, true);
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("Wrong directory or other problems with reading");
-                }
-                while ((line = file.ReadLine()) != null)
-                {
-                    if (line[0] >= '0' && line[0] <= '9')
-                    {
-                        continue;
-                    }
-
-                    var wordsOfLine = Parsing(line);
-
-                    if (Name == null) /*If parameter is null, get all words from dictionary */
-                    {
-                        ListHash.Add(wordsOfLine.Item1);
-                        ListHash.Add(wordsOfLine.Item2);
-                        continue;
-                    }
-
-                    bool ifContains = false;
-                    bool ifContains2 = false;
-                    foreach (var a in wordsOfLine.Item1.ToLower())
-                    {
-                        if (!Name.Contains(a)) { ifContains = true; break; }
-
-                    }
-
-                    if (wordsOfLine.Item2 != null)
-                    {
-                        foreach (var a in wordsOfLine.Item2.ToLower())
-                        {
-                            if (!Name.Contains(a)) { ifContains2 = true; break; }
-                        }
-                    }
-                    if (!ifContains)
-                    {
-                        ListHash.Add(wordsOfLine.Item1);
-                    }
-
-                    if (ifContains2 == false && wordsOfLine.Item2 != null)
-                    {
-                        ListHash.Add(wordsOfLine.Item2);
-                    }
-                }
-                return ListHash;
+                file = new System.IO
+                    .StreamReader(filePath, System.Text.Encoding.UTF8, true);
             }
-            
+            catch (Exception)
+            {
+                Console.WriteLine("Wrong directory or other problems with reading");
+            }
+            while ((line = file.ReadLine()) != null)
+            {
+                if (line[0] >= '0' && line[0] <= '9')
+                {
+                    continue;
+                }
+
+                var wordsOfLine = Parsing(line);
+
+                if (Name == null) /*If parameter is null, get all words from dictionary */
+                {
+                    ListHash.Add(wordsOfLine.Item1);
+                    ListHash.Add(wordsOfLine.Item2);
+                    continue;
+                }
+
+                bool ifContains = false;
+                bool ifContains2 = false;
+                foreach (var a in wordsOfLine.Item1.ToLower())
+                {
+                    if (!Name.Contains(a)) { ifContains = true; break; }
+
+                }
+
+                if (wordsOfLine.Item2 != null)
+                {
+                    foreach (var a in wordsOfLine.Item2.ToLower())
+                    {
+                        if (!Name.Contains(a)) { ifContains2 = true; break; }
+                    }
+                }
+                if (!ifContains)
+                {
+                    ListHash.Add(wordsOfLine.Item1);
+                }
+
+                if (ifContains2 == false && wordsOfLine.Item2 != null)
+                {
+                    ListHash.Add(wordsOfLine.Item2);
+                }
+            }
             return ListHash;
         }
 
