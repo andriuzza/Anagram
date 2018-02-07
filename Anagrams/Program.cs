@@ -17,8 +17,10 @@ namespace Anagrams
             Console.WriteLine("Insert words");
             string line = GetWithoutWhiteSpace(Console.ReadLine());
 
-            ToolService Service = new ToolService(new FileReadingRepository(), line);
-            Service.SearchForAnagram();
+           
+            string path = @"C:\Users\andrius.butkevicius\source\repos\Anagrams\Anagrams.Repositories\zodynas.txt";
+            ToolService Service = new ToolService(new FileReadingRepository(path), line);
+            Service.GetAnagram();
         }
 
         public static string GetWithoutWhiteSpace(string line)

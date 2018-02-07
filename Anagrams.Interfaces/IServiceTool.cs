@@ -2,7 +2,6 @@
 {
     public interface IServiceTool
     {
-        void SearchForAnagram();
-        //getanagram(zodis)
+        void GetAnagram();
     }
 }

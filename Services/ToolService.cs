@@ -48,25 +48,42 @@ namespace Services
         {
             return new string(name.OrderBy(c => c).ToArray());
         }
-
-        public void SearchForAnagram()
+        public HashSet<string> GetResultsOfAnagram()
         {
+            return Results;
+        }
 
+        public bool ShowResultsOfAnagram()
+        {
+            if (!Results.Any())
+            {
+                return false;
+            }
+            foreach(var anagram in Results)
+            {
+
+                Console.WriteLine(anagram);
+            }
+            return true;
+        }
+
+        public void GetAnagram()
+        {
             DictionaryList = _repository.GetData(Name);
-            /*Rekursija */
             for (var i = 0; i < Name.Length; i++)
             {
                 string NewString = Name;
-                Recursion(null, Name[i], NewString, 0, null, 0);
+                Recursion(null, Name[i], NewString,  null, 0);
             }
-            /*-----*/
+
+            ShowResultsOfAnagram();
         }
 
-        private bool Recursion(string str, char index, string strAllocated, int countingSave, string Zodis, int Pakeisti)
+        private bool Recursion(string str, char index, string strAllocated,  string Word, int SecondWord)
         {
             str += index;
            
-           // Console.WriteLine(str);
+          
             string strNew = null;
             foreach (var count in strAllocated)
             {
@@ -74,66 +91,56 @@ namespace Services
                 strNew += count;
             }
 
-
-            /* ---------------------- */
-            if (str.Length >= 5)
+            if (str.Length >= 4)
             {
-                if (DictionaryList.Any(stra => stra.Equals(str))) { Console.WriteLine(str); }
-                /*  foreach (var word in DictionaryList)
-                   {
-                  int next = countingSave;
-                  if (word == null) { break; }
-                  if (word.Length != str.Length) { continue; }
-                  //if (CheckingIfAnagram(word, str, strAllocated))
-                  //  {
+                foreach (var word in DictionaryList)
+                {
+                   
+                    if (word == null) { break; }
+                    if (word.Length != str.Length) { continue; }
+                  
 
-                  if (str.Equals(word))
-                  {
-                      //Console.WriteLine(str);
-                      if(strNew == null)
-                      {
-                          Console.WriteLine(Zodis + " " + str);
-                      }
+                    if (str.Equals(word))
+                    {
+                        // Console.WriteLine(str);
+                        // var sentence = Word + " " + str;
+                        if (!str.Equals(Name))
+                        {
+                            Results.Add(str);
+                        }
+                           
 
-                      /*Console.WriteLine(str);
-                          FindTwoWords(Pakeisti, Zodis, str
-                              , countingSave, index, strAllocated, next);
-                              */
-
-                //  if (strNew == null) return false;
-                //  for (var i = 0; i < strNew.Length; i++)
-                // {
-                //     Recursion(null, strNew[i], strNew, next, str, 1);
-                // }
-
-                //  }
-                // }
-                // }
-                //  }
-                ///  if(strNew == null) { return false; }
-                //  for (var j = 0; j < strNew.Length; j++)
-                // {
-                //      Recursion(str, strNew[j], strNew, countingSave, Zodis, 0);  
-                // }
+                        if (strNew == null) return false;
+                        for (var i = 0; i < strNew.Length; i++)
+                        {
+                            Recursion(null, strNew[i], strNew,  str, 1);
+                        }
+                    }
+                }
             }
+
+            if (strNew == null) { return false; }
+            for (var j = 0; j < strNew.Length; j++)
+            {
+                Recursion(str, strNew[j], strNew, Word, 0);
+            }
+
             return false;
         }
-        private bool FindTwoWords(int Pakeisti, string Zodis,
-            string str, int countingSave,  char index, string strAllocated, int next)
+        private bool FindTwoWords(int SecondWord, string Word,
+            string str,   char index, string strAllocated, int next)
         {
-            if (Pakeisti == 1 && Zodis != null && ((Zodis.Length + str.Length) == Name.Length))
+            if (SecondWord == 1 && Word != null && ((Word.Length + str.Length) == Name.Length))
             {
-                //    var sentence = Zodis + " " + str;
-                //   Results.Add(sentence);
-                Console.WriteLine(Zodis + " " + str);
+                Console.WriteLine(Word + " " + str);
             }
 
-            if ((str.Length == countingSave) && str.Length != 0)
+            if (str.Length != 0)
             {
                 return false;
             }
 
-            if (!Recursion(null, index, strAllocated, next, str, 1))
+            if (!Recursion(null, index, strAllocated,  str, 1))
             {
                 return false;
             }

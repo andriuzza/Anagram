@@ -9,7 +9,13 @@ namespace Anagrams.Repositories
     {
         private System.IO.StreamReader file = null;
         public HashSet<string> ListHash { get; private set; }
-        
+        public string filePath { get; private set; }
+
+        public FileReadingRepository(string path)
+        {
+            filePath = path;
+        }
+
         public HashSet<string> GetData(string Name)
         {
             if (ListHash == null)
@@ -20,7 +26,7 @@ namespace Anagrams.Repositories
                 try
                 {
                     file = new System.IO
-                       .StreamReader(@"C:\Users\PC\Documents\Anagram\Anagrams.Repositories\zodynas.txt", System.Text.Encoding.UTF8, true);
+                       .StreamReader(filePath, System.Text.Encoding.UTF8, true);
                 }
                 catch (Exception)
                 {
@@ -34,11 +40,11 @@ namespace Anagrams.Repositories
                     }
 
                     var wordsOfLine = Parsing(line);
-                    int yra = 0;
-                    int yra2 = 0;
+                    bool ifContains = false;
+                    bool ifContains2 = false;
                     foreach (var a in wordsOfLine.Item1.ToLower())
                     {
-                        if (!Name.Contains(a)) { yra = 1; break; }
+                        if (!Name.Contains(a)) { ifContains = true; break; }
 
                     }
 
@@ -46,15 +52,15 @@ namespace Anagrams.Repositories
                     {
                         foreach (var a in wordsOfLine.Item2.ToLower())
                         {
-                            if (!Name.Contains(a)) { yra2 = 1; break; }
+                            if (!Name.Contains(a)) { ifContains2 = true; break; }
                         }
                     }
-                    if (yra == 0)
+                    if (!ifContains)
                     {
                         ListHash.Add(wordsOfLine.Item1);
                     }
 
-                    if (yra2 == 0 && wordsOfLine.Item2 != null)
+                    if (ifContains2 == false && wordsOfLine.Item2 != null)
                     {
                         ListHash.Add(wordsOfLine.Item2);
                     }
