@@ -5,6 +5,6 @@ namespace Anagrams.Interfaces
 {
     public interface IWordRepository<T>
     {
-       HashSet<T> GetData(string Name);
+       HashSet<T> GetData(string Name = null);
     }
 }

@@ -16,7 +16,7 @@ namespace Anagrams.Repositories
             filePath = path;
         }
 
-        public HashSet<string> GetData(string Name)
+        public HashSet<string> GetData(string Name = null)
         {
             if (ListHash == null)
             {
@@ -40,6 +40,14 @@ namespace Anagrams.Repositories
                     }
 
                     var wordsOfLine = Parsing(line);
+
+                    if (Name == null) /*If parameter is null, get all words from dictionary */
+                    {
+                        ListHash.Add(wordsOfLine.Item1);
+                        ListHash.Add(wordsOfLine.Item2);
+                        continue;
+                    }
+
                     bool ifContains = false;
                     bool ifContains2 = false;
                     foreach (var a in wordsOfLine.Item1.ToLower())

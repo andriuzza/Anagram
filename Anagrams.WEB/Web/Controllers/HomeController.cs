@@ -1,5 +1,7 @@
 ﻿using Anagrams.Interfaces;
 using Services;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Web.Models;
@@ -45,13 +47,47 @@ namespace Web.Controllers
             ViewBag.Model = null;
             if (ModelState.IsValid)
             {
-
                 ViewBag.Model = _solver.GetAnagram(anagram.Name);
                 return View();
 
             }
             return View(anagram);
         }
+
+        [OutputCache(Duration = 5)]
+        public ActionResult GetDictionary(int size, int pageNumber)
+        {
+            var list = new List<string>();
+            var dictionary = _repository.GetData();
+
+            int count = 0;
+            int counterSize = 1;
+            int index = size * (pageNumber - 1);
+            bool CorrectPlace = false;
+
+            foreach(var valueWord in dictionary)
+            {
+                if(count == index)
+                {
+                    CorrectPlace = true;
+                    list.Add(valueWord);
+                }
+                count++;
+
+                if(CorrectPlace == true && counterSize <= 100)
+                {
+                    list.Add(valueWord);
+                    counterSize++;
+                }
+                if(counterSize == 100)
+                {
+                    break;
+                }
+            }
+               
+         return View(list);
+        }
+
 
         
     }

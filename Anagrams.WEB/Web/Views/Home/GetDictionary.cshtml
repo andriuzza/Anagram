@@ -1,0 +1,16 @@
+﻿@model List<string>
+@{
+    ViewBag.Title = "GetDictionary";
+}
+
+<h2>GetDictionary</h2>
+
+    <ul>
+    @foreach(var word in Model)
+    {
+        <li>@word</li>
+    }
+    </ul>
+
+
+
