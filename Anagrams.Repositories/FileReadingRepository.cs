@@ -20,7 +20,7 @@ namespace Anagrams.Repositories
                 try
                 {
                     file = new System.IO
-                       .StreamReader(@"C:\Users\andrius.butkevicius\source\repos\Anagrams\Anagrams\zodynas.txt", System.Text.Encoding.UTF8, true);
+                       .StreamReader(@"C:\Users\PC\Documents\Anagram\Anagrams.Repositories\zodynas.txt", System.Text.Encoding.UTF8, true);
                 }
                 catch (Exception)
                 {
@@ -62,7 +62,6 @@ namespace Anagrams.Repositories
                 return ListHash;
             }
             
-
             return ListHash;
         }
 
