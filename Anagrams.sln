@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anagrams", "Anagrams\Anagrams.csproj", "{28E5158E-D4EF-49DE-A1CC-03FA9FA4F7DA}"
 EndProject
@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Anagrams.WEB\Web\Web
 		{38FB9CE8-ABAF-47EC-B492-E736AE6C3C45} = {38FB9CE8-ABAF-47EC-B492-E736AE6C3C45}
 		{54153CFF-50C1-4B1B-B627-BABED0E6FC50} = {54153CFF-50C1-4B1B-B627-BABED0E6FC50}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUnitTests", "UnitTestProject1\WebUnitTests.csproj", "{A1697D9E-BB82-4EC3-9571-B1917A4EB5AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -129,6 +131,22 @@ Global
 		{F1F6B7DC-9664-48A2-AF2B-941AF0D25E13}.Release|x64.Build.0 = Release|Any CPU
 		{F1F6B7DC-9664-48A2-AF2B-941AF0D25E13}.Release|x86.ActiveCfg = Release|Any CPU
 		{F1F6B7DC-9664-48A2-AF2B-941AF0D25E13}.Release|x86.Build.0 = Release|Any CPU
+		{A1697D9E-BB82-4EC3-9571-B1917A4EB5AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1697D9E-BB82-4EC3-9571-B1917A4EB5AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1697D9E-BB82-4EC3-9571-B1917A4EB5AB}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{A1697D9E-BB82-4EC3-9571-B1917A4EB5AB}.Debug|ARM.Build.0 = Debug|Any CPU
+		{A1697D9E-BB82-4EC3-9571-B1917A4EB5AB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A1697D9E-BB82-4EC3-9571-B1917A4EB5AB}.Debug|x64.Build.0 = Debug|Any CPU
+		{A1697D9E-BB82-4EC3-9571-B1917A4EB5AB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A1697D9E-BB82-4EC3-9571-B1917A4EB5AB}.Debug|x86.Build.0 = Debug|Any CPU
+		{A1697D9E-BB82-4EC3-9571-B1917A4EB5AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1697D9E-BB82-4EC3-9571-B1917A4EB5AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1697D9E-BB82-4EC3-9571-B1917A4EB5AB}.Release|ARM.ActiveCfg = Release|Any CPU
+		{A1697D9E-BB82-4EC3-9571-B1917A4EB5AB}.Release|ARM.Build.0 = Release|Any CPU
+		{A1697D9E-BB82-4EC3-9571-B1917A4EB5AB}.Release|x64.ActiveCfg = Release|Any CPU
+		{A1697D9E-BB82-4EC3-9571-B1917A4EB5AB}.Release|x64.Build.0 = Release|Any CPU
+		{A1697D9E-BB82-4EC3-9571-B1917A4EB5AB}.Release|x86.ActiveCfg = Release|Any CPU
+		{A1697D9E-BB82-4EC3-9571-B1917A4EB5AB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
