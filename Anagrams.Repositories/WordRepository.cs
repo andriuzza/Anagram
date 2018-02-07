@@ -1,13 +1,14 @@
 ﻿using Anagrams.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Anagrams.Repositories
 {
     public class WordRepository : IWordRepository<string>
     {
-        private System.IO.StreamReader file = null;
+        private StreamReader File = null;
         public HashSet<string> ListHash { get; private set; }
         public string filePath { get; private set; }
 
@@ -23,14 +24,13 @@ namespace Anagrams.Repositories
 
             try
             {
-                file = new System.IO
-                    .StreamReader(filePath, System.Text.Encoding.UTF8, true);
+                File = NewFileHandling(filePath);
             }
             catch (Exception)
             {
                 Console.WriteLine("Wrong directory or other problems with reading");
             }
-            while ((line = file.ReadLine()) != null)
+            while ((line = File.ReadLine()) != null)
             {
                 if (line[0] >= '0' && line[0] <= '9')
                 {
@@ -61,6 +61,7 @@ namespace Anagrams.Repositories
                         if (!Name.Contains(a)) { ifContains2 = true; break; }
                     }
                 }
+
                 if (!ifContains)
                 {
                     ListHash.Add(wordsOfLine.Item1);
@@ -101,6 +102,22 @@ namespace Anagrams.Repositories
             }
             return new Tuple<string, string>
                 (nameFirst, ReverseString(nameSecond));
+        }
+
+        public bool InsertNewWord(string Name)
+        {
+           /* using (FileStream fs = new FileStream(filePath, FileMode.Append, FileAccess.Write))
+            using (StreamWriter sw = new StreamWriter(fs))
+            {
+                sw.WriteLine("eina sau");
+            }*/
+            return false;
+        }
+
+        private StreamReader NewFileHandling(string filePath)
+        {
+            return new System.IO
+                    .StreamReader(filePath, System.Text.Encoding.UTF8, true);
         }
 
         private string ReverseString(string name)

@@ -1,17 +1,30 @@
-﻿@model List<string>
+﻿@model PagedList.IPagedList<string>
+@using PagedList.Mvc;
+
+
 @{
-    ViewBag.Title = "GetDictionary";
+    ViewBag.Title = "Dictionary";
 }
 
-<h2>GetDictionary</h2>
+<h2>Words</h2>
 
-    <ul>
-    @foreach(var word in Model)
+
+<table class="table">
+    
+   
+    @foreach (var item in Model)
     {
-       
-        <li><a href="/home/index/?query=@word">@word</a></li>
+        <tr>
+            <td>
+                <a href="Index/?query=@item">@item</a>
+            </td>
+            
+        </tr>
     }
-    </ul>
 
+</table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-
+@Html.PagedListPager(Model, page => Url.Action("GetDictionary",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

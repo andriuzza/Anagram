@@ -1,8 +1,7 @@
 ﻿using Anagrams.Interfaces;
+using PagedList;
 using Services;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 using Web.Models;
 
@@ -11,30 +10,31 @@ namespace Web.Controllers
     public class HomeController : Controller
     {
         private readonly IWordRepository<string> _repository;
-        public AnagramSolver _solver { get; private set; }
+        private AnagramSolver _solver;
 
         public HomeController(IWordRepository<string> repository)
         {
             _repository = repository;
-            ApplyLogic(_repository);
+            _solver = new AnagramSolver(_repository);
         }
 
-        private void ApplyLogic(IWordRepository<string> repository)
-        {
-            _solver = new AnagramSolver(repository);
-        }
-  
         public ActionResult Index(string query)
         {
+            //if model state bad return error
+
+            if (string.IsNullOrEmpty(query))
+            {
+                return View();
+            }
+
             IEnumerable<string> list = null;
             ViewBag.Model = null;
-            if (query != null)
+            if (query != null)//""
             {
                 list = _solver.GetAnagram(query);
                 ViewBag.Model = _solver.GetAnagram(query);
-                
             }
-         
+
             return View(list);
         }
 
@@ -56,10 +56,6 @@ namespace Web.Controllers
             return View(anagram);
         }
 
-        public ActionResult PostToDictionary()
-        {
-            return View();
-        }
         public ActionResult PostToDictionary(string Name)
         {
             if (ModelState.IsValid)
@@ -71,12 +67,16 @@ namespace Web.Controllers
         }
 
         [OutputCache(Duration = 5)]
-        public ActionResult GetDictionary(int size=100, int pageNumber=1)
+        public ActionResult GetDictionary(/*int size=100, int pageNumber=1*/int? page, string currentFilter)
         {
-            var list = new List<string>();
             var dictionary = _repository.GetData();
-
-            long count = 0;
+            int pageSize = 100;
+            int pageNumber = (page ?? 1);
+            return View(dictionary.ToPagedList(pageNumber, pageSize));
+        }
+    }
+}
+/* long count = 0;
             long counterSize = 1;
             long index = size * (pageNumber - 1);
             bool CorrectPlace = false;
@@ -99,9 +99,4 @@ namespace Web.Controllers
                 {
                     break;
                 }
-            }
-               
-         return View(list);
-        }   
-    }
-}
+            }*/
