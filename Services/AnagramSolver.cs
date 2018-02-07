@@ -9,14 +9,16 @@ namespace Services
     {
         private readonly IWordRepository<string> _repository;
         private HashSet<string> DictionaryList { get; set; }
+      
 
         private HashSet<string> Results = new HashSet<string>();
 
         public AnagramSolver(IWordRepository<string> repository)
         {
             _repository = repository;
+         
         }
-
+       
 
         private string OrderString(string name)
         {
@@ -42,7 +44,7 @@ namespace Services
             return true;
         }
 
-        public void GetAnagram(string Name)
+        public HashSet<string> GetAnagram(string Name)
         {
             DictionaryList = _repository.GetData(Name);
             for (var i = 0; i < Name.Length; i++)
@@ -50,6 +52,7 @@ namespace Services
                 string NewString = Name;
                 Recursion(null, Name[i], NewString,  null, 0, Name);
             }
+            return Results;
         }
 
         private bool Recursion(string str, char index, string strAllocated,  string Word, int SecondWord, string Name)

@@ -14,9 +14,8 @@ namespace Anagrams.Tests
             Services.AnagramSolver _service = new Services.AnagramSolver(null);
 
             var isEmpty = _service.ShowResultsOfAnagram();
-
             Assert.AreEqual(isEmpty, false);
-            
+
         }
 
         [TestMethod]

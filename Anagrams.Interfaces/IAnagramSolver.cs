@@ -4,7 +4,7 @@ namespace Anagrams.Interfaces
 {
     public interface IAnagramSolver<T>
     {
-        void GetAnagram(string Name);
+        HashSet<string> GetAnagram(string Name);
         HashSet<T> GetResultsOfAnagram();
     }
 }

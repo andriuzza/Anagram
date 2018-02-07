@@ -1,0 +1,14 @@
+﻿<div class="row">
+    <h1>Welcome to Anagram Generator</h1>
+    @if (ViewBag.Model != null)
+    {
+        <ul>
+            @foreach (var anagram in ViewBag.Model)
+
+            {
+                <li>@anagram</li>
+            }
+        </ul>
+    }
+    @Html.ActionLink("Create", "Create", "Home")
+</div>

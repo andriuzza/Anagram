@@ -1,0 +1,23 @@
+﻿@model Web.Models.Anagram
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create", "Home", FormMethod.Post))
+{
+    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = "Name" })
+    <br />
+    <input type="submit" value="Submit" class="btn btn-success btn-lg" />
+}
+@if (ViewBag.Model != null)
+{
+    <ul>
+        @foreach (var anagram in ViewBag.Model)
+
+        {
+            <li>@anagram</li>
+        }
+    </ul>
+}

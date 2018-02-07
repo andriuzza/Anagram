@@ -5,13 +5,21 @@ VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anagrams", "Anagrams\Anagrams.csproj", "{28E5158E-D4EF-49DE-A1CC-03FA9FA4F7DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anagrams.Interfaces", "Anagrams.Interfaces\Anagrams.Interfaces.csproj", "{38789E0A-BF29-427B-B930-9750D7BB9FFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anagrams.Interfaces", "Anagrams.Interfaces\Anagrams.Interfaces.csproj", "{38789E0A-BF29-427B-B930-9750D7BB9FFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anagrams.Repositories", "Anagrams.Repositories\Anagrams.Repositories.csproj", "{54153CFF-50C1-4B1B-B627-BABED0E6FC50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anagrams.Repositories", "Anagrams.Repositories\Anagrams.Repositories.csproj", "{54153CFF-50C1-4B1B-B627-BABED0E6FC50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{38FB9CE8-ABAF-47EC-B492-E736AE6C3C45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{38FB9CE8-ABAF-47EC-B492-E736AE6C3C45}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anagrams.Tests", "Anagrams.Tests\Anagrams.Tests.csproj", "{4AB94957-D9E1-46D3-A673-3B75E2E3DE3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Anagrams.WEB\Web\Web.csproj", "{F1F6B7DC-9664-48A2-AF2B-941AF0D25E13}"
+	ProjectSection(ProjectDependencies) = postProject
+		{38789E0A-BF29-427B-B930-9750D7BB9FFA} = {38789E0A-BF29-427B-B930-9750D7BB9FFA}
+		{4AB94957-D9E1-46D3-A673-3B75E2E3DE3F} = {4AB94957-D9E1-46D3-A673-3B75E2E3DE3F}
+		{38FB9CE8-ABAF-47EC-B492-E736AE6C3C45} = {38FB9CE8-ABAF-47EC-B492-E736AE6C3C45}
+		{54153CFF-50C1-4B1B-B627-BABED0E6FC50} = {54153CFF-50C1-4B1B-B627-BABED0E6FC50}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,6 +113,22 @@ Global
 		{4AB94957-D9E1-46D3-A673-3B75E2E3DE3F}.Release|x64.Build.0 = Release|Any CPU
 		{4AB94957-D9E1-46D3-A673-3B75E2E3DE3F}.Release|x86.ActiveCfg = Release|Any CPU
 		{4AB94957-D9E1-46D3-A673-3B75E2E3DE3F}.Release|x86.Build.0 = Release|Any CPU
+		{F1F6B7DC-9664-48A2-AF2B-941AF0D25E13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1F6B7DC-9664-48A2-AF2B-941AF0D25E13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1F6B7DC-9664-48A2-AF2B-941AF0D25E13}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{F1F6B7DC-9664-48A2-AF2B-941AF0D25E13}.Debug|ARM.Build.0 = Debug|Any CPU
+		{F1F6B7DC-9664-48A2-AF2B-941AF0D25E13}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F1F6B7DC-9664-48A2-AF2B-941AF0D25E13}.Debug|x64.Build.0 = Debug|Any CPU
+		{F1F6B7DC-9664-48A2-AF2B-941AF0D25E13}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F1F6B7DC-9664-48A2-AF2B-941AF0D25E13}.Debug|x86.Build.0 = Debug|Any CPU
+		{F1F6B7DC-9664-48A2-AF2B-941AF0D25E13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1F6B7DC-9664-48A2-AF2B-941AF0D25E13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1F6B7DC-9664-48A2-AF2B-941AF0D25E13}.Release|ARM.ActiveCfg = Release|Any CPU
+		{F1F6B7DC-9664-48A2-AF2B-941AF0D25E13}.Release|ARM.Build.0 = Release|Any CPU
+		{F1F6B7DC-9664-48A2-AF2B-941AF0D25E13}.Release|x64.ActiveCfg = Release|Any CPU
+		{F1F6B7DC-9664-48A2-AF2B-941AF0D25E13}.Release|x64.Build.0 = Release|Any CPU
+		{F1F6B7DC-9664-48A2-AF2B-941AF0D25E13}.Release|x86.ActiveCfg = Release|Any CPU
+		{F1F6B7DC-9664-48A2-AF2B-941AF0D25E13}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
