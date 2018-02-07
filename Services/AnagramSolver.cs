@@ -5,49 +5,24 @@ using System.Linq;
 
 namespace Services
 {
-    public class ToolService : IServiceTool
+    public class AnagramSolver : IAnagramSolver<string>
     {
-        private readonly IRepository<string> _repository;
+        private readonly IWordRepository<string> _repository;
         private HashSet<string> DictionaryList { get; set; }
 
         private HashSet<string> Results = new HashSet<string>();
-        public string Name { get; private set; }
 
-        public ToolService(IRepository<string> repository, string Name)
+        public AnagramSolver(IWordRepository<string> repository)
         {
             _repository = repository;
-            this.Name = Name;
         }
 
-
-        private bool CheckingIfAnagram(string word, string property, int[] array)
-        {
-            if (property == null)
-            {
-                if (word == null) return false;
-
-                if (OrderString(Name).Equals(OrderString(word)))
-                {
-                    return true;
-                }
-
-                return false;
-            }
-
-            if (word == null) return false;
-
-            if (OrderString(property).Equals(OrderString(word)))
-            {
-                return true;
-            }
-
-            return false;
-        }
 
         private string OrderString(string name)
         {
             return new string(name.OrderBy(c => c).ToArray());
         }
+
         public HashSet<string> GetResultsOfAnagram()
         {
             return Results;
@@ -67,19 +42,17 @@ namespace Services
             return true;
         }
 
-        public void GetAnagram()
+        public void GetAnagram(string Name)
         {
             DictionaryList = _repository.GetData(Name);
             for (var i = 0; i < Name.Length; i++)
             {
                 string NewString = Name;
-                Recursion(null, Name[i], NewString,  null, 0);
+                Recursion(null, Name[i], NewString,  null, 0, Name);
             }
-
-            ShowResultsOfAnagram();
         }
 
-        private bool Recursion(string str, char index, string strAllocated,  string Word, int SecondWord)
+        private bool Recursion(string str, char index, string strAllocated,  string Word, int SecondWord, string Name)
         {
             str += index;
            
@@ -102,18 +75,15 @@ namespace Services
 
                     if (str.Equals(word))
                     {
-                        // Console.WriteLine(str);
-                        // var sentence = Word + " " + str;
                         if (!str.Equals(Name))
                         {
                             Results.Add(str);
                         }
-                           
 
                         if (strNew == null) return false;
                         for (var i = 0; i < strNew.Length; i++)
                         {
-                            Recursion(null, strNew[i], strNew,  str, 1);
+                            Recursion(null, strNew[i], strNew,  str, 1, Name);
                         }
                     }
                 }
@@ -122,13 +92,13 @@ namespace Services
             if (strNew == null) { return false; }
             for (var j = 0; j < strNew.Length; j++)
             {
-                Recursion(str, strNew[j], strNew, Word, 0);
+                Recursion(str, strNew[j], strNew, Word, 0, Name);
             }
 
             return false;
         }
         private bool FindTwoWords(int SecondWord, string Word,
-            string str,   char index, string strAllocated, int next)
+            string str,   char index, string strAllocated, int next, string Name)
         {
             if (SecondWord == 1 && Word != null && ((Word.Length + str.Length) == Name.Length))
             {
@@ -140,7 +110,7 @@ namespace Services
                 return false;
             }
 
-            if (!Recursion(null, index, strAllocated,  str, 1))
+            if (!Recursion(null, index, strAllocated,  str, 1, Name))
             {
                 return false;
             }

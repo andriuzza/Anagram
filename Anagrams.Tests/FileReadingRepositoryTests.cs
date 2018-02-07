@@ -11,7 +11,7 @@ namespace Anagrams.Tests
         [TestMethod]
         public void CheckIfResultsAreEmpty()
         {
-            ToolService _service = new ToolService(null, "TESTING");
+            Services.AnagramSolver _service = new Services.AnagramSolver(null);
 
             var isEmpty = _service.ShowResultsOfAnagram();
 
@@ -22,18 +22,12 @@ namespace Anagrams.Tests
         [TestMethod]
         public void CheckIfResultsAreEqual()
         {
+            WordRepository _repo =  new WordRepository(@"C:\Users\andrius.butkevicius\source\repos\Anagrams\Anagrams.Repositories\zodynas.txt");
 
-            //   FileReadingRepository repo = new FileReadingRepository();
-            // var result =  repo.GetData("alus", @"C:\Users\andrius.butkevicius\source\repos\Anagrams\Anagrams.Repositories\zodynas.txt");
-          FileReadingRepository _repo =  new FileReadingRepository(@"C:\Users\andrius.butkevicius\source\repos\Anagrams\Anagrams.Repositories\zodynas.txt");
-         
-
-          ToolService _service = new ToolService(_repo, "alus");
+            AnagramSolver _service = new AnagramSolver(_repo);
             _repo.GetData("alus");
 
-
-
-            Assert.AreEqual(_service.GetResults().Count, 0);
+            Assert.AreEqual(_service.GetResultsOfAnagram().Count, 0);
 
         }
 

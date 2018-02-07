@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Configuration;
 using Services;
 using Anagrams.Repositories;
 
@@ -17,10 +11,14 @@ namespace Anagrams
             Console.WriteLine("Insert words");
             string line = GetWithoutWhiteSpace(Console.ReadLine());
 
-           
             string path = @"C:\Users\andrius.butkevicius\source\repos\Anagrams\Anagrams.Repositories\zodynas.txt";
-            ToolService Service = new ToolService(new FileReadingRepository(path), line);
-            Service.GetAnagram();
+
+            AnagramSolver Service = new AnagramSolver(new WordRepository(path));
+            Service.GetAnagram(line);
+            foreach(var anagram in Service.GetResultsOfAnagram())
+            {
+                Console.WriteLine(anagram);
+            }
         }
 
         public static string GetWithoutWhiteSpace(string line)

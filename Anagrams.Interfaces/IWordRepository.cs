@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Anagrams.Interfaces
 {
-    public interface IRepository<T>
+    public interface IWordRepository<T>
     {
        HashSet<T> GetData(string Name);
     }

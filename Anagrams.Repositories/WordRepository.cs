@@ -5,13 +5,13 @@ using System.Linq;
 
 namespace Anagrams.Repositories
 {
-    public class FileReadingRepository : IRepository<string>
+    public class WordRepository : IWordRepository<string>
     {
         private System.IO.StreamReader file = null;
         public HashSet<string> ListHash { get; private set; }
         public string filePath { get; private set; }
 
-        public FileReadingRepository(string path)
+        public WordRepository(string path)
         {
             filePath = path;
         }
