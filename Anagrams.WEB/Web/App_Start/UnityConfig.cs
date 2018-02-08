@@ -1,10 +1,12 @@
 using Anagrams.Interfaces;
+using Anagrams.Interfaces.FactoryInterface;
 using Anagrams.Repositories;
 using System;
 
 using Unity;
 using Unity.Injection;
 using Unity.Lifetime;
+using Web.FactoryDesignPatternForLogic;
 
 namespace Web
 {
@@ -43,7 +45,11 @@ namespace Web
             container.RegisterType<IWordRepository<string>, WordRepository>
                 (new ContainerControlledLifetimeManager(), 
                      new InjectionConstructor
-                     (@"C:\Users\andrius.butkevicius\source\repos\Anagrams\Anagrams.Repositories\zodynas.txt"));
+                     (@"C:\Users\PC\Documents\Anagram\Anagrams.Repositories\zodynas.txt"));
+
+            container.RegisterType<IAnagramFactoryManager, AnagramFactoryManager>
+                (new ContainerControlledLifetimeManager(), 
+                     new InjectionConstructor());
 
             // NOTE: To load from web.config uncomment the line below.
             // Make sure to add a Unity.Configuration to the using statements.

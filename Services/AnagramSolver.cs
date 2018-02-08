@@ -14,7 +14,6 @@ namespace Services
         public AnagramSolver(IWordRepository<string> repository)
         {
             _repository = repository;
-         
         }
 
         public HashSet<string> GetResultsOfAnagram()

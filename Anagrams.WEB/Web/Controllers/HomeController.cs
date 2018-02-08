@@ -1,10 +1,12 @@
 ﻿using Anagrams.Interfaces;
+using Anagrams.Interfaces.FactoryInterface;
 using PagedList;
 using Services;
 using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
+using Web.FactoryDesignPatternForLogic;
 using Web.Models;
 
 namespace Web.Controllers
@@ -12,13 +14,12 @@ namespace Web.Controllers
     public class HomeController : Controller
     {
         private readonly IWordRepository<string> _repository;
-        private AnagramSolver _solver;
+        private IAnagramSolver<string> _solver;
 
-        public HomeController(IWordRepository<string> repository)
+        public HomeController(IWordRepository<string> repository, IAnagramFactoryManager factory)
         {
             _repository = repository;
-            _solver = new AnagramSolver(_repository);
-           // RepositoryDirectoryStatic = _solver.GetAnagram(null);
+            _solver = factory.GetInstance(repository);
         }
 
         public ActionResult Index(string query)

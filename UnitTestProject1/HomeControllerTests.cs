@@ -11,8 +11,8 @@ namespace WebUnitTests
         [TestMethod]
         public void Index_EmptyQuery_ReturnsEmptyView()
         {
-            // Create
-            var homeController = new HomeController(null);
+            // Arranges
+            var homeController = new HomeController(null, null);
 
             // Act
             var result = homeController.Index("") as ViewResult;
@@ -20,11 +20,12 @@ namespace WebUnitTests
             // Assert
             Assert.AreEqual("", result.ViewName);
         }
+
         [TestMethod]
         public void Index_QueryOfOneWord_ReturnsSomething()
         {
-            // Create
-            var homeController = new HomeController(null);
+            // Arrange
+            var homeController = new HomeController(null, null);
 
             // Act
             var result = homeController.Index("vaidenasi") as ViewResult;
