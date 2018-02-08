@@ -12,7 +12,6 @@ namespace Web.Controllers
 {
     public class WordController : Controller
     {
-        // GET: Word
         private readonly IWordRepository<string> _repository;
         private AnagramSolver _solver;
 

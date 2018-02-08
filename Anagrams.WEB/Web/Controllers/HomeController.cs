@@ -22,34 +22,34 @@ namespace Web.Controllers
         }
 
         public ActionResult Index(string query)
-       {
+        {
             //if model state bad return error
             if (string.IsNullOrEmpty(query))
             {
                 return View();
             }
-            IEnumerable<string> list = null;
 
-            if (query != null)
+            IEnumerable<string> list = _solver.GetAnagram(query);
+
+            var howManyTimes = Request.Cookies[query];
+
+            if(howManyTimes  == null)
             {
-                list = _solver.GetAnagram(query);
+                howManyTimes = new HttpCookie(query)
+                {
+                    Value = "1"
+                };
             }
+            else
+            {
+                var str = howManyTimes.Value;
+                int parseToInterger = Int32.Parse(str);
+                parseToInterger++;
+
+                Response.Cookies[query].Value = parseToInterger.ToString();
+            }
+
             ViewBag.CookieName = query;
-            string howManyTimes = HttpContext.Response.Cookies[query].Value;
-
-            if (string.IsNullOrEmpty(howManyTimes))
-            {
-                howManyTimes = "0";
-            }
-
-            int parseToInterger = Int32.Parse(howManyTimes);
-            parseToInterger++;
-            howManyTimes = parseToInterger.ToString();
-         
-
-           // HttpContext.Response.Cookies.Add(cookieOfThisRequest);
-           
-          //  Response.AppendCookie(cookieOfThisRequest);
 
             return View(list);
         }
