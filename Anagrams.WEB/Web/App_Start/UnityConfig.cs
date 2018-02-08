@@ -40,9 +40,10 @@ namespace Web
         /// </remarks>
         public static void RegisterTypes(IUnityContainer container)
         {
-            //container.RegisterInstance<IWordRepository<string>>(new WordRepository(@"C:\Users\andrius.butkevicius\source\repos\Anagrams\Anagrams.Repositories\zodynas.txt"));
-        
-            container.RegisterType<IWordRepository<string>, WordRepository>(new ContainerControlledLifetimeManager(), new InjectionConstructor(@"C:\Users\andrius.butkevicius\source\repos\Anagrams\Anagrams.Repositories\zodynas.txt"));
+            container.RegisterType<IWordRepository<string>, WordRepository>
+                (new ContainerControlledLifetimeManager(), 
+                     new InjectionConstructor
+                     (@"C:\Users\andrius.butkevicius\source\repos\Anagrams\Anagrams.Repositories\zodynas.txt"));
 
             // NOTE: To load from web.config uncomment the line below.
             // Make sure to add a Unity.Configuration to the using statements.

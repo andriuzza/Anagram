@@ -37,8 +37,7 @@ namespace Services
         private bool Recursion(string str, char index, string strAllocated,  string Word, int SecondWord, string Name, int countWord)
         {
             str += index;
-           
-          
+
             string strNew = null;
             foreach (var count in strAllocated)
             {

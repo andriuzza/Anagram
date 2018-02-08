@@ -1,5 +1,4 @@
 ﻿using Anagrams.Interfaces;
-using Anagrams.Repositories.Signleton;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -34,7 +33,15 @@ namespace Anagrams.Repositories
                 return newDictionary;
             }
             return ListHash;
-           
+        }
+        public bool InsertNewWord(string Name)
+        {
+            /* using (FileStream fs = new FileStream(filePath, FileMode.Append, FileAccess.Write))
+             using (StreamWriter sw = new StreamWriter(fs))
+             {
+                 sw.WriteLine("eina sau");
+             }*/
+            return false;
         }
 
         private void GetDataInitialize()
@@ -113,16 +120,6 @@ namespace Anagrams.Repositories
             }
             return new Tuple<string, string>
                 (nameFirst, ReverseString(nameSecond));
-        }
-
-        public bool InsertNewWord(string Name)
-        {
-           /* using (FileStream fs = new FileStream(filePath, FileMode.Append, FileAccess.Write))
-            using (StreamWriter sw = new StreamWriter(fs))
-            {
-                sw.WriteLine("eina sau");
-            }*/
-            return false;
         }
 
         private StreamReader NewFileHandling(string filePath)

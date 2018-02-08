@@ -13,4 +13,13 @@
     }
     @Html.ActionLink("Create", "Create", "Word")
     @Html.ActionLink("GetDictionary", "GetDictionary", "Word")
+    @{ 
+        string val = "COOKIES NOT FOUND";
+
+        if (Request.Cookies[ViewBag.CookieName] != null)
+        {
+            val = Request.Cookies[ViewBag.CookieName].Value;
+        }
+        <p>@val</p>
+     }
 </div>
