@@ -22,33 +22,19 @@ namespace Services
             return Results;
         }
 
-        public bool ShowResultsOfAnagram()
-        {
-            if (!Results.Any())
-            {
-                return false;
-            }
-            foreach(var anagram in Results)
-            {
-
-                Console.WriteLine(anagram);
-            }
-            return true;
-        }
-
         public HashSet<string> GetAnagram(string Name)
         {
             DictionaryList = _repository.GetData(Name);
-
+            int count = 0;
             for (var i = 0; i < Name.Length; i++)
             {
                 string NewString = Name;
-                Recursion(null, Name[i], NewString,  null, 0, Name);
+                Recursion(null, Name[i], NewString,  null, 0, Name, count);
             }
             return Results;
         }
 
-        private bool Recursion(string str, char index, string strAllocated,  string Word, int SecondWord, string Name)
+        private bool Recursion(string str, char index, string strAllocated,  string Word, int SecondWord, string Name, int countWord)
         {
             str += index;
            
@@ -73,28 +59,32 @@ namespace Services
                     {
                         if (!str.Equals(Name))
                         {
+                            countWord++;
+                            if(countWord == 10)
+                            {
+                                return false;
+                            }
                             Results.Add(str);
                         }
 
                         if (strNew == null) return false;
                         for (var i = 0; i < strNew.Length; i++)
                         {
-                            Recursion(null, strNew[i], strNew,  str, 1, Name);
+                            Recursion(null, strNew[i], strNew,  str, 1, Name, countWord);
                         }
                     }
                 }
             }
-
             if (strNew == null) { return false; }
             for (var j = 0; j < strNew.Length; j++)
             {
-                Recursion(str, strNew[j], strNew, Word, 0, Name);
+                Recursion(str, strNew[j], strNew, Word, 0, Name, countWord);
             }
 
             return false;
         }
         private bool FindTwoWords(int SecondWord, string Word,
-            string str,   char index, string strAllocated, int next, string Name)
+            string str, char index, string strAllocated, int next, string Name)
         {
             if (SecondWord == 1 && Word != null && ((Word.Length + str.Length) == Name.Length))
             {
@@ -106,7 +96,7 @@ namespace Services
                 return false;
             }
 
-            if (!Recursion(null, index, strAllocated,  str, 1, Name))
+            if (!Recursion(null, index, strAllocated,  str, 1, Name, 0))
             {
                 return false;
             }

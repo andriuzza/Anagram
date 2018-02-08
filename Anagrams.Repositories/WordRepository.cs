@@ -1,4 +1,5 @@
 ﻿using Anagrams.Interfaces;
+using Anagrams.Repositories.Signleton;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,19 +10,36 @@ namespace Anagrams.Repositories
     public class WordRepository : IWordRepository<string>
     {
         private StreamReader File = null;
-        public HashSet<string> ListHash { get; private set; }
+        private HashSet<string> ListHash = new HashSet<string>();
         public string filePath { get; private set; }
 
         public WordRepository(string path)
         {
             filePath = path;
+            GetDataInitialize();
         }
 
-        public HashSet<string> GetData(string Name = null)
+        public HashSet<string> GetData(string name)
         {
-           ListHash = new HashSet<string>();
-           string line;
+            if (!string.IsNullOrEmpty(name))
+            {
+                HashSet<string> newDictionary = new HashSet<string>();
+                foreach (var word in ListHash)
+                {
+                    if (CheckIfWordHasSameLetters(word, name))
+                    {
+                        newDictionary.Add(word);
+                    }
+                }
+                return newDictionary;
+            }
+            return ListHash;
+           
+        }
 
+        private void GetDataInitialize()
+        {
+            string line;
             try
             {
                 File = NewFileHandling(filePath);
@@ -30,49 +48,42 @@ namespace Anagrams.Repositories
             {
                 Console.WriteLine("Wrong directory or other problems with reading");
             }
+
             while ((line = File.ReadLine()) != null)
             {
                 if (line[0] >= '0' && line[0] <= '9')
                 {
                     continue;
                 }
-
                 var wordsOfLine = Parsing(line);
 
-                if (Name == null) /*If parameter is null, get all words from dictionary */
-                {
-                    ListHash.Add(wordsOfLine.Item1);
-                    ListHash.Add(wordsOfLine.Item2);
-                    continue;
-                }
-
-                bool ifContains = false;
-                bool ifContains2 = false;
-                foreach (var a in wordsOfLine.Item1.ToLower())
-                {
-                    if (!Name.Contains(a)) { ifContains = true; break; }
-
-                }
-
-                if (wordsOfLine.Item2 != null)
-                {
-                    foreach (var a in wordsOfLine.Item2.ToLower())
-                    {
-                        if (!Name.Contains(a)) { ifContains2 = true; break; }
-                    }
-                }
-
-                if (!ifContains)
-                {
-                    ListHash.Add(wordsOfLine.Item1);
-                }
-
-                if (ifContains2 == false && wordsOfLine.Item2 != null)
-                {
-                    ListHash.Add(wordsOfLine.Item2);
-                }
+                ListHash.Add(wordsOfLine.Item1);
+                ListHash.Add(wordsOfLine.Item2);
             }
-            return ListHash;
+        }
+        private bool CheckIfWordHasSameLetters(string wordFromDictionary, string name)
+        {
+            if(wordFromDictionary == null)
+            {
+                return false;
+            }
+            if (name == null) /*If parameter is null, get all words from dictionary */
+            {
+                return false;
+            }
+
+            bool ifContains = false;
+            foreach (var a in wordFromDictionary.ToLower())
+            {
+                if (!name.Contains(a)) { ifContains = true; break; }
+            }
+
+            if (!ifContains)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private Tuple<string, string> Parsing(string line)
@@ -122,7 +133,11 @@ namespace Anagrams.Repositories
 
         private string ReverseString(string name)
         {
-            if (name == null) { return null; }
+            if (string.IsNullOrEmpty(name))
+            {
+                return null;
+            }
+
             string newString = "";
 
             for (var i = name.Length - 1; i >= 0; i--)
@@ -133,3 +148,44 @@ namespace Anagrams.Repositories
         }
     }
 }
+/*
+ /* if (line[0] >= '0' && line[0] <= '9')
+                {
+                    continue;
+                }
+
+                var wordsOfLine = Parsing(line);
+
+                if (Name == null) If parameter is null, get all words from dictionary 
+                {
+                    ListHash.Add(wordsOfLine.Item1);
+                    ListHash.Add(wordsOfLine.Item2);
+                    continue;
+                }
+
+                bool ifContains = false;
+bool ifContains2 = false;
+                foreach (var a in wordsOfLine.Item1.ToLower())
+                {
+                    if (!Name.Contains(a)) { ifContains = true; break; }
+
+                }
+
+                if (wordsOfLine.Item2 != null)
+                {
+                    foreach (var a in wordsOfLine.Item2.ToLower())
+                    {
+                        if (!Name.Contains(a)) { ifContains2 = true; break; }
+                    }
+                }
+
+                if (!ifContains)
+                {
+                    ListHash.Add(wordsOfLine.Item1);
+                }
+
+                if (ifContains2 == false && wordsOfLine.Item2 != null)
+                {
+                    ListHash.Add(wordsOfLine.Item2);
+                }
+    */ 

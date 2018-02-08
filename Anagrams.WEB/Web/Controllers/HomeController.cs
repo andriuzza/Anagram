@@ -12,11 +12,13 @@ namespace Web.Controllers
     {
         private readonly IWordRepository<string> _repository;
         private AnagramSolver _solver;
+        private static HashSet<string>RepositoryDirectoryStatic;
 
         public HomeController(IWordRepository<string> repository)
         {
             _repository = repository;
             _solver = new AnagramSolver(_repository);
+           // RepositoryDirectoryStatic = _solver.GetAnagram(null);
         }
 
         public ActionResult Index(string query)
