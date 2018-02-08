@@ -7,5 +7,6 @@ namespace Anagrams.Interfaces
     {
        HashSet<T> GetData(string Name = null);
        bool InsertNewWord(string Name);
+       string ReturnFilePath();
     }
 }

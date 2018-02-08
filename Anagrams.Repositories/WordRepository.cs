@@ -18,6 +18,11 @@ namespace Anagrams.Repositories
             GetDataInitialize();
         }
 
+        public string ReturnFilePath()
+        { 
+            return filePath;
+        }
+
         public HashSet<string> GetData(string name)
         {
             if (!string.IsNullOrEmpty(name))

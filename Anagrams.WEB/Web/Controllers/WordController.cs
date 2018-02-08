@@ -58,5 +58,12 @@ namespace Web.Controllers
             int pageNumber = (page ?? 1);
             return View(dictionary.ToPagedList(pageNumber, pageSize));
         }
+
+        public ActionResult DownloadDictinary()
+        {
+            byte[] fileBytes = System.IO.File.ReadAllBytes(_repository.ReturnFilePath());
+            string fileName = "dictionary.txt";
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
     }
 }
