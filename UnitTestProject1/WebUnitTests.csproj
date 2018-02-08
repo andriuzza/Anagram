@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="HomeControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FileReadingTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -84,9 +85,17 @@
       <Project>{38789E0A-BF29-427B-B930-9750D7BB9FFA}</Project>
       <Name>Anagrams.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Anagrams.Repositories\Anagrams.Repositories.csproj">
+      <Project>{54153cff-50c1-4b1b-b627-babed0e6fc50}</Project>
+      <Name>Anagrams.Repositories</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Anagrams.WEB\Web\Web.csproj">
       <Project>{f1f6b7dc-9664-48a2-af2b-941af0d25e13}</Project>
       <Name>Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Services\Services.csproj">
+      <Project>{38fb9ce8-abaf-47ec-b492-e736ae6c3c45}</Project>
+      <Name>Services</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

@@ -1,6 +1,7 @@
 ﻿using Anagrams.Interfaces;
 using PagedList;
 using Services;
+using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using Web.Models;
@@ -28,11 +29,10 @@ namespace Web.Controllers
             }
 
             IEnumerable<string> list = null;
-            ViewBag.Model = null;
-            if (query != null)//""
+
+            if (query != null)
             {
                 list = _solver.GetAnagram(query);
-                ViewBag.Model = _solver.GetAnagram(query);
             }
 
             return View(list);
@@ -58,16 +58,13 @@ namespace Web.Controllers
 
         public ActionResult PostToDictionary(string Name)
         {
-            if (ModelState.IsValid)
-            {
 
-            }
-
-            return View();
+            return Content(Name + "Not implemented");
+           
         }
 
         [OutputCache(Duration = 5)]
-        public ActionResult GetDictionary(/*int size=100, int pageNumber=1*/int? page, string currentFilter)
+        public ActionResult GetDictionary(int? page, string currentFilter)
         {
             var dictionary = _repository.GetData();
             int pageSize = 100;
@@ -76,6 +73,7 @@ namespace Web.Controllers
         }
     }
 }
+/*int size=100, int pageNumber=1*/
 /* long count = 0;
             long counterSize = 1;
             long index = size * (pageNumber - 1);

@@ -9,20 +9,12 @@ namespace Services
     {
         private readonly IWordRepository<string> _repository;
         private HashSet<string> DictionaryList { get; set; }
-      
-
         private HashSet<string> Results = new HashSet<string>();
 
         public AnagramSolver(IWordRepository<string> repository)
         {
             _repository = repository;
          
-        }
-       
-
-        private string OrderString(string name)
-        {
-            return new string(name.OrderBy(c => c).ToArray());
         }
 
         public HashSet<string> GetResultsOfAnagram()
@@ -119,6 +111,10 @@ namespace Services
                 return false;
             }
             return false;
+        }
+        private string OrderString(string name)
+        {
+            return new string(name.OrderBy(c => c).ToArray());
         }
     }
 }
