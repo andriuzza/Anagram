@@ -22,12 +22,10 @@ namespace Web.Controllers
         public ActionResult Index(string query)
         {
             //if model state bad return error
-
             if (string.IsNullOrEmpty(query))
             {
                 return View();
             }
-
             IEnumerable<string> list = null;
 
             if (query != null)
@@ -36,40 +34,6 @@ namespace Web.Controllers
             }
 
             return View(list);
-        }
-
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Create(Anagram anagram)
-        {
-            ViewBag.Model = null;
-            if (ModelState.IsValid)
-            {
-                ViewBag.Model = _solver.GetAnagram(anagram.Name);
-                return View();
-
-            }
-            return View(anagram);
-        }
-
-        public ActionResult PostToDictionary(string Name)
-        {
-
-            return Content(Name + "Not implemented");
-           
-        }
-
-        [OutputCache(Duration = 5)]
-        public ActionResult GetDictionary(int? page, string currentFilter)
-        {
-            var dictionary = _repository.GetData();
-            int pageSize = 100;
-            int pageNumber = (page ?? 1);
-            return View(dictionary.ToPagedList(pageNumber, pageSize));
         }
     }
 }
