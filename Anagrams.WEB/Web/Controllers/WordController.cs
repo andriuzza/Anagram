@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using Web.FactoryDesignPatternForLogic;
 using Web.Models;
 using Web.Controllers.api;
+using Services.Helpers;
 
 namespace Web.Controllers
 {
@@ -38,6 +39,9 @@ namespace Web.Controllers
         public ActionResult Create(Anagram anagram)
         {
             ViewBag.Model = null;
+
+            var wordWithoutSpaces = anagram.Name.GetWithoutWhiteSpace(); 
+
             if (ModelState.IsValid)
             {
                 ViewBag.Model = _solver.GetAnagram(anagram.Name);

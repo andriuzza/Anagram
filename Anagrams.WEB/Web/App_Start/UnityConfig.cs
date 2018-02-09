@@ -42,10 +42,11 @@ namespace Web
         /// </remarks>
         public static void RegisterTypes(IUnityContainer container)
         {
+            var path = @"C:\Users\andrius.butkevicius\source\repos\Anagrams\Anagrams.Repositories\zodynas.txt";
+
             container.RegisterType<IWordRepository<string>, WordRepository>
                 (new ContainerControlledLifetimeManager(), 
-                     new InjectionConstructor
-                     (@"C:\Users\PC\Documents\Anagram\Anagrams.Repositories\zodynas.txt"));
+                     new InjectionConstructor(path));
 
             container.RegisterType<IAnagramFactoryManager, AnagramFactoryManager>
                 (new ContainerControlledLifetimeManager(), 

@@ -24,17 +24,26 @@ namespace Web.Controllers
 
         public ActionResult Index(string query)
         {
-            //if model state bad return error
+           
             if (string.IsNullOrEmpty(query))
             {
                 return View();
             }
 
-            IEnumerable<string> list = _solver.GetAnagram(query);
+            var list = _solver.GetAnagram(query) as IEnumerable<string>;
 
+            UpdateCookieVisitingNumber(query);
+
+            ViewBag.CookieName = query;
+
+            return View(list);
+        }
+
+        private void UpdateCookieVisitingNumber(string query)
+        {
             var howManyTimes = Request.Cookies[query];
 
-            if(howManyTimes  == null)
+            if (howManyTimes == null)
             {
                 howManyTimes = new HttpCookie(query)
                 {
@@ -49,10 +58,6 @@ namespace Web.Controllers
 
                 Response.Cookies[query].Value = parseToInterger.ToString();
             }
-
-            ViewBag.CookieName = query;
-
-            return View(list);
         }
     }
 }
