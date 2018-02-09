@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace HandlingRequestFromConsole
 {
@@ -11,7 +11,8 @@ namespace HandlingRequestFromConsole
     {
         static void Main(string[] args)
         {
-            DownloadAsyncData();
+            //  DownloadAsyncData();
+            ObjectToXml();
         }
         static async void DownloadAsyncData()
         {
@@ -24,8 +25,23 @@ namespace HandlingRequestFromConsole
                 ("http://localhost:54566/api/word/?name=labadiena", _client);
 
             Console.WriteLine(result);
+        }
+        public static void ObjectToXml()
+        {
+            
+           
+            var path = @"C:\Users\andrius.butkevicius\source\repos\Anagrams\Anagrams.Repositories\produktai.xml";
+            RS overview;
+            XmlSerializer serializer = new XmlSerializer(typeof(RS));
+
+            using (XmlReader reader = XmlReader.Create(path))
+            {
+                overview = (RS)serializer.Deserialize(reader);
+            }
+            Console.WriteLine(overview);
 
         }
+
         public static async Task<string> GetAnagram(string path, HttpClient _client)
         {
             string responseBody = null;
@@ -38,6 +54,8 @@ namespace HandlingRequestFromConsole
 
             return responseBody;
         }
+
+       
 
     }
 }
