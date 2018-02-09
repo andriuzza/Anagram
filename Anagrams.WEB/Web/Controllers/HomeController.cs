@@ -24,13 +24,19 @@ namespace Web.Controllers
 
         public ActionResult Index(string query)
         {
-           
+            IEnumerable<string> list;
             if (string.IsNullOrEmpty(query))
             {
                 return View();
             }
-
-            var list = _solver.GetAnagram(query) as IEnumerable<string>;
+            try
+            {
+                list = _solver.GetAnagram(query);
+            }
+            catch (Exception)
+            {
+                return Content("Wrong dictionary's path");
+            }
 
             UpdateCookieVisitingNumber(query);
 
@@ -49,6 +55,9 @@ namespace Web.Controllers
                 {
                     Value = "1"
                 };
+
+                ControllerContext.HttpContext
+                    .Response.Cookies.Add(howManyTimes);
             }
             else
             {
@@ -58,6 +67,18 @@ namespace Web.Controllers
 
                 Response.Cookies[query].Value = parseToInterger.ToString();
             }
+        }
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            if (filterContext.ExceptionHandled)
+            {
+                return;
+            }
+            filterContext.Result = new ViewResult
+            {
+                ViewName = "~/Views/Shared/Error.aspx"
+            };
+            filterContext.ExceptionHandled = true;
         }
     }
 }

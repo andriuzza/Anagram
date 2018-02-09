@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
 using Web.FactoryDesignPatternForLogic;
 
 namespace Web.Controllers.api
@@ -36,5 +37,6 @@ namespace Web.Controllers.api
 
             return Ok(result);
         }
+      
     }
 }

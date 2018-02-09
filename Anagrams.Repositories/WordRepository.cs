@@ -52,14 +52,8 @@ namespace Anagrams.Repositories
         private void GetDataInitialize()
         {
             string line;
-            try
-            {
-                File = NewFileHandling(filePath);
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Wrong directory or other problems with reading");
-            }
+
+            File = NewFileHandling(filePath);
 
             while ((line = File.ReadLine()) != null)
             {
@@ -129,8 +123,16 @@ namespace Anagrams.Repositories
 
         private StreamReader NewFileHandling(string filePath)
         {
-            return new System.IO
-                    .StreamReader(filePath, System.Text.Encoding.UTF8, true);
+            try
+            {
+                return new System.IO
+                        .StreamReader(filePath, System.Text.Encoding.UTF8, true);
+            }
+            catch (Exception)
+            {
+                throw new NullReferenceException("Path is wrong or file type " +
+                    "is not correct, must be with .txt extension");   
+            }
         }
 
         private string ReverseString(string name)

@@ -2,7 +2,7 @@ using Anagrams.Interfaces;
 using Anagrams.Interfaces.FactoryInterface;
 using Anagrams.Repositories;
 using System;
-
+using System.Web.Configuration;
 using Unity;
 using Unity.Injection;
 using Unity.Lifetime;
@@ -42,7 +42,8 @@ namespace Web
         /// </remarks>
         public static void RegisterTypes(IUnityContainer container)
         {
-            var path = @"C:\Users\andrius.butkevicius\source\repos\Anagrams\Anagrams.Repositories\zodynas.txt";
+
+            var path = WebConfigurationManager.AppSettings["directoryPath"];
 
             container.RegisterType<IWordRepository<string>, WordRepository>
                 (new ContainerControlledLifetimeManager(), 
