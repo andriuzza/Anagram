@@ -15,17 +15,17 @@ namespace FileReadingTests
             Services.AnagramSolver _service = new Services.AnagramSolver(null);
 
             // Act
-           // var isEmpty = _service.ShowResultsOfAnagram();
+            //var isEmpty = _service.ShowResultsOfAnagram();
 
             // Assert
-           // Assert.AreEqual(isEmpty, false);
+        //    Assert.AreEqual(isEmpty, false);
         }
 
         [TestMethod]
         public void GetResultsOfAnagram_NewRepositoryNotEmpty_ReturnCorrectNumberOfAnagram()
         {
             // Create
-            WordRepository _repo = new WordRepository(@"C:\Users\andrius.butkevicius\source\repos\Anagrams\Anagrams.Repositories\zodynas.txt");
+            WordRepository _repo = new WordRepository(@"C:\Users\PC\Documents\Anagram\UnitTestProject1\TEST.txt");
 
             AnagramSolver _service = new AnagramSolver(_repo);
 

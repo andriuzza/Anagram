@@ -9,7 +9,7 @@ namespace Anagrams.Repositories
     public class WordRepository : IWordRepository<string>
     {
         private StreamReader File = null;
-        private HashSet<string> ListHash = new HashSet<string>();
+        private HashSet<string> HashSetHash = new HashSet<string>();
         public string filePath { get; private set; }
 
         public WordRepository(string path)
@@ -28,7 +28,7 @@ namespace Anagrams.Repositories
             if (!string.IsNullOrEmpty(name))
             {
                 HashSet<string> newDictionary = new HashSet<string>();
-                foreach (var word in ListHash)
+                foreach (var word in HashSetHash)
                 {
                     if (CheckIfWordHasSameLetters(word, name))
                     {
@@ -37,7 +37,7 @@ namespace Anagrams.Repositories
                 }
                 return newDictionary;
             }
-            return ListHash;
+            return HashSetHash;
         }
         public bool InsertNewWord(string Name)
         {
@@ -63,8 +63,8 @@ namespace Anagrams.Repositories
                 }
                 var wordsOfLine = Parsing(line);
 
-                ListHash.Add(wordsOfLine.Item1);
-                ListHash.Add(wordsOfLine.Item2);
+                HashSetHash.Add(wordsOfLine.Item1);
+                HashSetHash.Add(wordsOfLine.Item2);
             }
         }
         private bool CheckIfWordHasSameLetters(string wordFromDictionary, string name)
@@ -73,7 +73,18 @@ namespace Anagrams.Repositories
             {
                 return false;
             }
+
             if (name == null) /*If parameter is null, get all words from dictionary */
+            {
+                return false;
+            }
+
+            if(name.Length < wordFromDictionary.Length)
+            {
+                return false;
+            }
+
+            if(wordFromDictionary.Length > 12)
             {
                 return false;
             }
@@ -81,7 +92,11 @@ namespace Anagrams.Repositories
             bool ifContains = false;
             foreach (var a in wordFromDictionary.ToLower())
             {
-                if (!name.Contains(a)) { ifContains = true; break; }
+                if (!name.Contains(a))
+                {
+                    ifContains = true;
+                    break;
+                }
             }
 
             if (!ifContains)
@@ -162,8 +177,8 @@ namespace Anagrams.Repositories
 
                 if (Name == null) If parameter is null, get all words from dictionary 
                 {
-                    ListHash.Add(wordsOfLine.Item1);
-                    ListHash.Add(wordsOfLine.Item2);
+                    HashSetHash.Add(wordsOfLine.Item1);
+                    HashSetHash.Add(wordsOfLine.Item2);
                     continue;
                 }
 
@@ -185,11 +200,11 @@ bool ifContains2 = false;
 
                 if (!ifContains)
                 {
-                    ListHash.Add(wordsOfLine.Item1);
+                    HashSetHash.Add(wordsOfLine.Item1);
                 }
 
                 if (ifContains2 == false && wordsOfLine.Item2 != null)
                 {
-                    ListHash.Add(wordsOfLine.Item2);
+                    HashSetHash.Add(wordsOfLine.Item2);
                 }
     */ 

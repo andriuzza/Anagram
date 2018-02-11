@@ -8,7 +8,7 @@ namespace Services
     public class AnagramSolver : IAnagramSolver<string>
     {
         private readonly IWordRepository<string> _repository;
-        private HashSet<string> DictionaryList { get; set; }
+        private HashSet<string> DictionaryHashSet { get; set; }
         private HashSet<string> Results = new HashSet<string>();
 
         public AnagramSolver(IWordRepository<string> repository)
@@ -23,66 +23,79 @@ namespace Services
 
         public HashSet<string> GetAnagram(string Name)
         {
-            DictionaryList = _repository.GetData(Name);
-            int count = 0;
+            DictionaryHashSet = _repository.GetData(Name);
+
             for (var i = 0; i < Name.Length; i++)
             {
-                string NewString = Name;
-                Recursion(null, Name[i], NewString,  null, 0, Name, count);
+                Recursion("", Name[i], Name,  Name,  Name, 0);
             }
+        
             return Results;
         }
 
-        private bool Recursion(string str, char index, string strAllocated,  string Word, int SecondWord, string Name, int countWord)
+        private bool Recursion(string constructedWord, char letter, string removalWord,
+            string Word, string Name, int countWord)
         {
-            str += index;
+            constructedWord += letter; // appending a new word be a one letter
 
-            string strNew = null;
-            foreach (var count in strAllocated)
+            string strNew = "";
+            bool marked = false;
+            foreach (var str in removalWord)
             {
-                if (count == index) { continue; }
-                strNew += count;
-            }
-
-            if (str.Length >= 4)
-            {
-                foreach (var word in DictionaryList)
+                if (str == letter && marked == false)
                 {
-                   
-                    if (word == null) { break; }
-                    if (word.Length != str.Length) { continue; }
-                  
+                    marked = true;
+                    continue;
+                }
 
-                    if (str.Equals(word))
+                strNew += str;
+            }        /* constructed word without that letter*/
+
+            var wordOnDictionary = DictionaryHashSet.Contains(constructedWord);
+            if (wordOnDictionary)
+            {     
+                string temporaryWord = "";
+                
+                if (!constructedWord.Equals(Name)) /*if they are the same not necessary to add */
+                {
+                    temporaryWord = constructedWord;
+
+                    if (countWord == 0)
                     {
-                        if (!str.Equals(Name))
-                        {
-                            countWord++;
-                            if(countWord == 10)
-                            {
-                                return false;
-                            }
-                            Results.Add(str);
-                        }
+                        countWord++;
+                    }
+                        
+                    if (string.IsNullOrEmpty(strNew) && countWord == 1 
+                        && (Word.Length + constructedWord.Length) == Name.Length)
+                    {
 
-                        if (strNew == null) return false;
-                        for (var i = 0; i < strNew.Length; i++)
-                        {
-                            Recursion(null, strNew[i], strNew,  str, 1, Name, countWord);
-                        }
+                        Results.Add(Word + " " + constructedWord);
+                        countWord--;
                     }
                 }
-            }
-            if (strNew == null) { return false; }
-            for (var j = 0; j < strNew.Length; j++)
-            {
-                Recursion(str, strNew[j], strNew, Word, 0, Name, countWord);
+
+                if (string.IsNullOrEmpty(strNew))
+                {
+                    return true;
+                }
+
+                for (var i = 0; i < strNew.Length; i++)
+                {
+                    Recursion("", strNew[i], strNew, temporaryWord, Name, countWord);
+                }
             }
 
+            if (strNew == null) { return false; }
+
+            for (var j = 0; j < strNew.Length; j++)
+            {
+                Recursion(constructedWord, strNew[j], strNew, Word, Name, countWord);
+            }
             return false;
         }
+
         private bool FindTwoWords(int SecondWord, string Word,
-            string str, char index, string strAllocated, int next, string Name)
+            string str, char letter, string removalWord, string Name)
         {
             if (SecondWord == 1 && Word != null && ((Word.Length + str.Length) == Name.Length))
             {
@@ -94,12 +107,13 @@ namespace Services
                 return false;
             }
 
-            if (!Recursion(null, index, strAllocated,  str, 1, Name, 0))
+            if (!Recursion(null, letter, removalWord,  null, Name, 0))
             {
                 return false;
             }
             return false;
         }
+
         private string OrderString(string name)
         {
             return new string(name.OrderBy(c => c).ToArray());

@@ -10,3 +10,4 @@ namespace Anagrams.Interfaces
        string ReturnFilePath();
     }
 }
+    

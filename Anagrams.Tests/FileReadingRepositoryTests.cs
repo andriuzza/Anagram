@@ -22,11 +22,11 @@ namespace Anagrams.Tests
         public void CheckIfResultsAreEqual()
         {
             // Arrange
-            WordRepository _repo = new WordRepository(@"C:\Users\andrius.butkevicius\source\repos\Anagrams\Anagrams.Repositories\zodynas.txt");
+            WordRepository _repo = new WordRepository(@"C:\Users\PC\Documents\Anagram\Anagrams.Repositories\zodynastest.txt");
 
             // Act
             AnagramSolver _service = new AnagramSolver(_repo);
-            _repo.GetData("testing");
+            _repo.GetData("labadiena");
 
             // Assert
             Assert.AreEqual(_service.GetResultsOfAnagram().Count, 0);

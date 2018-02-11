@@ -4,6 +4,7 @@ using Anagrams.Repositories;
 using System.Net.Http;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Anagrams
 {
@@ -11,7 +12,21 @@ namespace Anagrams
     {
         static void Main(string[] args)
         {
-            MainAsync();
+
+            Console.WriteLine("Insert words");
+            string line = GetWithoutWhiteSpace(Console.ReadLine());
+            string path = @"C:\Users\PC\Documents\Anagram\Anagrams.Repositories\zodynas.txt";
+
+            var sw = Stopwatch.StartNew();
+
+            AnagramSolver Service = new AnagramSolver(new WordRepository(path));
+            Service.GetAnagram(line);
+           foreach (var anagram in Service.GetResultsOfAnagram())
+            {
+                Console.WriteLine(anagram);
+            }
+            sw.Stop();
+            Console.WriteLine(sw.ElapsedMilliseconds);
         }
         static async void MainAsync()
         {
