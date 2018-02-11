@@ -52,7 +52,7 @@ namespace Services
             }        /* constructed word without that letter*/
 
             var wordOnDictionary = DictionaryHashSet.Contains(constructedWord);
-            if (wordOnDictionary)
+            if (wordOnDictionary && constructedWord.Length > 2)
             {     
                 string temporaryWord = "";
                 
@@ -64,7 +64,13 @@ namespace Services
                     {
                         countWord++;
                     }
-                        
+                      
+                    if(string.IsNullOrEmpty(strNew) && countWord == 1
+                        && (constructedWord.Length) == Name.Length)
+                    {
+                        Results.Add(constructedWord);
+                    }
+
                     if (string.IsNullOrEmpty(strNew) && countWord == 1 
                         && (Word.Length + constructedWord.Length) == Name.Length)
                     {

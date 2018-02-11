@@ -44,7 +44,7 @@ namespace Web.Controllers
 
             if (ModelState.IsValid)
             {
-                ViewBag.Model = _solver.GetAnagram(anagram.Name);
+                ViewBag.Model = _solver.GetAnagram(wordWithoutSpaces);
                 return View();
             }
             return View(anagram);

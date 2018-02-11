@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Web.FactoryDesignPatternForLogic;
 using Web.Models;
+using Services.Helpers;
 
 namespace Web.Controllers
 {
@@ -31,7 +32,7 @@ namespace Web.Controllers
             }
             try
             {
-                list = _solver.GetAnagram(query);
+                list = _solver.GetAnagram(query.GetWithoutWhiteSpace());
             }
             catch (Exception)
             {
