@@ -15,12 +15,12 @@ namespace HandlingRequestFromConsole
             //  DownloadAsyncData();
             // ObjectToXml();
 
-            //TransferToDataBase();
+          //  TransferToDataBase();
         }
 
         public static void TransferToDataBase()
         {
-            DatabaseInit db = new DatabaseInit(new WordRepository(@"C:\Users\andrius.butkevicius\source\repos\Anagrams\Anagrams.Repositories\zodynas.txt"));
+            DatabaseInit db = new DatabaseInit(new WordRepository(@"C:\Users\PC\Documents\Anagram\Anagrams.Repositories\zodynas.txt"));
             db.TransferToDataBase();
         }
         static async void DownloadAsyncData()

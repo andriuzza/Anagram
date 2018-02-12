@@ -16,11 +16,10 @@ namespace Web.Controllers
     public class HomeController : Controller
     {
         private readonly IWordRepository<string> _repository;
-        private IAnagramSolver<string> _solver;
+        private readonly IAnagramSolver<string> _solver;
 
         public HomeController(IWordRepository<string> repository,
-            IAnagramFactoryManager factory,
-            CachedAnagram caching)
+            IAnagramFactoryManager factory)
         {
             _repository = repository;
             _solver = factory.GetInstance(repository);

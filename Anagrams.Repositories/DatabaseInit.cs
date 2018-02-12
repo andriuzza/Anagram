@@ -12,7 +12,7 @@ namespace Anagrams.Repositories
         // without set in not allowed to attech
 
         SqlConnection cn = new SqlConnection();
-        private string connectionString = @"Data Source=lt-lit-sc-0316\sqlexpress
+        private string connectionString = @"Data Source=(localdb)\MSSQLLocalDB
                                     ;Initial Catalog=ConnectionDb2018;Integrated Security=True;
                                             Connect Timeout=30;Encrypt=False;
                                              TrustServerCertificate=True;

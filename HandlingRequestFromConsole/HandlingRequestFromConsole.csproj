@@ -66,6 +66,10 @@
       <Project>{54153cff-50c1-4b1b-b627-babed0e6fc50}</Project>
       <Name>Anagrams.Repositories</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Anagrams.WEB\Web\Web.csproj">
+      <Project>{f1f6b7dc-9664-48a2-af2b-941af0d25e13}</Project>
+      <Name>Web</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

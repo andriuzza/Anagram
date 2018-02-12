@@ -22,12 +22,14 @@ namespace Web.Controllers
         private readonly CachedAnagram caching;
 
         public WordController(IWordRepository<string> repository,
-            IAnagramFactoryManager factory,
-             CachedAnagram caching)
+            IAnagramFactoryManager factory)
         {
             _repository = repository;
             _solver = factory.GetInstance(repository); // //factory design pattern
-            this.caching = caching;
+            this.caching = new CachedAnagram(@"Data Source=(localdb)\MSSQLLocalDB;
+                        Initial Catalog=ConnectionDb2018;Integrated Security=True;
+                            Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;
+                                 ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
         }
 
         public ActionResult Index()
@@ -43,17 +45,17 @@ namespace Web.Controllers
         [HttpPost]
         public ActionResult Create(Anagram anagram)
         {
-            ViewBag.Model = null;
+            ViewBag.Model = caching.GetCachedData(anagram.Name); // list of concated strings
 
             var wordWithoutSpaces = anagram.Name.GetWithoutWhiteSpace();
 
-            var listOfResult = caching.GetCachedData(anagram.Name);
-            ViewBag.Model = listOfResult.ListOfAanagrams;
-
             if (ModelState.IsValid && ViewBag.Model == null)
             {
-                ViewBag.Model = _solver.GetAnagram(wordWithoutSpaces);
-                caching.InsertCache(listOfResult.AnagramsId);
+                var list = _solver.GetAnagram(wordWithoutSpaces);
+                ViewBag.Model = list;
+
+                //INSERT DATA OF CACHE
+                caching.InsertCache(list, anagram.Name);
 
                 return View();
             }
