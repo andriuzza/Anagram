@@ -12,7 +12,15 @@ namespace Anagrams
     {
         static void Main(string[] args)
         {
-
+            TransferToDataBase(); 
+        }
+        public static void TransferToDataBase()
+        {
+            DatabaseInit db = new DatabaseInit(new WordRepository(@"C:\Users\andrius.butkevicius\source\repos\Anagrams\Anagrams.Repositories\zodynas.txt"));
+            db.TransferToDataBase();
+        }
+        public static void Show()
+        {
             Console.WriteLine("Insert words");
             string line = GetWithoutWhiteSpace(Console.ReadLine());
             string path = @"C:\Users\PC\Documents\Anagram\Anagrams.Repositories\zodynas.txt";
@@ -21,7 +29,7 @@ namespace Anagrams
 
             AnagramSolver Service = new AnagramSolver(new WordRepository(path));
             Service.GetAnagram(line);
-           foreach (var anagram in Service.GetResultsOfAnagram())
+            foreach (var anagram in Service.GetResultsOfAnagram())
             {
                 Console.WriteLine(anagram);
             }

@@ -165,6 +165,10 @@ namespace Anagrams.Repositories
             }
             return newString;
         }
+        public HashSet<string> Contains(string Name)
+        {
+            return null;
+        }
     }
 }
 /*

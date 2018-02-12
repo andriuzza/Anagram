@@ -11,6 +11,7 @@ using Web.FactoryDesignPatternForLogic;
 using Web.Models;
 using Web.Controllers.api;
 using Services.Helpers;
+using Services.CachedServices;
 
 namespace Web.Controllers
 {
@@ -18,11 +19,15 @@ namespace Web.Controllers
     {
         private readonly IWordRepository<string> _repository;
         private IAnagramSolver<string> _solver;
+        private readonly CachedAnagram caching;
 
-        public WordController(IWordRepository<string> repository, IAnagramFactoryManager factory)
+        public WordController(IWordRepository<string> repository,
+            IAnagramFactoryManager factory,
+             CachedAnagram caching)
         {
             _repository = repository;
             _solver = factory.GetInstance(repository); // //factory design pattern
+            this.caching = caching;
         }
 
         public ActionResult Index()
@@ -40,13 +45,19 @@ namespace Web.Controllers
         {
             ViewBag.Model = null;
 
-            var wordWithoutSpaces = anagram.Name.GetWithoutWhiteSpace(); 
+            var wordWithoutSpaces = anagram.Name.GetWithoutWhiteSpace();
 
-            if (ModelState.IsValid)
+            var listOfResult = caching.GetCachedData(anagram.Name);
+            ViewBag.Model = listOfResult.ListOfAanagrams;
+
+            if (ModelState.IsValid && ViewBag.Model == null)
             {
                 ViewBag.Model = _solver.GetAnagram(wordWithoutSpaces);
+                caching.InsertCache(listOfResult.AnagramsId);
+
                 return View();
             }
+
             return View(anagram);
         }
 
@@ -56,9 +67,29 @@ namespace Web.Controllers
         }
 
         [OutputCache(Duration = 5)]
-        public ActionResult GetDictionary(int? page, string currentFilter)
+        public ActionResult GetDictionary(int? page, string currentFilter, string searchString)
         {
-            var dictionary = _repository.GetData();
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+            HashSet<string> dictionary = new HashSet<string>();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                dictionary = _repository.Contains(searchString);
+            }
+            else
+            {
+                dictionary = _repository.GetData();
+            }
+           
             int pageSize = 100;
             int pageNumber = (page ?? 1);
             return View(dictionary.ToPagedList(pageNumber, pageSize));

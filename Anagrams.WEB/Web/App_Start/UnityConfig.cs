@@ -45,9 +45,15 @@ namespace Web
 
             var path = WebConfigurationManager.AppSettings["directoryPath"];
 
-            container.RegisterType<IWordRepository<string>, WordRepository>
+            var connectionSrting = @"Data Source=lt-lit-sc-0316\sqlexpress
+                                    ;Initial Catalog=ConnectionDb2018;Integrated Security=True;
+                                            Connect Timeout=30;Encrypt=False;
+                                             TrustServerCertificate=True;
+                                                    ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+
+            container.RegisterType<IWordRepository<string>, DbRepository>
                 (new ContainerControlledLifetimeManager(), 
-                     new InjectionConstructor(path));
+                     new InjectionConstructor(connectionSrting));
 
             container.RegisterType<IAnagramFactoryManager, AnagramFactoryManager>
                 (new ContainerControlledLifetimeManager(), 

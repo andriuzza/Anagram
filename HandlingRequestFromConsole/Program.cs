@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Anagrams.Repositories;
+using System;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -12,7 +13,15 @@ namespace HandlingRequestFromConsole
         static void Main(string[] args)
         {
             //  DownloadAsyncData();
-            ObjectToXml();
+            // ObjectToXml();
+
+            //TransferToDataBase();
+        }
+
+        public static void TransferToDataBase()
+        {
+            DatabaseInit db = new DatabaseInit(new WordRepository(@"C:\Users\andrius.butkevicius\source\repos\Anagrams\Anagrams.Repositories\zodynas.txt"));
+            db.TransferToDataBase();
         }
         static async void DownloadAsyncData()
         {
@@ -54,8 +63,5 @@ namespace HandlingRequestFromConsole
 
             return responseBody;
         }
-
-       
-
     }
 }

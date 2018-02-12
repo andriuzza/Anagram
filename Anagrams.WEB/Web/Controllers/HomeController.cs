@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Web.FactoryDesignPatternForLogic;
 using Web.Models;
 using Services.Helpers;
+using Services.CachedServices;
 
 namespace Web.Controllers
 {
@@ -17,7 +18,9 @@ namespace Web.Controllers
         private readonly IWordRepository<string> _repository;
         private IAnagramSolver<string> _solver;
 
-        public HomeController(IWordRepository<string> repository, IAnagramFactoryManager factory)
+        public HomeController(IWordRepository<string> repository,
+            IAnagramFactoryManager factory,
+            CachedAnagram caching)
         {
             _repository = repository;
             _solver = factory.GetInstance(repository);
@@ -57,8 +60,7 @@ namespace Web.Controllers
                     Value = "1"
                 };
 
-                ControllerContext.HttpContext
-                    .Response.Cookies.Add(howManyTimes);
+                Response.Cookies.Add(howManyTimes);
             }
             else
             {
