@@ -35,8 +35,14 @@ namespace Web.Controllers
 
         public ActionResult GetLogData()
         {
-            return View(caching
-                .ReturnIPSearches(Request.UserHostAddress));
+            string ip = System.Net.Dns
+                .GetHostEntry(System.Net.Dns.GetHostName())
+                .AddressList[1].ToString();
+
+            var result = caching
+                .ReturnIPSearches(ip);
+
+            return View(result);
         }
     }
 }

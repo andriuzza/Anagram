@@ -13,6 +13,7 @@ using Web.Controllers.api;
 using Services.Helpers;
 using Services.CachedServices;
 using System.Diagnostics;
+using System.Web.Configuration;
 
 namespace Web.Controllers
 {
@@ -27,10 +28,7 @@ namespace Web.Controllers
         {
             _repository = repository;
             _solver = factory.GetInstance(repository); // //factory design pattern
-            this.caching = new CachedAnagram(@"Data Source=(localdb)\MSSQLLocalDB;
-                        Initial Catalog=ConnectionDb2018;Integrated Security=True;
-                            Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;
-                                 ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            caching = new CachedAnagram(WebConfigurationManager.AppSettings["connectionString"]);
         }
 
         public ActionResult Index()
@@ -57,10 +55,10 @@ namespace Web.Controllers
                 var list = _solver.GetAnagram(wordWithoutSpaces);
                 wt.Stop();
                 ViewBag.Model = list;
-                //INSERT DATA OF CACHE
+                
                 var time = wt.ElapsedMilliseconds;
 
-                string ip = Request.UserHostAddress;
+                string ip = System.Net.Dns.GetHostEntry(System.Net.Dns.GetHostName()).AddressList[1].ToString();
                 caching.InsertCache(list, anagram.Name);
                 caching.InsertLogUser(time,ip, anagram.Name);
 

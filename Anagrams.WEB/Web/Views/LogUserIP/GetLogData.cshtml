@@ -1,7 +1,23 @@
-﻿
+﻿@model List<Services.CachedServices.TimeResultModel>
 @{
     ViewBag.Title = "GetLogData";
 }
 
 <h2>GetLogData</h2>
 
+@foreach(var item in Model)
+{
+    <p>@item.Time</p>
+    <p>----------</p>
+    if (item.Anagrams == null)
+    {
+        foreach (var anagram in item.Anagrams)
+        {
+        <p>@anagram</p>
+        }
+    } else
+    {
+        <p>No anagrams found</p>
+    }
+    <p>#############</p>
+}

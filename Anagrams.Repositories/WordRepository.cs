@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Anagrams.Interfaces.Models;
 
 namespace Anagrams.Repositories
 {
@@ -169,46 +170,20 @@ namespace Anagrams.Repositories
         {
             return null;
         }
+
+        public void InsertLogUser(long TIME, string ip, string query)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HashSet<string> GetCachedData(string Name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<TimeResultModel> ReturnIPSearches(string IP)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
-/*
- /* if (line[0] >= '0' && line[0] <= '9')
-                {
-                    continue;
-                }
-
-                var wordsOfLine = Parsing(line);
-
-                if (Name == null) If parameter is null, get all words from dictionary 
-                {
-                    HashSetHash.Add(wordsOfLine.Item1);
-                    HashSetHash.Add(wordsOfLine.Item2);
-                    continue;
-                }
-
-                bool ifContains = false;
-bool ifContains2 = false;
-                foreach (var a in wordsOfLine.Item1.ToLower())
-                {
-                    if (!Name.Contains(a)) { ifContains = true; break; }
-
-                }
-
-                if (wordsOfLine.Item2 != null)
-                {
-                    foreach (var a in wordsOfLine.Item2.ToLower())
-                    {
-                        if (!Name.Contains(a)) { ifContains2 = true; break; }
-                    }
-                }
-
-                if (!ifContains)
-                {
-                    HashSetHash.Add(wordsOfLine.Item1);
-                }
-
-                if (ifContains2 == false && wordsOfLine.Item2 != null)
-                {
-                    HashSetHash.Add(wordsOfLine.Item2);
-                }
-    */ 

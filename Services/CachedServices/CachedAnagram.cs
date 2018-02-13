@@ -19,64 +19,32 @@ namespace Services.CachedServices
         {
             connectionString = con;
         }
-        private Dictionary<string, int> GetTimeAndStrings(string IP)
+
+        public List<TimeResultModel>  ReturnIPSearches(string IP)
         {
-            cn.ConnectionString = connectionString;
-            cn.Open();
-
-            SqlDataAdapter adapter = new SqlDataAdapter();
-
-
-
-
-            SqlCommand command = new SqlCommand("SELECT TIME, SortedOrder FROM dbo.UserLog " +
-                                                    "WHERE IP = @FN", cn);
-
-            command.Parameters.AddWithValue("@FN", IP);
-
-            adapter.SelectCommand = command;
-
-            DataSet dataSet = new DataSet();
-
-            adapter.Fill(dataSet, "dbo.UserLog");
-
-            cn.Close();
-            adapter.Dispose();
-            Dictionary<string, int> result = new Dictionary<string, int>();
-            if (dataSet.Tables[0].Rows.Count > 0)
-            {
-                for (var i = 0; i < dataSet.Tables[0].Rows.Count; i++)
-                {
-                    result.Add(dataSet.Tables[0].Rows[i]["SortedOrder"].ToString(),
-                        Int32.Parse(dataSet.Tables[0].Rows[i]["Time"].ToString()));
-                }
-
-                return result;
-            }
-            return null;
-        }
-
-        public TimeResultModel  ReturnIPSearches(string IP)
-        {
-            TimeResultModel vw = new TimeResultModel();
+            List<TimeResultModel> vw = new List<TimeResultModel>();
 
             var data = GetTimeAndStrings(IP);
             foreach(var str in data)
-            {
+            {  var newWord = new TimeResultModel();
                var result = GetCachedData(str.Key);
 
-                foreach (var anagram in result)
+                if (result != null)
                 {
-                    vw.Anagrams.Add(anagram);
+                    foreach (var anagram in result)
+                    {
+                        newWord.Anagrams.Add(anagram);
+                    }
                 }
-                vw.Time = str.Value;
+                newWord.Time = str.Value;
+                vw.Add(newWord);
             }
 
             return vw;
         }
 
 
-        public void InsertLogUser(long TIME, string ip,string query)
+        public void InsertLogUser(long TIME, string ip, string query)
         {
             var sortedName = query.ToLower().GetWithoutWhiteSpace();
             var str = String.Concat(sortedName.OrderBy(c => c)); // SORTED AND LOWERED
@@ -89,10 +57,10 @@ namespace Services.CachedServices
             insert.Connection = cn;
 
             insert.CommandType = System.Data.CommandType.Text;
-            insert.CommandText = "INSERT INTO dbo.UserLog (SortedWord) VALUES(@FN)";
+            insert.CommandText = "INSERT INTO dbo.LogIPUser (IP, Time, SortedWord) VALUES(@FN, @LN, @MN)";
 
             insert.Parameters
-                .Add(new SqlParameter("@FN", System.Data.SqlDbType.NVarChar, 15, "IP"));
+                .Add(new SqlParameter("@FN", System.Data.SqlDbType.NVarChar, 50, "IP"));
 
             insert.Parameters
                 .Add(new SqlParameter("@LN", SqlDbType.Int, 10000, "Time"));
@@ -101,12 +69,12 @@ namespace Services.CachedServices
                 .Add(new SqlParameter("@MN", System.Data.SqlDbType.NVarChar, 50, "SortedWord"));
 
 
-            SqlDataAdapter adapter = new SqlDataAdapter("SELECT IP, Time, SortedWord FROM dbo.UserLog", cn);
+            SqlDataAdapter adapter = new SqlDataAdapter("SELECT IP, Time, SortedWord FROM dbo.LogIPUser", cn);
 
             adapter.InsertCommand = insert;
 
             DataSet ds = new DataSet();
-            adapter.Fill(ds, "dbo.UserLog");
+            adapter.Fill(ds, "dbo.LogIPUser");
 
             DataRow newRow = ds.Tables[0].NewRow();
             newRow["IP"] = ip;
@@ -166,7 +134,7 @@ namespace Services.CachedServices
             return false;
         }
 
-        public List<int> GetIds (string sortedName)
+        private List<int> GetIds (string sortedName)
         {
 
             cn.ConnectionString = connectionString;
@@ -207,11 +175,14 @@ namespace Services.CachedServices
             var sortedName = Name.ToLower().GetWithoutWhiteSpace(); 
             var str = String.Concat(sortedName.OrderBy(c => c)); // SORTED AND LOWERED
 
-            SqlCommand command = new SqlCommand(" SELECT STUFF(( SELECT N', ' + dbo.Word.Name FROM dbo.CacheAnagram as P2," +
+            SqlCommand command = new SqlCommand("SELECT STUFF(( SELECT N', ' + dbo.Word.Name FROM dbo.CacheAnagram AS P2," +
                 " dbo.Word WHERE P.Id = P2.Id" +
-                    "AND Word.Id = P2.WordId      AND  P2.Id = p.Id FOR XML PATH(N'')), 1, 2, N'') as result" +
-                     " from(select DISTINCT dbo.CacheMaps.Id from dbo.CacheMaps where dbo.CacheMaps.SortedWord = @FN)" +
-                     " AS P GROUP BY P.Id", cn);
+                "  AND Word.Id = P2.WordId " +
+                " AND  P2.Id = p.Id " +
+                    "FOR XML PATH(N'')), 1, 2, N'') AS result " +
+                       " from (select DISTINCT dbo.CacheMaps.Id from  dbo.CacheMaps" +
+                        " where dbo.CacheMaps.SortedWord = @FN) AS P " +
+                        "GROUP BY P.Id", cn);
 
             command.Parameters.AddWithValue("@FN", str);
 
@@ -351,34 +322,62 @@ namespace Services.CachedServices
 
             return Ids;
         }
+        private Dictionary<string, int> GetTimeAndStrings(string IP)
+        {
+            cn.ConnectionString = connectionString;
+            cn.Open();
+
+            SqlDataAdapter adapter = new SqlDataAdapter();
+
+            SqlCommand command = new SqlCommand("SELECT TIME, SortedWord FROM dbo.LogIPUser " +
+                                                    "WHERE IP = @FN", cn);
+
+            command.Parameters.AddWithValue("@FN", IP);
+
+            adapter.SelectCommand = command;
+
+            DataSet dataSet = new DataSet();
+
+            adapter.Fill(dataSet, "dbo.LogIPUser");
+
+            cn.Close();
+            adapter.Dispose();
+            Dictionary<string, int> result = new Dictionary<string, int>();
+            if (dataSet.Tables[0].Rows.Count > 0)
+            {
+                for (var i = 0; i < dataSet.Tables[0].Rows.Count; i++)
+                {
+                    result.Add(dataSet.Tables[0].Rows[i]["SortedWord"].ToString(),
+                        Int32.Parse(dataSet.Tables[0].Rows[i]["Time"].ToString()));
+                }
+
+                return result;
+            }
+            return null;
+        }
 
         private List<string> GetString(string Name)
         {
             List<string> list = new List<string>();
             string newStr = "";
-            foreach(var str in Name)
+            for(var i = 0; i < Name.Length; i++)
             {
-                if(str == ' ')
+                if(Name[i] == ' ')
                 {
-                    if(newStr.Length > 1)
+                    if(newStr.Length > 1 && i != Name.Length-1)
                     {
                         list.Add(newStr);
                         newStr = "";
                         continue;
                     }
-
                     break;
                 }
-                newStr += str;
+                newStr += Name[i];
             }
             list.Add(newStr);
             return list;
         }
     }
 
-    public class TimeResultModel
-    {
-        public List<string> Anagrams { get; set; }
-        public long Time { get; set; }
-    }
+
 }

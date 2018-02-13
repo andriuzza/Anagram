@@ -12,11 +12,12 @@ namespace Anagrams.Repositories
         // without set in not allowed to attech
 
         SqlConnection cn = new SqlConnection();
-        private string connectionString = @"Data Source=(localdb)\MSSQLLocalDB
-                                    ;Initial Catalog=ConnectionDb2018;Integrated Security=True;
-                                            Connect Timeout=30;Encrypt=False;
-                                             TrustServerCertificate=True;
-                                                    ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+
+        private string connString = @"Data Source=(localdb)\MSSQLLocalDB;" +
+                        "Initial Catalog = ConnectionDb2018; Integrated Security = True;" +
+                             "Connect Timeout = 30; Encrypt=False;TrustServerCertificate=True;" +
+                                 " ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+
 
         public DatabaseInit(IWordRepository<string> repo)
         {
@@ -38,7 +39,7 @@ namespace Anagrams.Repositories
 
         public bool TransferToDataBase()
         {
-            cn.ConnectionString = connectionString;
+            cn.ConnectionString = connString;
 
             cn.Open();
 

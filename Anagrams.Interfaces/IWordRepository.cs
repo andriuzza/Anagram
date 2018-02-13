@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Anagrams.Interfaces.Models;
+using System;
 using System.Collections.Generic;
 
 namespace Anagrams.Interfaces
 {
-    public interface IWordRepository<T> //: IRepo<string>
+    public interface IWordRepository<T> : ICacheManager
     {
        HashSet<T> GetData(string Name = null);
        bool InsertNewWord(string Name);
@@ -11,9 +12,12 @@ namespace Anagrams.Interfaces
        HashSet<string> Contains(string Name); // change name
     }
 
-    public interface IRepo<T>
+    public interface ICacheManager
     {
-        //crud
+        void InsertLogUser(long TIME, string ip, string query); 
+        HashSet<string> GetCachedData(string Name); 
+        List<TimeResultModel> ReturnIPSearches(string IP);
     }
+
 }
     

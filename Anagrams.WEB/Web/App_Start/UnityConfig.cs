@@ -6,6 +6,7 @@ using System.Web.Configuration;
 using Unity;
 using Unity.Injection;
 using Unity.Lifetime;
+using Web.EFRepo;
 using Web.FactoryDesignPatternForLogic;
 
 namespace Web
@@ -45,12 +46,9 @@ namespace Web
 
             var path = WebConfigurationManager.AppSettings["directoryPath"];
 
-            var connectionSrting = @"Data Source=(localdb)\MSSQLLocalDB;
-                        Initial Catalog=ConnectionDb2018;Integrated Security=True;
-                            Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;
-                                 ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            var connectionSrting = WebConfigurationManager.AppSettings["connectionString"];
 
-            container.RegisterType<IWordRepository<string>, DbRepository>
+            container.RegisterType<IWordRepository<string>, EFRepo.EFRepository>
                 (new ContainerControlledLifetimeManager(), 
                      new InjectionConstructor(connectionSrting));
 

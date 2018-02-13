@@ -191,38 +191,39 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogUserIPController.cs" />
     <Compile Include="Controllers\WordController.cs" />
+    <Compile Include="EFRepo\EFRepository.cs" />
     <Compile Include="FactoryDesignPatternForLogic\AnagramFactoryManager.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ADO.NET\CacheAnagram.cs">
+      <DependentUpon>EFModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ADO.NET\CacheMap.cs">
+      <DependentUpon>EFModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ADO.NET\EFModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EFModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ADO.NET\EFModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EFModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ADO.NET\EFModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EFModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ADO.NET\UserLog.cs">
+      <DependentUpon>EFModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ADO.NET\Word.cs">
+      <DependentUpon>EFModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Anagram.cs" />
-    <Compile Include="Models\CacheAnagram.cs">
-      <DependentUpon>CacheMaps.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CacheMap.cs">
-      <DependentUpon>CacheMaps.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CacheMaps.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CacheMaps.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CacheMaps.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CacheMaps.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CacheMaps.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CacheMaps.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\LogUserIP.cs">
-      <DependentUpon>CacheMaps.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Word.cs">
-      <DependentUpon>CacheMaps.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -233,27 +234,27 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\CacheMaps.Context.tt">
+    <Content Include="Models\ADO.NET\EFModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CacheMaps.Context.cs</LastGenOutput>
-      <DependentUpon>CacheMaps.edmx</DependentUpon>
+      <DependentUpon>EFModel.edmx</DependentUpon>
+      <LastGenOutput>EFModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\CacheMaps.tt">
+    <Content Include="Models\ADO.NET\EFModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>CacheMaps.edmx</DependentUpon>
-      <LastGenOutput>CacheMaps.cs</LastGenOutput>
+      <DependentUpon>EFModel.edmx</DependentUpon>
+      <LastGenOutput>EFModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="Models\CacheMaps.edmx">
+    <EntityDeploy Include="Models\ADO.NET\EFModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>CacheMaps.Designer.cs</LastGenOutput>
+      <LastGenOutput>EFModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\CacheMaps.edmx.diagram">
-      <DependentUpon>CacheMaps.edmx</DependentUpon>
+    <Content Include="Models\ADO.NET\EFModel.edmx.diagram">
+      <DependentUpon>EFModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
