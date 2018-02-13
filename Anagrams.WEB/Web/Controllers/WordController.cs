@@ -12,6 +12,7 @@ using Web.Models;
 using Web.Controllers.api;
 using Services.Helpers;
 using Services.CachedServices;
+using System.Diagnostics;
 
 namespace Web.Controllers
 {
@@ -45,17 +46,23 @@ namespace Web.Controllers
         [HttpPost]
         public ActionResult Create(Anagram anagram)
         {
+            
             ViewBag.Model = caching.GetCachedData(anagram.Name); // list of concated strings
 
             var wordWithoutSpaces = anagram.Name.GetWithoutWhiteSpace();
 
             if (ModelState.IsValid && ViewBag.Model == null)
             {
+                var wt = Stopwatch.StartNew();
                 var list = _solver.GetAnagram(wordWithoutSpaces);
+                wt.Stop();
                 ViewBag.Model = list;
-
                 //INSERT DATA OF CACHE
+                var time = wt.ElapsedMilliseconds;
+
+                string ip = Request.UserHostAddress;
                 caching.InsertCache(list, anagram.Name);
+                caching.InsertLogUser(time,ip, anagram.Name);
 
                 return View();
             }

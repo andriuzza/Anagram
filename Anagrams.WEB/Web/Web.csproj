@@ -46,6 +46,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -65,6 +71,8 @@
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -181,12 +189,40 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\api\WordController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LogUserIPController.cs" />
     <Compile Include="Controllers\WordController.cs" />
     <Compile Include="FactoryDesignPatternForLogic\AnagramFactoryManager.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Anagram.cs" />
+    <Compile Include="Models\CacheAnagram.cs">
+      <DependentUpon>CacheMaps.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CacheMap.cs">
+      <DependentUpon>CacheMaps.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CacheMaps.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CacheMaps.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CacheMaps.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CacheMaps.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CacheMaps.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CacheMaps.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LogUserIP.cs">
+      <DependentUpon>CacheMaps.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Word.cs">
+      <DependentUpon>CacheMaps.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -197,10 +233,27 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\CacheMaps.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CacheMaps.Context.cs</LastGenOutput>
+      <DependentUpon>CacheMaps.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\CacheMaps.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CacheMaps.edmx</DependentUpon>
+      <LastGenOutput>CacheMaps.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EntityDeploy Include="Models\CacheMaps.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CacheMaps.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\CacheMaps.edmx.diagram">
+      <DependentUpon>CacheMaps.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -227,6 +280,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Word\GetDictionary.cshtml" />
     <Content Include="Views\Word\Create.cshtml" />
+    <Content Include="Views\LogUserIP\GetLogData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -257,6 +311,9 @@
       <Project>{38fb9ce8-abaf-47ec-b492-e736ae6c3c45}</Project>
       <Name>Services</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -19,6 +19,105 @@ namespace Services.CachedServices
         {
             connectionString = con;
         }
+        private Dictionary<string, int> GetTimeAndStrings(string IP)
+        {
+            cn.ConnectionString = connectionString;
+            cn.Open();
+
+            SqlDataAdapter adapter = new SqlDataAdapter();
+
+
+
+
+            SqlCommand command = new SqlCommand("SELECT TIME, SortedOrder FROM dbo.UserLog " +
+                                                    "WHERE IP = @FN", cn);
+
+            command.Parameters.AddWithValue("@FN", IP);
+
+            adapter.SelectCommand = command;
+
+            DataSet dataSet = new DataSet();
+
+            adapter.Fill(dataSet, "dbo.UserLog");
+
+            cn.Close();
+            adapter.Dispose();
+            Dictionary<string, int> result = new Dictionary<string, int>();
+            if (dataSet.Tables[0].Rows.Count > 0)
+            {
+                for (var i = 0; i < dataSet.Tables[0].Rows.Count; i++)
+                {
+                    result.Add(dataSet.Tables[0].Rows[i]["SortedOrder"].ToString(),
+                        Int32.Parse(dataSet.Tables[0].Rows[i]["Time"].ToString()));
+                }
+
+                return result;
+            }
+            return null;
+        }
+
+        public TimeResultModel  ReturnIPSearches(string IP)
+        {
+            TimeResultModel vw = new TimeResultModel();
+
+            var data = GetTimeAndStrings(IP);
+            foreach(var str in data)
+            {
+               var result = GetCachedData(str.Key);
+
+                foreach (var anagram in result)
+                {
+                    vw.Anagrams.Add(anagram);
+                }
+                vw.Time = str.Value;
+            }
+
+            return vw;
+        }
+
+
+        public void InsertLogUser(long TIME, string ip,string query)
+        {
+            var sortedName = query.ToLower().GetWithoutWhiteSpace();
+            var str = String.Concat(sortedName.OrderBy(c => c)); // SORTED AND LOWERED
+
+            cn.ConnectionString = connectionString;
+
+            cn.Open();
+
+            SqlCommand insert = new SqlCommand();
+            insert.Connection = cn;
+
+            insert.CommandType = System.Data.CommandType.Text;
+            insert.CommandText = "INSERT INTO dbo.UserLog (SortedWord) VALUES(@FN)";
+
+            insert.Parameters
+                .Add(new SqlParameter("@FN", System.Data.SqlDbType.NVarChar, 15, "IP"));
+
+            insert.Parameters
+                .Add(new SqlParameter("@LN", SqlDbType.Int, 10000, "Time"));
+
+            insert.Parameters
+                .Add(new SqlParameter("@MN", System.Data.SqlDbType.NVarChar, 50, "SortedWord"));
+
+
+            SqlDataAdapter adapter = new SqlDataAdapter("SELECT IP, Time, SortedWord FROM dbo.UserLog", cn);
+
+            adapter.InsertCommand = insert;
+
+            DataSet ds = new DataSet();
+            adapter.Fill(ds, "dbo.UserLog");
+
+            DataRow newRow = ds.Tables[0].NewRow();
+            newRow["IP"] = ip;
+            newRow["SortedWord"] = str;
+            newRow["Time"] = TIME;
+            ds.Tables[0].Rows.Add(newRow);
+
+            adapter.Update(ds.Tables[0]);
+            cn.Close();
+            adapter.Dispose();
+        }
 
         public bool InsertCache(HashSet<string> elements, string query)
         {
@@ -108,8 +207,11 @@ namespace Services.CachedServices
             var sortedName = Name.ToLower().GetWithoutWhiteSpace(); 
             var str = String.Concat(sortedName.OrderBy(c => c)); // SORTED AND LOWERED
 
-            SqlCommand command = new SqlCommand("SELECT Id FROM dbo.CacheMaps " +    
-                                                  "WHERE SortedWord = @FN", cn);
+            SqlCommand command = new SqlCommand(" SELECT STUFF(( SELECT N', ' + dbo.Word.Name FROM dbo.CacheAnagram as P2," +
+                " dbo.Word WHERE P.Id = P2.Id" +
+                    "AND Word.Id = P2.WordId      AND  P2.Id = p.Id FOR XML PATH(N'')), 1, 2, N'') as result" +
+                     " from(select DISTINCT dbo.CacheMaps.Id from dbo.CacheMaps where dbo.CacheMaps.SortedWord = @FN)" +
+                     " AS P GROUP BY P.Id", cn);
 
             command.Parameters.AddWithValue("@FN", str);
 
@@ -117,14 +219,19 @@ namespace Services.CachedServices
 
             DataSet dataSet = new DataSet();
 
-            adapter.Fill(dataSet, "dbo.CacheMaps");
+            adapter.Fill(dataSet, "dbo.CacheAnagram");
 
             cn.Close();
             adapter.Dispose();
-
+            HashSet<string> result = new HashSet<string>();
             if (dataSet.Tables[0].Rows.Count > 0)
             {
-                return FillSet(dataSet);
+                for(var i = 0; i < dataSet.Tables[0].Rows.Count; i++)
+                {
+                    result.Add(dataSet.Tables[0].Rows[i]["RESULT"].ToString());
+                }
+
+                return result;
             }
 
             return null;
@@ -141,7 +248,6 @@ namespace Services.CachedServices
 
                 SqlDataAdapter adapter = new SqlDataAdapter();
 
-
                 SqlCommand command = new SqlCommand("SELECT Id FROM dbo.CacheMaps " +
                                                       "WHERE SortedWord = @FN", cn);
 
@@ -154,6 +260,8 @@ namespace Services.CachedServices
                 adapter.Fill(dataSet, "dbo.CacheAnagram");
 
                 var concatedWord = "";
+
+                
                 for (var j = 0; j< dataSet.Tables[0].Rows.Count; j++)
                 {
                     concatedWord += (dataSet.Tables[0].Rows[j]["Name"] + " ");
@@ -258,6 +366,7 @@ namespace Services.CachedServices
                         newStr = "";
                         continue;
                     }
+
                     break;
                 }
                 newStr += str;
@@ -267,9 +376,9 @@ namespace Services.CachedServices
         }
     }
 
-    public class WordAndAnagram
+    public class TimeResultModel
     {
-        public List<int> AnagramsId { get; set; }
-        public HashSet<string> ListOfAanagrams { get; set;}
+        public List<string> Anagrams { get; set; }
+        public long Time { get; set; }
     }
 }
