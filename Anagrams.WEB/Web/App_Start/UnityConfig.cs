@@ -6,7 +6,6 @@ using System.Web.Configuration;
 using Unity;
 using Unity.Injection;
 using Unity.Lifetime;
-using Web.EFRepo;
 using Web.FactoryDesignPatternForLogic;
 
 namespace Web
@@ -48,7 +47,7 @@ namespace Web
 
             var connectionSrting = WebConfigurationManager.AppSettings["connectionString"];
 
-            container.RegisterType<IWordRepository<string>, EFRepository>
+            container.RegisterType<IWordRepository<string>, Anagrams_Repositories.EFRepository>
                 (new ContainerControlledLifetimeManager(), 
                      new InjectionConstructor(connectionSrting));
 

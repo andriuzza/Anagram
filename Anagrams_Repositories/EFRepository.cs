@@ -2,21 +2,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using Web.Models.ADO.NET;
 using Anagrams.Interfaces.Models;
+using EntityframeworkDB.ADO.NET;
 using Services.Helpers;
-
-namespace Web.EFRepo
+namespace Anagrams_Repositories
 {
     public class EFRepository : IWordRepository<string>
     {
-  
-        private readonly ConnectionDb2018Entities _context;
+        private readonly ConnectionDb2018Entities1 _context;
 
         public EFRepository(string path)
         {
-            _context = new ConnectionDb2018Entities();
+            _context = new ConnectionDb2018Entities1();
         }
         public HashSet<string> Contains(string Name)
         {
@@ -71,8 +68,6 @@ namespace Web.EFRepo
             return count > 0 ? listOfAnagrams : null;
 
         }
-
-   
 
         public HashSet<string> GetData(string Name = null)
         {

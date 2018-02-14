@@ -4,11 +4,12 @@
 }
 
 <h2>GetLogData</h2>
+<p>#############</p>
 
 @foreach(var item in Model)
 {
-    <p>@item.Time</p>
-    <p>----------</p>
+    <p>TIME OF REQUEST - @item.Time</p>
+    <p>--- ANAGRAMS ---</p>
     if (item.Anagrams.Count > 0)
     {
         foreach (var anagram in item.Anagrams)
