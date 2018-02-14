@@ -68,7 +68,7 @@ namespace Anagrams.Repositories
         }
 
 
-        public void InsertLogUser(long TIME, string ip, string query)
+        public bool InsertLogUser(long TIME, string ip, string query)
         {
             var sortedName = query.ToLower().GetWithoutWhiteSpace();
             var str = String.Concat(sortedName.OrderBy(c => c)); // SORTED AND LOWERED
@@ -105,10 +105,22 @@ namespace Anagrams.Repositories
             newRow["SortedWord"] = str;
             newRow["Time"] = TIME;
             ds.Tables[0].Rows.Add(newRow);
+            try
+            {
+                adapter.Update(ds.Tables[0]);
+               
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                cn.Close();
+                adapter.Dispose();
+            }
 
-            adapter.Update(ds.Tables[0]);
-            cn.Close();
-            adapter.Dispose();
+            return true;
         }
 
         public bool InsertCache(HashSet<string> elements, string query)

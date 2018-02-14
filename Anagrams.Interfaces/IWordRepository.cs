@@ -14,9 +14,10 @@ namespace Anagrams.Interfaces
 
     public interface ICacheManager
     {
-        void InsertLogUser(long TIME, string ip, string query); 
+        bool InsertLogUser(long TIME, string ip, string query); 
         HashSet<string> GetCachedData(string Name); 
         List<TimeResultModel> ReturnIPSearches(string IP);
+        bool InsertCache(HashSet<string> elements, string query);
     }
 
 }

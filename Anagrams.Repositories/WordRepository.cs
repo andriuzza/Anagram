@@ -171,7 +171,7 @@ namespace Anagrams.Repositories
             return null;
         }
 
-        public void InsertLogUser(long TIME, string ip, string query)
+        public bool InsertLogUser(long TIME, string ip, string query)
         {
             throw new NotImplementedException();
         }
@@ -182,6 +182,11 @@ namespace Anagrams.Repositories
         }
 
         public List<TimeResultModel> ReturnIPSearches(string IP)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool InsertCache(HashSet<string> elements, string query)
         {
             throw new NotImplementedException();
         }
