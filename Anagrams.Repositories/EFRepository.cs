@@ -1,22 +1,22 @@
-﻿using Anagrams.Interfaces;
+﻿/*using Anagrams.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using Web.Models.ADO.NET;
+
 using Anagrams.Interfaces.Models;
 using Services.Helpers;
+using EntityframeworkDB.ADO.NET;
 
-namespace Web.EFRepo
+namespace Anagrams.Repositories.EFRepo
 {
     public class EFRepository : IWordRepository<string>
     {
   
-        private readonly ConnectionDb2018Entities _context;
+        private readonly ConnectionDb2018Entities1 _context;
 
         public EFRepository(string path)
         {
-            _context = new ConnectionDb2018Entities();
+            _context = new ConnectionDb2018Entities1();
         }
         public HashSet<string> Contains(string Name)
         {
@@ -117,15 +117,10 @@ namespace Web.EFRepo
                         Id = item.Number,
                         WordId = wordId.Id
                     };
-
-                    if (_context.CacheMaps.Any(g => g.SortedWord.Equals(sortedName)))
-                    {
-                        _context.CacheAnagrams.Add(anagram);
-                    }
-                    
+                    _context.CacheAnagrams.Add(anagram);
                 }
             }
-            
+
             if(_context.SaveChanges() > 0)
             {
                 return true;
@@ -201,16 +196,14 @@ namespace Web.EFRepo
 
             foreach(var item in strings)
             {
-                var data = GetCachedData(item.SortedWord);
-                var anagrams = data == null ? new HashSet<string>() : data;
                 list.Add(new TimeResultModel
                 {
                     Time = item.Time,
-                    Anagrams = new HashSet<string>(anagrams)
+                    Anagrams = new HashSet<string>(GetCachedData(item.SortedWord))
                 });
             }
 
             return list.Count > 0 ?list : null;
         }
     }
-}
+}*/

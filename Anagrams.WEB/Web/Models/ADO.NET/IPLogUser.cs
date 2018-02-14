@@ -11,16 +11,11 @@ namespace Web.Models.ADO.NET
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-
-    public partial class CacheAnagram
-    {
-        [Key, Column(Order = 0)]
-        public int Id { get; set; }
-        [Key, Column(Order = 1)]
-        public int WordId { get; set; }
     
-        public virtual Word Word { get; set; }
+    public partial class IPLogUser
+    {
+        public string IP { get; set; }
+        public int Time { get; set; }
+        public string SortedWord { get; set; }
     }
 }

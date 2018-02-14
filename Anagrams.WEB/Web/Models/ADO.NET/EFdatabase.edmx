@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ConnectionDb2018Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CacheAnagram">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="WordId" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="WordId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CacheMaps">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SortedWord" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IPLogUser">
+          <Key>
+            <PropertyRef Name="IP" />
+            <PropertyRef Name="SortedWord" />
+          </Key>
+          <Property Name="IP" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Time" Type="int" Nullable="false" />
+          <Property Name="SortedWord" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Word">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CacheAnagram_Word">
+          <End Role="Word" Type="Self.Word" Multiplicity="1" />
+          <End Role="CacheAnagram" Type="Self.CacheAnagram" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Word">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CacheAnagram">
+              <PropertyRef Name="WordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ConnectionDb2018ModelStoreContainer">
+          <EntitySet Name="CacheAnagram" EntityType="Self.CacheAnagram" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CacheMaps" EntityType="Self.CacheMaps" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IPLogUser" EntityType="Self.IPLogUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Word" EntityType="Self.Word" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CacheAnagram_Word" Association="Self.FK_CacheAnagram_Word">
+            <End Role="Word" EntitySet="Word" />
+            <End Role="CacheAnagram" EntitySet="CacheAnagram" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ConnectionDb2018Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CacheAnagram">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="WordId" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="WordId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Word" Relationship="Self.FK_CacheAnagram_Word" FromRole="CacheAnagram" ToRole="Word" />
+        </EntityType>
+        <EntityType Name="CacheMap">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SortedWord" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IPLogUser">
+          <Key>
+            <PropertyRef Name="IP" />
+            <PropertyRef Name="SortedWord" />
+          </Key>
+          <Property Name="IP" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Time" Type="Int32" Nullable="false" />
+          <Property Name="SortedWord" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Word">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="CacheAnagrams" Relationship="Self.FK_CacheAnagram_Word" FromRole="Word" ToRole="CacheAnagram" />
+        </EntityType>
+        <Association Name="FK_CacheAnagram_Word">
+          <End Role="Word" Type="Self.Word" Multiplicity="1" />
+          <End Role="CacheAnagram" Type="Self.CacheAnagram" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Word">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CacheAnagram">
+              <PropertyRef Name="WordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ConnectionDb2018Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CacheAnagrams" EntityType="Self.CacheAnagram" />
+          <EntitySet Name="CacheMaps" EntityType="Self.CacheMap" />
+          <EntitySet Name="IPLogUsers" EntityType="Self.IPLogUser" />
+          <EntitySet Name="Words" EntityType="Self.Word" />
+          <AssociationSet Name="FK_CacheAnagram_Word" Association="Self.FK_CacheAnagram_Word">
+            <End Role="Word" EntitySet="Words" />
+            <End Role="CacheAnagram" EntitySet="CacheAnagrams" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ConnectionDb2018ModelStoreContainer" CdmEntityContainer="ConnectionDb2018Entities">
+          <EntitySetMapping Name="CacheAnagrams">
+            <EntityTypeMapping TypeName="ConnectionDb2018Model.CacheAnagram">
+              <MappingFragment StoreEntitySet="CacheAnagram">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="WordId" ColumnName="WordId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CacheMaps">
+            <EntityTypeMapping TypeName="ConnectionDb2018Model.CacheMap">
+              <MappingFragment StoreEntitySet="CacheMaps">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SortedWord" ColumnName="SortedWord" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IPLogUsers">
+            <EntityTypeMapping TypeName="ConnectionDb2018Model.IPLogUser">
+              <MappingFragment StoreEntitySet="IPLogUser">
+                <ScalarProperty Name="IP" ColumnName="IP" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="SortedWord" ColumnName="SortedWord" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Words">
+            <EntityTypeMapping TypeName="ConnectionDb2018Model.Word">
+              <MappingFragment StoreEntitySet="Word">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

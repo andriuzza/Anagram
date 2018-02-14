@@ -7,11 +7,11 @@ namespace Anagrams.Interfaces.Models
     public class TimeResultModel
     {
         public int Time { get; set; }
-        public List<string> Anagrams { get; set; }
+        public HashSet<string> Anagrams { get; set; } = null;
 
         public TimeResultModel()
         {
-            Anagrams = new List<string>();
+            Anagrams = new HashSet<string>();
         }
     }
 }

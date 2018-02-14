@@ -244,31 +244,31 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ADO.NET\CacheAnagram.cs">
-      <DependentUpon>EFModel.tt</DependentUpon>
+      <DependentUpon>EFdatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ADO.NET\CacheMap.cs">
-      <DependentUpon>EFModel.tt</DependentUpon>
+      <DependentUpon>EFdatabase.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ADO.NET\EFModel.Context.cs">
+    <Compile Include="Models\ADO.NET\EFdatabase.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EFModel.Context.tt</DependentUpon>
+      <DependentUpon>EFdatabase.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ADO.NET\EFModel.cs">
+    <Compile Include="Models\ADO.NET\EFdatabase.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EFModel.tt</DependentUpon>
+      <DependentUpon>EFdatabase.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ADO.NET\EFModel.Designer.cs">
+    <Compile Include="Models\ADO.NET\EFdatabase.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EFModel.edmx</DependentUpon>
+      <DependentUpon>EFdatabase.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\ADO.NET\UserLog.cs">
-      <DependentUpon>EFModel.tt</DependentUpon>
+    <Compile Include="Models\ADO.NET\IPLogUser.cs">
+      <DependentUpon>EFdatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ADO.NET\Word.cs">
-      <DependentUpon>EFModel.tt</DependentUpon>
+      <DependentUpon>EFdatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Anagram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -284,15 +284,15 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\ADO.NET\EFModel.Context.tt">
+    <Content Include="Models\ADO.NET\EFdatabase.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EFModel.edmx</DependentUpon>
-      <LastGenOutput>EFModel.Context.cs</LastGenOutput>
+      <DependentUpon>EFdatabase.edmx</DependentUpon>
+      <LastGenOutput>EFdatabase.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\ADO.NET\EFModel.tt">
+    <Content Include="Models\ADO.NET\EFdatabase.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EFModel.edmx</DependentUpon>
-      <LastGenOutput>EFModel.cs</LastGenOutput>
+      <DependentUpon>EFdatabase.edmx</DependentUpon>
+      <LastGenOutput>EFdatabase.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -300,13 +300,6 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <EntityDeploy Include="Models\ADO.NET\EFModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>EFModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\ADO.NET\EFModel.edmx.diagram">
-      <DependentUpon>EFModel.edmx</DependentUpon>
     </Content>
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
@@ -326,6 +319,13 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <EntityDeploy Include="Models\ADO.NET\EFdatabase.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>EFdatabase.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\ADO.NET\EFdatabase.edmx.diagram">
+      <DependentUpon>EFdatabase.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />

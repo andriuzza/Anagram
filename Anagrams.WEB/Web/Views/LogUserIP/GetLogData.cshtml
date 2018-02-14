@@ -1,4 +1,4 @@
-﻿@model List<Services.CachedServices.TimeResultModel>
+﻿@model List<Anagrams.Interfaces.Models.TimeResultModel>
 @{
     ViewBag.Title = "GetLogData";
 }
@@ -9,7 +9,7 @@
 {
     <p>@item.Time</p>
     <p>----------</p>
-    if (item.Anagrams == null)
+    if (item.Anagrams.Count > 0)
     {
         foreach (var anagram in item.Anagrams)
         {

@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Anagrams.Interfaces\Anagrams.Interfaces.csproj" />
+    <ProjectReference Include="..\EntityframeworkDB\EntityframeworkDB.csproj" />
     <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>
 

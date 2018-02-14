@@ -9,7 +9,6 @@ using System.Web.Mvc;
 using Web.FactoryDesignPatternForLogic;
 using Web.Models;
 using Services.Helpers;
-using Services.CachedServices;
 
 namespace Web.Controllers
 {
