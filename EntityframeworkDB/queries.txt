@@ -1,0 +1,107 @@
+USE [ConnectionDb2018]
+GO
+
+/****** Object:  Table [dbo].[CacheAnagram]    Script Date: 2/14/2018 3:04:39 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[CacheAnagram](
+	[Id] [int] NOT NULL,
+	[WordId] [int] NOT NULL,
+ CONSTRAINT [PK_CacheAnagram] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC,
+	[WordId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[CacheAnagram]  WITH CHECK ADD  CONSTRAINT [FK_CacheAnagram_Word] FOREIGN KEY([WordId])
+REFERENCES [dbo].[Word] ([Id])
+GO
+
+ALTER TABLE [dbo].[CacheAnagram] CHECK CONSTRAINT [FK_CacheAnagram_Word]
+GO
+
+
+
+
+
+
+
+USE [ConnectionDb2018]
+GO
+
+/****** Object:  Table [dbo].[CacheMaps]    Script Date: 2/14/2018 3:04:47 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[CacheMaps](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[SortedWord] [nvarchar](50) NOT NULL,
+ CONSTRAINT [PK_CacheMaps] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
+
+
+
+
+USE [ConnectionDb2018]
+GO
+
+/****** Object:  Table [dbo].[IPLogUser]    Script Date: 2/14/2018 3:04:56 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[IPLogUser](
+	[IP] [nvarchar](25) NOT NULL,
+	[Time] [int] NOT NULL,
+	[SortedWord] [nvarchar](50) NOT NULL,
+ CONSTRAINT [PK_IPLogUser] PRIMARY KEY CLUSTERED 
+(
+	[IP] ASC,
+	[SortedWord] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
+
+
+
+
+USE [ConnectionDb2018]
+GO
+
+/****** Object:  Table [dbo].[Word]    Script Date: 2/14/2018 3:05:11 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Word](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](255) NOT NULL,
+ CONSTRAINT [PK_Word] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
