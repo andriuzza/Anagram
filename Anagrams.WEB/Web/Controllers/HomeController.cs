@@ -47,7 +47,7 @@ namespace Web.Controllers
             return View(list);
         }
 
-        private void UpdateCookieVisitingNumber(string query)
+        public int UpdateCookieVisitingNumber(string query)
         {
             var howManyTimes = Request.Cookies[query];
 
@@ -59,6 +59,8 @@ namespace Web.Controllers
                 };
 
                 Response.Cookies.Add(howManyTimes);
+
+                return 1;
             }
             else
             {
@@ -67,19 +69,9 @@ namespace Web.Controllers
                 parseToInterger++;
 
                 Response.Cookies[query].Value = parseToInterger.ToString();
+
+                return parseToInterger;
             }
-        }
-        protected override void OnException(ExceptionContext filterContext)
-        {
-            if (filterContext.ExceptionHandled)
-            {
-                return;
-            }
-            filterContext.Result = new ViewResult
-            {
-                ViewName = "~/Views/Shared/Error.aspx"
-            };
-            filterContext.ExceptionHandled = true;
         }
     }
 }

@@ -3,18 +3,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Anagrams.Interfaces.Models;
-using EntityframeworkDB.ADO.NET;
+using Anagrams.EFCF.Core;
 using Services.Helpers;
+using Anagrams.EFCF.Core.Models;
+
 namespace Anagrams_Repositories
 {
     public class EFRepository : IWordRepository<string>
     {
-        private readonly ConnectionDb2018Entities1 _context;
+        private readonly ManagerContext _context;
 
-        public EFRepository(string path)
+        public EFRepository()
         {
-            _context = new ConnectionDb2018Entities1();
+            _context = new ManagerContext();
         }
+
         public HashSet<string> Contains(string Name)
         {
             if (!string.IsNullOrEmpty(Name))
@@ -29,6 +32,7 @@ namespace Anagrams_Repositories
             return GetData(Name);
         }
 
+
         public HashSet<string> GetCachedData(string Name)
         {
             var listOfAnagrams = new HashSet<string>();
@@ -36,16 +40,16 @@ namespace Anagrams_Repositories
             var str = Name.ToLower().GetWithoutWhiteSpace();
             var sortedName = String.Concat(str.OrderBy(c => c));
 
-            var result = from ids in _context.CacheMaps.ToList()
-                         join names in _context.CacheAnagrams.ToList()
+            var result = from ids in _context.CacheMaps
+                         join names in _context.CacheAnagrams
                              on ids.Id equals names.Id
-                         join wordName in _context.Words.ToList()
+                         join wordName in _context.Words
                          on names.WordId equals wordName.Id
                          where ids.SortedWord.Equals(sortedName)
                          select new { id = ids.Id, name = wordName.Name };
 
             int count = 0;
-            foreach (var item in result)
+            foreach (var item in result.ToList())
             {
                 string name = "";
                 
@@ -89,21 +93,17 @@ namespace Anagrams_Repositories
                 _context.CacheMaps.Add(map);
             }
 
-            
             _context.SaveChanges();
             
-
             var ids = from id in _context.CacheMaps
                       where id.SortedWord.Equals(sortedName)
                       select id.Id;
-
-
 
             var idAndWords = ids.ToList().Zip(elements, (n, w) => new { Number = n, Word = w });
 
             foreach(var item in idAndWords)
             {
-                foreach(var name in GetString(item.Word))
+                foreach(var name in UnconcatWords(item.Word))
                 {
                     var wordId = _context.Words
                                .Where(a => a.Name.Equals(name)).First();
@@ -117,7 +117,6 @@ namespace Anagrams_Repositories
                     {
                         _context.CacheAnagrams.Add(anagram);
                     }
-                    
                 }
             }
             
@@ -127,6 +126,28 @@ namespace Anagrams_Repositories
             }
 
             return false;
+        }
+
+
+        public List<TimeResultModel> ReturnIPSearches(string IP)
+        {
+            var list = new List<TimeResultModel>();
+            var strings = from item in _context.IPLogUsers
+                          where item.IP.Equals(IP)
+                          select new { item.SortedWord, item.Time };
+
+            foreach (var item in strings.ToList())
+            {
+                var data = GetCachedData(item.SortedWord);
+                var anagrams = data == null ? new HashSet<string>() : data;
+                list.Add(new TimeResultModel
+                {
+                    Time = item.Time,
+                    Anagrams = new HashSet<string>(anagrams)
+                });
+            }
+
+            return list.Count > 0 ? list : null;
         }
 
         public bool InsertLogUser(long TIME, string ip, string query)
@@ -139,8 +160,6 @@ namespace Anagrams_Repositories
                 Time = (int)TIME,
                 SortedWord = str
             };
-
-          
 
             if(_context.IPLogUsers.Any(p=>p.IP.Equals(ip) && p.SortedWord.Equals(str)))
             {
@@ -156,7 +175,7 @@ namespace Anagrams_Repositories
             return false;
         }
 
-        private List<string> GetString(string Name)
+        private List<string> UnconcatWords(string Name)
         {
             List<string> list = new List<string>();
             string newStr = "";
@@ -176,36 +195,6 @@ namespace Anagrams_Repositories
             }
             list.Add(newStr);
             return list;
-        }
-        public bool InsertNewWord(string Name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string ReturnFilePath()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<TimeResultModel> ReturnIPSearches(string IP)
-        {
-            var list = new List<TimeResultModel>();
-            var strings = from item in _context.IPLogUsers.ToList()
-                          where item.IP.Equals(IP)
-                          select new { item.SortedWord, item.Time };
-
-            foreach(var item in strings)
-            {
-                var data = GetCachedData(item.SortedWord);
-                var anagrams = data == null ? new HashSet<string>() : data;
-                list.Add(new TimeResultModel
-                {
-                    Time = item.Time,
-                    Anagrams = new HashSet<string>(anagrams)
-                });
-            }
-
-            return list.Count > 0 ?list : null;
         }
     }
 }

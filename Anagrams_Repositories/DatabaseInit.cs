@@ -1,4 +1,5 @@
-﻿using Anagrams.Interfaces;
+﻿using Anagrams.EFCF.Core;
+using Anagrams.Interfaces;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -9,15 +10,9 @@ namespace Anagrams_Repositories
     {
         private readonly IWordRepository<string> _repo;
         public HashSet<string> WordsList { get; private set; }
-        // without set in not allowed to attech
-
-        SqlConnection cn = new SqlConnection();
-
-        private string connString = @"Data Source=(localdb)\MSSQLLocalDB;" +
-                        "Initial Catalog = ConnectionDb2018; Integrated Security = True;" +
-                             "Connect Timeout = 30; Encrypt=False;TrustServerCertificate=True;" +
-                                 " ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-
+        private SqlConnection cn = new SqlConnection();
+      
+        private string connString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Anagrams.EFCF.Core.ManagerContext;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
         public DatabaseInit(IWordRepository<string> repo)
         {
@@ -25,17 +20,6 @@ namespace Anagrams_Repositories
             GetList();
         }
 
-        private bool GetList()
-        {
-            WordsList = _repo.GetData("");
-
-            if (WordsList == null)
-            {
-                return false;
-            }
-
-            return true;
-        }
 
         public bool TransferToDataBase()
         {
@@ -47,17 +31,17 @@ namespace Anagrams_Repositories
             insert.Connection = cn;
 
             insert.CommandType = System.Data.CommandType.Text;
-            insert.CommandText = "INSERT INTO dbo.WORD (Name) VALUES(@FN)";
+            insert.CommandText = "INSERT INTO WORDS (Name) VALUES(@FN)";
 
             insert.Parameters
                 .Add(new SqlParameter("@FN", System.Data.SqlDbType.NVarChar, 255, "Name"));
 
-            SqlDataAdapter adapter = new SqlDataAdapter("SELECT Id, Name FROM dbo.Word", cn);
+            SqlDataAdapter adapter = new SqlDataAdapter("SELECT Id, Name FROM Words", cn);
 
             adapter.InsertCommand = insert;
 
             DataSet ds = new DataSet();
-            adapter.Fill(ds, "dbo.Word");
+            adapter.Fill(ds, "Words");
 
             foreach (var word in WordsList)
             {
@@ -65,14 +49,29 @@ namespace Anagrams_Repositories
                 {
                     continue;
                 }
-                DataRow newRow = ds.Tables[0].NewRow();
-                newRow["Name"] = word;
-                ds.Tables[0].Rows.Add(newRow);
+              
+                
+
+               DataRow newRow = ds.Tables[0].NewRow();
+               newRow["Name"] = word;
+               ds.Tables[0].Rows.Add(newRow);
             }
+         
 
             adapter.Update(ds.Tables[0]);
             cn.Close();
             adapter.Dispose();
+
+            return true;
+        }
+        private bool GetList()
+        {
+            WordsList = _repo.GetData("");
+
+            if (WordsList == null)
+            {
+                return false;
+            }
 
             return true;
         }

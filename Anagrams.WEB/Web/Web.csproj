@@ -235,9 +235,11 @@
     <Compile Include="App_Start\UnityWebApiActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\api\WordController.cs" />
+    <Compile Include="Controllers\FreeSearchController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogUserIPController.cs" />
     <Compile Include="Controllers\WordController.cs" />
+    <Compile Include="Cookies\CookiesManager.cs" />
     <Compile Include="FactoryDesignPatternForLogic\AnagramFactoryManager.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -246,10 +248,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-grid.css" />
-    <Content Include="Content\bootstrap-grid.min.css" />
-    <Content Include="Content\bootstrap-reboot.css" />
-    <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\PagedList.css" />
@@ -275,12 +273,6 @@
     <Content Include="Scripts\bootstrap.js.map" />
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-reboot.min.css.map" />
-    <Content Include="Content\bootstrap-reboot.css.map" />
-    <Content Include="Content\bootstrap-grid.min.css.map" />
-    <Content Include="Content\bootstrap-grid.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -334,6 +326,8 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\FreeSearch\AddWord.cshtml" />
+    <Content Include="Views\FreeSearch\UpdateWord.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -342,6 +336,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Anagrams.EFCF.Core\Anagrams.EFCF.Core.csproj">
+      <Project>{b56bd963-3646-418c-a309-44d0e1966b8d}</Project>
+      <Name>Anagrams.EFCF.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Anagrams.Interfaces\Anagrams.Interfaces.csproj">
       <Project>{38789e0a-bf29-427b-b930-9750d7bb9ffa}</Project>
       <Name>Anagrams.Interfaces</Name>
@@ -353,6 +351,10 @@
     <ProjectReference Include="..\..\Services\Services.csproj">
       <Project>{38fb9ce8-abaf-47ec-b492-e736ae6c3c45}</Project>
       <Name>Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Web.Services\Web.Services.csproj">
+      <Project>{80ae4727-9a94-4b4f-adb9-f05349db0d31}</Project>
+      <Name>Web.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

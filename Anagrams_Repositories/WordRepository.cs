@@ -11,17 +11,11 @@ namespace Anagrams_Repositories
     {
         private StreamReader File = null;
         private HashSet<string> HashSetHash = new HashSet<string>();
-        public string filePath { get; private set; }
+        private string filePath = @"C:\Users\PC\Documents\Anagram\Anagrams_Repositories\zodynas.txt";
 
-        public WordRepository(string path)
+        public WordRepository()
         {
-            filePath = path;
             GetDataInitialize();
-        }
-
-        public string ReturnFilePath()
-        { 
-            return filePath;
         }
 
         public HashSet<string> GetData(string name)
@@ -39,15 +33,6 @@ namespace Anagrams_Repositories
                 return newDictionary;
             }
             return HashSetHash;
-        }
-        public bool InsertNewWord(string Name)
-        {
-            /* using (FileStream fs = new FileStream(filePath, FileMode.Append, FileAccess.Write))
-             using (StreamWriter sw = new StreamWriter(fs))
-             {
-                 sw.WriteLine("eina sau");
-             }*/
-            return false;
         }
 
         private void GetDataInitialize()
@@ -168,7 +153,7 @@ namespace Anagrams_Repositories
         }
         public HashSet<string> Contains(string Name)
         {
-            return null;
+            throw new NotImplementedException();
         }
 
         public bool InsertLogUser(long TIME, string ip, string query)

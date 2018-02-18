@@ -1,12 +1,21 @@
+using Anagrams.EFCF.Core.Models;
 using Anagrams.Interfaces;
+using Anagrams.Interfaces.DtoModel;
+using Anagrams.Interfaces.EntityInterfaces;
 using Anagrams.Interfaces.FactoryInterface;
-
+using Anagrams.Interfaces.WebServices;
+using Anagrams_Repositories.EntitiesRepositories;
+using Anagrams_Repositories.IPClickRepo;
 using System;
+using System.Web;
 using System.Web.Configuration;
 using Unity;
 using Unity.Injection;
 using Unity.Lifetime;
+using Web.Controllers;
+using Web.Cookies;
 using Web.FactoryDesignPatternForLogic;
+using Web.Services;
 
 namespace Web
 {
@@ -47,13 +56,24 @@ namespace Web
 
             var connectionSrting = WebConfigurationManager.AppSettings["connectionString"];
 
-            container.RegisterType<IWordRepository<string>, Anagrams_Repositories.EFRepository>
-                (new ContainerControlledLifetimeManager(), 
-                     new InjectionConstructor(connectionSrting));
-
             container.RegisterType<IAnagramFactoryManager, AnagramFactoryManager>
-                (new ContainerControlledLifetimeManager(), 
+               (new ContainerControlledLifetimeManager(),
+                    new InjectionConstructor());
+
+            container.RegisterType<IWordRepository<string>, Anagrams_Repositories.EFRepository>
+                (new ContainerControlledLifetimeManager(),
                      new InjectionConstructor());
+
+            container.RegisterType<IDictionaryRepository<WordDto>, WordEFRepository>
+                (new ContainerControlledLifetimeManager(),
+                     new InjectionConstructor());
+
+            container.RegisterType<IAdditionalSearchService, AdditionalSearchService>
+                (new ContainerControlledLifetimeManager(),
+                     new InjectionConstructor(new ClickEFRepository()));
+
+
+            //container.RegisterType<ICookiesManager, CookiesManager>(new InjectionConstructor(HttpContext.Current.Request));
 
             // NOTE: To load from web.config uncomment the line below.
             // Make sure to add a Unity.Configuration to the using statements.

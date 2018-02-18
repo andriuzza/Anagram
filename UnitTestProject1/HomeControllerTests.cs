@@ -15,6 +15,7 @@ namespace WebUnitTests
         private Mock<IWordRepository<string>> repository;
         private Mock<IAnagramFactoryManager> angramSolverFactory;
         private Mock<IAnagramSolver<string>> anagram;
+        private Mock<ICookiesManager> cookies;
 
         [TestInitialize]
         public void TestInit()
@@ -22,6 +23,7 @@ namespace WebUnitTests
              repository = new Mock<IWordRepository<string>>();
              angramSolverFactory = new Mock<IAnagramFactoryManager>();
              anagram = new Mock<IAnagramSolver<string>>();
+             cookies = new Mock<ICookiesManager>();
 
              anagram.Setup(x => x.GetAnagram("vaidenasi")).Returns(new HashSet<string>());
              angramSolverFactory
@@ -46,8 +48,8 @@ namespace WebUnitTests
         public void Index_QueryOfOneWord_ReturnsSomething()
         {
             // Arrange
-            var homeController = new HomeController(repository.Object, angramSolverFactory.Object);
-            
+            var homeController = new HomeController(repository.Object
+                                                            , angramSolverFactory.Object);
             // Act
             var result = homeController.Index("vaidenasi") as ViewResult;
 

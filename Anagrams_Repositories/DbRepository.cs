@@ -11,14 +11,12 @@ namespace Anagrams_Repositories
 {
     public class DbRepository : IWordRepository<string>
     {
-        private string connectionString;
+        private string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;" +
+                        "Initial Catalog = ConnectionDb2018; Integrated Security = True;" +
+                             "Connect Timeout = 30; Encrypt=False;TrustServerCertificate=True;" +
+                                 " ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
         SqlConnection cn = new SqlConnection();
-
-        public DbRepository(string path)
-        {
-            connectionString = path;
-        }
 
         public HashSet<string> Contains(string Name)
         {
@@ -170,35 +168,26 @@ namespace Anagrams_Repositories
             return false;
         }
 
-        private List<int> GetIds(string sortedName)
+        public HashSet<string> GetData(string Name = null)
         {
-
             cn.ConnectionString = connectionString;
             cn.Open();
 
             SqlDataAdapter adapter = new SqlDataAdapter();
 
-            SqlCommand command = new SqlCommand("SELECT Id FROM dbo.CacheMaps " +
-                                                  "WHERE SortedWord = @FN", cn);
-
-            command.Parameters.AddWithValue("@FN", sortedName);
+            SqlCommand command = new SqlCommand("SELECT Name FROM dbo.Word", cn);
 
             adapter.SelectCommand = command;
 
             DataSet dataSet = new DataSet();
 
-            adapter.Fill(dataSet, "dbo.CacheMaps");
+
+            adapter.Fill(dataSet, "Word");
 
             cn.Close();
             adapter.Dispose();
 
-            List<int> Ids = new List<int>();
-            for (var j = 0; j < dataSet.Tables[0].Rows.Count; j++)
-            {
-                Ids.Add(Int32.Parse(dataSet.Tables[0].Rows[j]["Id"].ToString()));
-            }
-
-            return Ids;
+            return FillHashSet(dataSet);
         }
 
         public HashSet<string> GetCachedData(string Name)
@@ -242,6 +231,36 @@ namespace Anagrams_Repositories
             }
 
             return null;
+        }
+        private List<int> GetIds(string sortedName)
+        {
+
+            cn.ConnectionString = connectionString;
+            cn.Open();
+
+            SqlDataAdapter adapter = new SqlDataAdapter();
+
+            SqlCommand command = new SqlCommand("SELECT Id FROM dbo.CacheMaps " +
+                                                  "WHERE SortedWord = @FN", cn);
+
+            command.Parameters.AddWithValue("@FN", sortedName);
+
+            adapter.SelectCommand = command;
+
+            DataSet dataSet = new DataSet();
+
+            adapter.Fill(dataSet, "dbo.CacheMaps");
+
+            cn.Close();
+            adapter.Dispose();
+
+            List<int> Ids = new List<int>();
+            for (var j = 0; j < dataSet.Tables[0].Rows.Count; j++)
+            {
+                Ids.Add(Int32.Parse(dataSet.Tables[0].Rows[j]["Id"].ToString()));
+            }
+
+            return Ids;
         }
 
         private HashSet<string> FillSet(DataSet data)
@@ -313,7 +332,7 @@ namespace Anagrams_Repositories
             //var pair in numbersAndWords
             foreach (var pair in numbersAndWords)
             {
-                foreach (var ids in GetIdsOfWord(GetString(pair.Word)))
+                foreach (var ids in GetIdsOfWord(GetUnconcatedWord(pair.Word)))
                 {
                     DataRow newRow = ds.Tables[0].NewRow();
                     newRow["Id"] = pair.Number;
@@ -392,7 +411,7 @@ namespace Anagrams_Repositories
             return null;
         }
 
-        private List<string> GetString(string Name)
+        private List<string> GetUnconcatedWord(string Name)
         {
             List<string> list = new List<string>();
             string newStr = "";
@@ -414,27 +433,6 @@ namespace Anagrams_Repositories
             return list;
         }
 
-        public HashSet<string> GetData(string Name = null)
-        {
-            cn.ConnectionString = connectionString;
-            cn.Open();
-
-            SqlDataAdapter adapter = new SqlDataAdapter();
-
-            SqlCommand command = new SqlCommand("SELECT Name FROM dbo.Word", cn);
-
-            adapter.SelectCommand = command;
-
-            DataSet dataSet = new DataSet();
-
-
-            adapter.Fill(dataSet, "Word");
-
-            cn.Close();
-            adapter.Dispose();
-
-           return FillHashSet(dataSet);
-        }
 
         private HashSet<string> FillHashSet(DataSet data)
         {
@@ -445,16 +443,6 @@ namespace Anagrams_Repositories
             }
 
             return dtr;
-        }
-
-        public bool InsertNewWord(string Name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string ReturnFilePath()
-        {
-            return connectionString;
         }
     }
 }
