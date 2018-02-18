@@ -28,29 +28,21 @@ namespace Web.Controllers
             _services = services;
         }
 
-        public ActionResult RemoveWord()
-        {
-            return View();
-        }
 
-        [HttpPost]
         public ActionResult RemoveWord(string searchName)
         {
-            if (ModelState.IsValid)
-            {
-                _wordsRepo.Delete(searchName);
+           
+            _wordsRepo.Delete(searchName);
 
-                _services.AdditionalSearches(ip);
+            _services.AdditionalSearches(ip);
 
-                return Content("Successfuly updated!");
-            }
-
-            return View();
+            return Content("Successfuly removed!");
         }
 
-        public ActionResult UpdateWord()
+        public ActionResult UpdateWord(string Word)
         {
-            return View();
+            var result = _wordsRepo.GetEntity(Word);
+            return View(result);
         }
 
         [HttpPost]
@@ -58,7 +50,7 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (!_wordsRepo.IsExist(Word))
+                if (_wordsRepo.IsExist(Word))
                 {
                     _wordsRepo.Update(updatedWord, Word);
                     _services.AdditionalSearches(ip);

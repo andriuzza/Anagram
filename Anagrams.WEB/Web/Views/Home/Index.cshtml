@@ -1,4 +1,5 @@
-﻿@model IEnumerable<string>
+﻿<link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+@model IEnumerable<string>
 <div class="row">
     <h1>Welcome to Anagram Generator</h1>
     @if (Model != null)
@@ -26,8 +27,8 @@
         }
         <p>How many times the user searched the word - @val</p>
      }
-    <input type="button" class="btn btn-success" value="Update" onclick="location.href='@Url.Action("Action", "Controller")'" />
-    <input type="button" class="btn btn-dark" value="Add" onclick="location.href='@Url.Action("Action", "Controller")'" />
-    <input type="button" class="btn btn-danger" value="Delete" onclick="location.href='@Url.Action("Action", "Controller")'" />
+    <input type="button" class="btn btn-success" value="Update" onclick="location.href='@Url.Action("UpdateWord", "FreeSearch", new { Word = ViewBag.CookieName})'" />
+    <input type="button" class="btn btn-dark" value="Add" onclick="location.href='@Url.Action("AddWord", "FreeSearch")'" />
+    <input type="button" class="btn btn-danger" value="Delete" onclick="location.href='@Url.Action("RemoveWord", "FreeSearch", new { searchName = ViewBag.CookieName})'" />
     
 </div>
