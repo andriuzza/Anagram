@@ -14,23 +14,16 @@ namespace Anagrams.EFCF.DelegateTask
         /* private UpperLaterDelegate uppperDelegate = null;
          Func<string, string> returnUpper = null;*/
 
-
-
-
-
         public Display(PrintDelegate task = null)
         {
             newDelagate = task;
         }
 
-
         /*With Func */
         public void FormattedPrint(Func<string,string> _delegate, string input)
         {
-
             Print(_delegate(input));
         }
-
 
         /*public void FormattedPrint(UpperLaterDelegate _delegate, string input)
         {

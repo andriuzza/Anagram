@@ -7,8 +7,6 @@ using System.Web.Mvc;
 using Web.Models;
 using Services.Helpers;
 using System.Diagnostics;
-using Anagrams.Interfaces.EntityInterfaces;
-using Anagrams.EFCF.Core.Models;
 using Anagrams.Interfaces.WebServices;
 
 namespace Web.Controllers

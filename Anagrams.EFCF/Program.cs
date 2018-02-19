@@ -12,14 +12,16 @@ using System.Threading.Tasks;
 
 namespace Anagrams.EFCF
 {
+  
     class Program
     {
+        
         static void Main(string[] args)
         {
             // TransferToDataBase();
 
             // FIRST TASK WITH GENERIC ENUMS = 
-           // Console.WriteLine(GenericAndEnum.MapValueToEnum<Gender>("fdsfsd"));
+            // Console.WriteLine(GenericAndEnum.MapValueToEnum<Gender>("fdsfsd"));
             /*Action doSomething = () => {
                     Console.WriteLine("Wow");
                 };
@@ -34,16 +36,20 @@ namespace Anagrams.EFCF
              */
 
 
-           /* Display ap = new Display();
-            ap.FormattedPrint((arg) => GetFirstUpperLetter(arg), "labas");*/
+            /* Display ap = new Display();
+             ap.FormattedPrint((arg) => GetFirstUpperLetter(arg), "labas");*/
+
+            /*//------------- HANDLING EVENTS------------ // */
+            DisplayWithEvents ap = new DisplayWithEvents();
 
 
-
+            ap.HandlingPrint += PrintToCommandLine;
+            ap.HandlingPrint += PrintToFile;
         }
 
         public static void PrintToCommandLine()
         {
-            Console.WriteLine("Wow");
+            Console.WriteLine("WowAAA");
         }
         public static void PrintToDebug()
         {
@@ -54,7 +60,7 @@ namespace Anagrams.EFCF
         {
             using (StreamWriter writetext = File.CreateText(@"C:\Users\andrius.butkevicius\source\repos\Anagrams\Anagrams.EFCF\DelegateTask\wow.txt"))
             {
-                writetext.WriteLine("wow");
+                writetext.WriteLine("wowAAA");
             }
         }
 

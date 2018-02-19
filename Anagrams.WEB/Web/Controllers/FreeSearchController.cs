@@ -1,14 +1,8 @@
-﻿using Anagrams.EFCF.Core.Models;
-using Anagrams.Interfaces.DtoModel;
+﻿using Anagrams.Interfaces.DtoModel;
 using Anagrams.Interfaces.EntityInterfaces;
 using Anagrams.Interfaces.WebServices;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using Web.Models;
-using Web.Services;
 
 namespace Web.Controllers
 {
@@ -28,16 +22,24 @@ namespace Web.Controllers
             _services = services;
         }
 
-
+        //[HttpDelete]
         public ActionResult RemoveWord(string searchName)
         {
-           
+            try
+            {
+                //call methods
+            }
+            catch (Exception ex)
+            {
+                //log error
+                //show error page
+            }
             _wordsRepo.Delete(searchName);
-
             _services.AdditionalSearches(ip);
 
             return Content("Successfuly removed!");
         }
+
 
         public ActionResult UpdateWord(string Word)
         {

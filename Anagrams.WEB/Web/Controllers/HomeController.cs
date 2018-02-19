@@ -1,13 +1,9 @@
 ﻿using Anagrams.Interfaces;
 using Anagrams.Interfaces.FactoryInterface;
-using PagedList;
-using Services;
 using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
-using Web.FactoryDesignPatternForLogic;
-using Web.Models;
 using Services.Helpers;
 
 namespace Web.Controllers

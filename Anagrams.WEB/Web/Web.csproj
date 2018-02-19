@@ -240,7 +240,6 @@
     <Compile Include="Controllers\LogUserIPController.cs" />
     <Compile Include="Controllers\WordController.cs" />
     <Compile Include="Cookies\CookiesManager.cs" />
-    <Compile Include="FactoryDesignPatternForLogic\AnagramFactoryManager.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -351,10 +350,6 @@
     <ProjectReference Include="..\..\Services\Services.csproj">
       <Project>{38fb9ce8-abaf-47ec-b492-e736ae6c3c45}</Project>
       <Name>Services</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Web.Services\Web.Services.csproj">
-      <Project>{80ae4727-9a94-4b4f-adb9-f05349db0d31}</Project>
-      <Name>Web.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

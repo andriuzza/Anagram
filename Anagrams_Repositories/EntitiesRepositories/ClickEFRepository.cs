@@ -2,6 +2,7 @@
 using Anagrams.EFCF.Core.Models;
 using Anagrams.Interfaces.DtoModel;
 using Anagrams.Interfaces.EntityInterfaces;
+using Anagrams_Repositories.IPClickRepo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,26 +11,18 @@ using System.Threading.Tasks;
 
 namespace Anagrams_Repositories.EntitiesRepositories
 {
-    public class ClickEFRepository : IClickRepository
+    public class ClickEFRepository : GenericRepository<IPClick>, IClickRepository
     {
-        private readonly ManagerContext _context;
-
-        public ClickEFRepository()
-        {
-            _context = new ManagerContext();
-        }
 
         public void Add(string ip)
         {
-            _context.IPClicks.Add(new IPClick(ip));
-
-            _context.SaveChanges();
+            base.Add(new IPClick(ip));
+            base.Save();
         }
 
         public IPClickDto GetEntity(string IP)
         {
-            var entity = _context.IPClicks
-                .FirstOrDefault(s => s.IP.Equals(IP));
+            var entity = base.GetByKey(IP);
 
             if(entity == null)
             {

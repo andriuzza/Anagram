@@ -9,15 +9,13 @@ using System.Threading.Tasks;
 
 namespace Anagrams_Repositories.IPClickRepo
 {
-    public class GenericRepository<T> : ICrudRepository<T> where T : class
+    public abstract class GenericRepository<T> : ICrudRepository<T> where T : class
     {
-        private readonly ManagerContext _context = null;
-        private DbSet<T> entity = null;
+        protected readonly ManagerContext _context;
 
-        public GenericRepository(ManagerContext context)
+        protected GenericRepository()
         {
-           _context = context;
-           entity =  _context.Set<T>();
+           _context = new ManagerContext();
         }
         public void Add(T entity)
         {
@@ -26,8 +24,8 @@ namespace Anagrams_Repositories.IPClickRepo
 
         public void Delete(object searchField)
         {
-            T exsitng = entity.Find(searchField);
-            entity.Remove(exsitng);
+            T exsitng = _context.Set<T>().Find(searchField);
+            _context.Set<T>().Remove(exsitng);
         }
 
         public void Edit(T entity, string updateField)
@@ -35,14 +33,14 @@ namespace Anagrams_Repositories.IPClickRepo
             _context.Entry(entity).State = EntityState.Modified;
         }
 
-        public T GetByString(object searchField)
+        public T GetByKey(object searchField)
         {
-            return entity.Find(searchField);
+            return _context.Set<T>().Find(searchField);
         }
 
-        public void Save()
+        public virtual int Save()
         {
-            _context.SaveChanges();
+           return _context.SaveChanges();
         }
     }
 }

@@ -1,21 +1,14 @@
-using Anagrams.EFCF.Core.Models;
 using Anagrams.Interfaces;
 using Anagrams.Interfaces.DtoModel;
 using Anagrams.Interfaces.EntityInterfaces;
 using Anagrams.Interfaces.FactoryInterface;
 using Anagrams.Interfaces.WebServices;
 using Anagrams_Repositories.EntitiesRepositories;
-using Anagrams_Repositories.IPClickRepo;
 using System;
-using System.Web;
 using System.Web.Configuration;
 using Unity;
 using Unity.Injection;
 using Unity.Lifetime;
-using Web.Controllers;
-using Web.Cookies;
-using Web.FactoryDesignPatternForLogic;
-using Web.Services;
 
 namespace Web
 {

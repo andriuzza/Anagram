@@ -2,6 +2,7 @@
 using Anagrams.EFCF.Core.Models;
 using Anagrams.Interfaces.DtoModel;
 using Anagrams.Interfaces.EntityInterfaces;
+using Anagrams_Repositories.IPClickRepo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,17 +11,10 @@ using System.Threading.Tasks;
 
 namespace Anagrams_Repositories.EntitiesRepositories
 {
-    public class WordEFRepository : IDictionaryRepository<WordDto>
+    public class WordEFRepository : GenericRepository<WordDto>, IDictionaryRepository<WordDto>
     {
-        private readonly ManagerContext _context;
 
-        public WordEFRepository()
-        {
-            _context = new ManagerContext();
-        }
-
-
-        public void Add(WordDto model)
+        public void  Add(WordDto model)
         {
             _context.Words.Add(new Word
             {
@@ -31,11 +25,11 @@ namespace Anagrams_Repositories.EntitiesRepositories
 
         public void Delete(string searchField)
         {
-            var result = GetModel(searchField);
-            _context.Words.Remove(result);
+           var result = base.GetByKey(searchField);
 
-            _context.SaveChanges();
+            base.Delete(result);
 
+            base.Save();
         }
 
         public WordDto GetEntity(string searchField)
@@ -67,7 +61,7 @@ namespace Anagrams_Repositories.EntitiesRepositories
                    .SingleOrDefault(s => s.Name.Equals(searchField));
         }
 
-        public int Save()
+        public override int Save()
         {
           return  _context.SaveChanges();
         }
