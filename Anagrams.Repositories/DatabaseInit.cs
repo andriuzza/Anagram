@@ -13,7 +13,7 @@ namespace Anagrams.Repositories
 
         SqlConnection cn = new SqlConnection();
 
-        private string connString = @"Data Source=(localdb)\MSSQLLocalDB;" +
+        private string connString = @"Data Source=LT-LIT-SC-0316\SQLEXPRESS;" +
                         "Initial Catalog = ConnectionDb2018; Integrated Security = True;" +
                              "Connect Timeout = 30; Encrypt=False;TrustServerCertificate=True;" +
                                  " ApplicationIntent=ReadWrite;MultiSubnetFailover=False";

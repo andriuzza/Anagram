@@ -17,6 +17,7 @@ namespace Anagrams.EFCF.Core
 
         protected override void OnModelCreating(DbModelBuilder mb)
         {
+         //   mb.Entity<Word>().
             base.OnModelCreating(mb);
         }
     }

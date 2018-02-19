@@ -23,7 +23,7 @@ namespace Anagrams
         {
             Console.WriteLine("Insert words");
             string line = GetWithoutWhiteSpace(Console.ReadLine());
-            string path = @"C:\Users\PC\Documents\Anagram\Anagrams.Repositories\zodynas.txt";
+            string path = @"C:\Users\andrius.butkevicius\source\repos\Anagrams\Anagrams.Repositories\zodynas.txt";
 
             var sw = Stopwatch.StartNew();
 
