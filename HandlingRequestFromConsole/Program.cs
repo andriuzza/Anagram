@@ -1,4 +1,5 @@
-﻿using Anagrams.Repositories;
+﻿
+using Anagrams_Repositories;
 using System;
 using System.IO;
 using System.Net.Http;
@@ -20,7 +21,7 @@ namespace HandlingRequestFromConsole
 
         public static void TransferToDataBase()
         {
-            DatabaseInit db = new DatabaseInit(new WordRepository(@"C:\Users\PC\Documents\Anagram\Anagrams.Repositories\zodynas.txt"));
+            DatabaseInit db = new DatabaseInit(new WordRepository());
             db.TransferToDataBase();
         }
         static async void DownloadAsyncData()
@@ -37,8 +38,6 @@ namespace HandlingRequestFromConsole
         }
         public static void ObjectToXml()
         {
-            
-           
             var path = @"C:\Users\andrius.butkevicius\source\repos\Anagrams\Anagrams.Repositories\produktai.xml";
             RS overview;
             XmlSerializer serializer = new XmlSerializer(typeof(RS));

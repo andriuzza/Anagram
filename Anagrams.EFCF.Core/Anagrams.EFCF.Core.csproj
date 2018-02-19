@@ -67,9 +67,22 @@
     <Compile Include="Migrations\201802141257271_init.Designer.cs">
       <DependentUpon>201802141257271_init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802151328598_initIPClick.cs" />
+    <Compile Include="Migrations\201802151328598_initIPClick.Designer.cs">
+      <DependentUpon>201802151328598_initIPClick.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802181759455_IncreasedIPAddersLength.cs" />
+    <Compile Include="Migrations\201802181759455_IncreasedIPAddersLength.Designer.cs">
+      <DependentUpon>201802181759455_IncreasedIPAddersLength.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802181806502_Fixed.cs" />
+    <Compile Include="Migrations\201802181806502_Fixed.Designer.cs">
+      <DependentUpon>201802181806502_Fixed.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CacheAanagram.cs" />
     <Compile Include="Models\CacheMap.cs" />
+    <Compile Include="Models\IPClick.cs" />
     <Compile Include="Models\IPLogUser.cs" />
     <Compile Include="Models\Word.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -93,6 +106,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201802141257271_init.resx">
       <DependentUpon>201802141257271_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802151328598_initIPClick.resx">
+      <DependentUpon>201802151328598_initIPClick.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802181759455_IncreasedIPAddersLength.resx">
+      <DependentUpon>201802181759455_IncreasedIPAddersLength.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802181806502_Fixed.resx">
+      <DependentUpon>201802181806502_Fixed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

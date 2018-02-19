@@ -4,20 +4,28 @@
 }
 
 <h2>GetLogData</h2>
-
-@foreach(var item in Model)
+@if (Model != null)
 {
-    <p>@item.Time</p>
-    <p>----------</p>
-    if (item.Anagrams.Count > 0)
-    {
-        foreach (var anagram in item.Anagrams)
-        {
-        <p>@anagram</p>
-        }
-    } else
-    {
-        <p>No anagrams found</p>
-    }
     <p>#############</p>
+    foreach (var item in Model)
+    {
+        <p>TIME OF REQUEST - @item.Time</p>
+        <p>--- ANAGRAMS ---</p>
+        if (item.Anagrams.Count > 0)
+        {
+            foreach (var anagram in item.Anagrams)
+            {
+            <p>@anagram</p>
+            }
+        }
+        else
+        {
+            <p>No anagrams found</p>
+        }
+        <p>#############</p>
+    }
+}
+else
+{
+    <h2>EMPTY DATA</h2>
 }

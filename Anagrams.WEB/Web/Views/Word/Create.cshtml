@@ -20,4 +20,8 @@
         }
     </ul>
 }
+@if (ViewBag.Limit != null)
+{
+    <p>@ViewBag.Limit</p>
+}
 @Html.ActionLink("GetDictionary", "GetDictionary", "Word")

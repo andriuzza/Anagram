@@ -1,10 +1,10 @@
 ﻿using System;
 using Services;
-using Anagrams.Repositories;
 using System.Net.Http;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using Anagrams_Repositories;
 
 namespace Anagrams
 {
@@ -16,7 +16,7 @@ namespace Anagrams
         }
         public static void TransferToDataBase()
         {
-            DatabaseInit db = new DatabaseInit(new WordRepository(@"C:\Users\andrius.butkevicius\source\repos\Anagrams\Anagrams.Repositories\zodynas.txt"));
+            DatabaseInit db = new DatabaseInit(new WordRepository());
             db.TransferToDataBase();
         }
         public static void Show()
@@ -27,7 +27,7 @@ namespace Anagrams
 
             var sw = Stopwatch.StartNew();
 
-            AnagramSolver Service = new AnagramSolver(new WordRepository(path));
+            AnagramSolver Service = new AnagramSolver(new WordRepository());
             Service.GetAnagram(line);
             foreach (var anagram in Service.GetResultsOfAnagram())
             {

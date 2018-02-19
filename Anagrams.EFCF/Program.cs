@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Anagrams_Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,12 @@ namespace Anagrams.EFCF
     {
         static void Main(string[] args)
         {
+            TransferToDataBase();
+        }
+        public static void TransferToDataBase()
+        {
+            FromFileToEF db = new FromFileToEF(new WordRepository());
+            db.TransferToDataBase();
         }
     }
 }

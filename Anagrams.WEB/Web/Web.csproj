@@ -235,65 +235,25 @@
     <Compile Include="App_Start\UnityWebApiActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\api\WordController.cs" />
+    <Compile Include="Controllers\FreeSearchController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogUserIPController.cs" />
     <Compile Include="Controllers\WordController.cs" />
-    <Compile Include="EFRepo\EFRepository.cs" />
+    <Compile Include="Cookies\CookiesManager.cs" />
     <Compile Include="FactoryDesignPatternForLogic\AnagramFactoryManager.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ADO.NET\CacheAnagram.cs">
-      <DependentUpon>EFdatabase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ADO.NET\CacheMap.cs">
-      <DependentUpon>EFdatabase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ADO.NET\EFdatabase.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EFdatabase.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ADO.NET\EFdatabase.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EFdatabase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ADO.NET\EFdatabase.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EFdatabase.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ADO.NET\IPLogUser.cs">
-      <DependentUpon>EFdatabase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ADO.NET\Word.cs">
-      <DependentUpon>EFdatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Anagram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-grid.css" />
-    <Content Include="Content\bootstrap-grid.min.css" />
-    <Content Include="Content\bootstrap-reboot.css" />
-    <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\ADO.NET\EFdatabase.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EFdatabase.edmx</DependentUpon>
-      <LastGenOutput>EFdatabase.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\ADO.NET\EFdatabase.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EFdatabase.edmx</DependentUpon>
-      <LastGenOutput>EFdatabase.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -313,19 +273,6 @@
     <Content Include="Scripts\bootstrap.js.map" />
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-reboot.min.css.map" />
-    <Content Include="Content\bootstrap-reboot.css.map" />
-    <Content Include="Content\bootstrap-grid.min.css.map" />
-    <Content Include="Content\bootstrap-grid.css.map" />
-    <EntityDeploy Include="Models\ADO.NET\EFdatabase.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>EFdatabase.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\ADO.NET\EFdatabase.edmx.diagram">
-      <DependentUpon>EFdatabase.edmx</DependentUpon>
-    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -379,6 +326,8 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\FreeSearch\AddWord.cshtml" />
+    <Content Include="Views\FreeSearch\UpdateWord.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -387,17 +336,25 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Anagrams.EFCF.Core\Anagrams.EFCF.Core.csproj">
+      <Project>{b56bd963-3646-418c-a309-44d0e1966b8d}</Project>
+      <Name>Anagrams.EFCF.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Anagrams.Interfaces\Anagrams.Interfaces.csproj">
       <Project>{38789e0a-bf29-427b-b930-9750d7bb9ffa}</Project>
       <Name>Anagrams.Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Anagrams.Repositories\Anagrams.Repositories.csproj">
-      <Project>{54153cff-50c1-4b1b-b627-babed0e6fc50}</Project>
-      <Name>Anagrams.Repositories</Name>
+    <ProjectReference Include="..\..\Anagrams_Repositories\Anagrams_Repositories.csproj">
+      <Project>{1efe78ce-4fe5-44f1-8c7a-8af980894bbd}</Project>
+      <Name>Anagrams_Repositories</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Services\Services.csproj">
       <Project>{38fb9ce8-abaf-47ec-b492-e736ae6c3c45}</Project>
       <Name>Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Web.Services\Web.Services.csproj">
+      <Project>{80ae4727-9a94-4b4f-adb9-f05349db0d31}</Project>
+      <Name>Web.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

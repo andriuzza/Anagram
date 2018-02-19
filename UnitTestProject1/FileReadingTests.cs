@@ -1,5 +1,5 @@
 ﻿using System;
-using Anagrams.Repositories;
+using Anagrams_Repositories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Services;
 
@@ -25,7 +25,7 @@ namespace FileReadingTests
         public void GetResultsOfAnagram_NewRepositoryNotEmpty_ReturnCorrectNumberOfAnagram()
         {
             // Create
-            WordRepository _repo = new WordRepository(@"C:\Users\PC\Documents\Anagram\UnitTestProject1\TEST.txt");
+            WordRepository _repo = new WordRepository();
 
             AnagramSolver _service = new AnagramSolver(_repo);
 

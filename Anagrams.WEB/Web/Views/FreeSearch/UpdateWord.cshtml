@@ -1,0 +1,16 @@
+﻿@model Anagrams.Interfaces.DtoModel.WordDto
+@{
+    ViewBag.Title = "Update a word";
+}
+
+<h2>Add a new word</h2>
+
+@using (Html.BeginForm("UpdateWord", "FreeSearch", new { Word = Model.Name }, FormMethod.Post))
+{
+    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = "Name" })
+    <br />
+    <input type="submit" value="Submit" class="btn btn-success btn-lg" />
+}
+
+
+@Html.ActionLink("GetDictionary", "GetDictionary", "Word")
