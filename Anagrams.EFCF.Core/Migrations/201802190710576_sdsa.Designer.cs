@@ -7,13 +7,13 @@ namespace Anagrams.EFCF.Core.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class IncreasedIPAddersLength : IMigrationMetadata
+    public sealed partial class sdsa : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(IncreasedIPAddersLength));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(sdsa));
         
         string IMigrationMetadata.Id
         {
-            get { return "201802181759455_IncreasedIPAddersLength"; }
+            get { return "201802190710576_sdsa"; }
         }
         
         string IMigrationMetadata.Source

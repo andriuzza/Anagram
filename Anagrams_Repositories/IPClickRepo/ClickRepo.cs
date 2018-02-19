@@ -1,17 +1,4 @@
-﻿using Anagrams.EFCF.Core;
-using Anagrams.EFCF.Core.Migrations;
-using Anagrams.Interfaces.EntityInterfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Anagrams.EFCF.Core.Models;
-using System.Data.Entity;
-
-/*namespace Anagrams_Repositories.IPClickRepo
-{
-   public class ClickRepo 
+﻿/*   public class ClickRepo 
     {
         private readonly ManagerContext _context;
 

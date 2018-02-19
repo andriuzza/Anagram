@@ -11,7 +11,7 @@ namespace Anagrams_Repositories
     {
         private StreamReader File = null;
         private HashSet<string> HashSetHash = new HashSet<string>();
-        private string filePath = @"C:\Users\PC\Documents\Anagram\Anagrams_Repositories\zodynas.txt";
+        private string filePath = @"C:\Users\andrius.butkevicius\source\repos\Anagrams\Anagrams_Repositories\zodynas.txt";
 
         public WordRepository()
         {

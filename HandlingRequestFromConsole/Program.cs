@@ -1,5 +1,4 @@
 ﻿
-using Anagrams_Repositories;
 using System;
 using System.IO;
 using System.Net.Http;
@@ -21,8 +20,8 @@ namespace HandlingRequestFromConsole
 
         public static void TransferToDataBase()
         {
-            DatabaseInit db = new DatabaseInit(new WordRepository());
-            db.TransferToDataBase();
+           /* DatabaseInit db = new DatabaseInit(new WordRepository());
+            db.TransferToDataBase();*/
         }
         static async void DownloadAsyncData()
         {

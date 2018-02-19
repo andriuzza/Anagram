@@ -49,6 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DelegateTask\Display.cs" />
+    <Compile Include="DelegateTask\IDisplay.cs" />
+    <Compile Include="GenericTask\DisplayWithEvents.cs" />
+    <Compile Include="GenericTask\Enums\Gender.cs" />
+    <Compile Include="GenericTask\Enums\Weekday.cs" />
+    <Compile Include="GenericTask\GenericAndEnum.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

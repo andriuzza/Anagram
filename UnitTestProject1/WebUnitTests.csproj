@@ -139,6 +139,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GenericTestForEnum.cs" />
     <Compile Include="HomeWebApiControllerTests.cs" />
     <Compile Include="HomeControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -149,6 +150,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Anagrams.EFCF.Core\Anagrams.EFCF.Core.csproj">
+      <Project>{b56bd963-3646-418c-a309-44d0e1966b8d}</Project>
+      <Name>Anagrams.EFCF.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Anagrams.EFCF\Anagrams.EFCF.csproj">
+      <Project>{B869642C-630C-4883-97BE-2E28FFF15B03}</Project>
+      <Name>Anagrams.EFCF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Anagrams.Interfaces\Anagrams.Interfaces.csproj">
       <Project>{38789E0A-BF29-427B-B930-9750D7BB9FFA}</Project>
       <Name>Anagrams.Interfaces</Name>

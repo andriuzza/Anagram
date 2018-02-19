@@ -3,7 +3,7 @@ namespace Anagrams.EFCF.Core.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class init : DbMigration
+    public partial class sdsa : DbMigration
     {
         public override void Up()
         {
@@ -37,6 +37,16 @@ namespace Anagrams.EFCF.Core.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
+                "dbo.IPClicks",
+                c => new
+                    {
+                        IP = c.String(nullable: false, maxLength: 30),
+                        Count = c.Int(nullable: false),
+                        Expiration = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.IP);
+            
+            CreateTable(
                 "dbo.IPLogUsers",
                 c => new
                     {
@@ -53,6 +63,7 @@ namespace Anagrams.EFCF.Core.Migrations
             DropForeignKey("dbo.CacheAnagrams", "WordId", "dbo.Words");
             DropIndex("dbo.CacheAnagrams", new[] { "WordId" });
             DropTable("dbo.IPLogUsers");
+            DropTable("dbo.IPClicks");
             DropTable("dbo.CacheMaps");
             DropTable("dbo.Words");
             DropTable("dbo.CacheAnagrams");

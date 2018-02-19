@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using Anagrams_Repositories;
 
+
 namespace Anagrams
 {
     class Program
@@ -16,14 +17,14 @@ namespace Anagrams
         }
         public static void TransferToDataBase()
         {
-            DatabaseInit db = new DatabaseInit(new WordRepository());
+            FromFileToEF db = new FromFileToEF(new WordRepository());
             db.TransferToDataBase();
         }
         public static void Show()
         {
             Console.WriteLine("Insert words");
             string line = GetWithoutWhiteSpace(Console.ReadLine());
-            string path = @"C:\Users\andrius.butkevicius\source\repos\Anagrams\Anagrams.Repositories\zodynas.txt";
+            //string path = @"C:\Users\andrius.butkevicius\source\repos\Anagrams\Anagrams.Repositories\zodynas.txt";
 
             var sw = Stopwatch.StartNew();
 

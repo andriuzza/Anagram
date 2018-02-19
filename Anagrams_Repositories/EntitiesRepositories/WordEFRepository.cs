@@ -26,6 +26,7 @@ namespace Anagrams_Repositories.EntitiesRepositories
             {
                 Name = model.Name
             });
+            _context.SaveChanges();
         }
 
         public void Delete(string searchField)

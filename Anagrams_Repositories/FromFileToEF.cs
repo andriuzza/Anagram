@@ -16,16 +16,15 @@ namespace Anagrams_Repositories
         public HashSet<string> WordsList { get; private set; }
         private SqlConnection cn = new SqlConnection();
       
-          private string connString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Anagrams.EFCF.Core.ManagerContext;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        private string connString = @"Data Source=(localdb)\MSSQLLocalDB;
+                                Initial Catalog=ManagerDbContext;Integrated Security=True;Connect Timeout=30;
+                                         Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
         public FromFileToEF(IWordRepository<string> repo)
         {
             _repo = repo;
             GetList();
-
-             
         }
-
 
         public bool TransferToDataBase()
         {
@@ -55,11 +54,6 @@ namespace Anagrams_Repositories
                 {
                     continue;
                 }
-               /* _context.Words.Add(new Anagrams.EFCF.Core.Models.Word
-                {
-                    Name = word
-                });*/
-
 
                   DataRow newRow = ds.Tables[0].NewRow();
                   newRow["Name"] = word;
