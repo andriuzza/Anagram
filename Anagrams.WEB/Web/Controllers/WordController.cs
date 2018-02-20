@@ -36,32 +36,6 @@ namespace Web.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Create(Anagram anagram)
-        {
-
-            var result = _services.IfAllowedToSearch();
-            if (result)
-            {
-                ViewBag.Model = _repository.GetCachedData(anagram.Name); // list of concated strings
-
-                var wordWithoutSpaces = anagram.Name.GetWithoutWhiteSpace();
-
-                if (ModelState.IsValid && ViewBag.Model == null)
-                {
-                    FetchData(wordWithoutSpaces, _services.GetIpAddress(), anagram);
-
-                    return View();
-                }
-            }
-            else
-            {
-                return Content("Try later");
-            }
-
-            return View(anagram);
-        }
-
 
         public ActionResult PostToDictionary(string Name)
         {
@@ -81,7 +55,7 @@ namespace Web.Controllers
             }
 
             ViewBag.CurrentFilter = searchString;
-            HashSet<Word> dictionary = new HashSet<Word>();
+            HashSet<string> dictionary = new HashSet<string>();
 
             if (!string.IsNullOrEmpty(searchString))
             {
@@ -109,24 +83,6 @@ namespace Web.Controllers
         {
             throw new NotImplementedException();
         }
-        private string GetIp()
-        {
-            return System.Net.Dns
-                .GetHostEntry(System.Net.Dns.GetHostName())
-                .AddressList[1].ToString();
-        }
 
-        private void FetchData(string wordWithoutSpaces, string ip, Anagram anagram)
-        {
-            var wt = Stopwatch.StartNew();
-            var list = _solver.GetAnagram(wordWithoutSpaces);
-            wt.Stop();
-            ViewBag.Model = list; /*Not sure yet if I can create ViewBag in void function */
-
-            var time = wt.ElapsedMilliseconds;
-
-            _repository.InsertCache(list, anagram.Name);
-            _repository.InsertLogUser(time, ip, anagram.Name);
-        }
     }
 }

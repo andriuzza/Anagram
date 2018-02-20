@@ -3,14 +3,15 @@
     ViewBag.Title = "GetLogData";
 }
 
-<h2>GetLogData</h2>
+<h2>Get User log data</h2>
+<hr />
 @if (Model != null)
 {
-    <p>#############</p>
+
     foreach (var item in Model)
     {
-        <p>TIME OF REQUEST - @item.Time</p>
-        <p>--- ANAGRAMS ---</p>
+        <h3>TIME OF REQUEST - @item.Time ms</h3>
+        <h4>--- ANAGRAMS ---</h4>
         if (item.Anagrams.Count > 0)
         {
             foreach (var anagram in item.Anagrams)
@@ -22,7 +23,7 @@
         {
             <p>No anagrams found</p>
         }
-        <p>#############</p>
+        <hr />
     }
 }
 else

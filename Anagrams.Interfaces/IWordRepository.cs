@@ -6,8 +6,8 @@ namespace Anagrams.Interfaces
 {
     public interface IWordRepository<T> : ICacheManager where T : class
     {
-       HashSet<T> GetData(string Name = null);
-       HashSet<T> Contains(string Name);
+       HashSet<string> GetData(string Name = null);
+       HashSet<string> Contains(string Name);
     }
 
     public interface ICacheManager

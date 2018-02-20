@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<Anagrams.EFCF.Core.Models.Word>
+﻿@model PagedList.IPagedList<string>
 @using PagedList.Mvc;
 
 
@@ -20,7 +20,7 @@
 
         <tr>
             <td>
-                <a href="http://localhost:54566/Home/Index/?query=@item.Name">@item.Name</a>
+                <a href="http://localhost:54566/Home/Index/?query=@item">@item</a>
             </td>
         </tr>
     }

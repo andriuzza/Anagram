@@ -12,20 +12,22 @@ namespace Anagrams_Repositories
     public class EFRepository : IWordRepository<Word>
     {
         private readonly ManagerContext _context;
+        private HashSet<string> InitializeDictionary;
 
         public EFRepository()
         {
             _context = new ManagerContext();
+            InitializeDictionary = new HashSet<string>(_context.Words.Select(a=>a.Name).ToList());
         }
 
-        public HashSet<Word> Contains(string Name)
+        public HashSet<string> Contains(string Name)
         {
             if (!string.IsNullOrEmpty(Name))
             {
-                var result = _context.Words.
-                    Where(b => b.Name.Contains(Name));
+                var result = InitializeDictionary.
+                Where(b => b.Contains(Name));
 
-                return new HashSet<Word>(result);
+                return new HashSet<string>(result);
             }
             return GetData(Name);
         }
@@ -71,10 +73,14 @@ namespace Anagrams_Repositories
 
         }
 
-        public HashSet<Word> GetData(string Name = null)
+        public HashSet<string> GetData(string Name = null)
         {
-            var result = _context.Words;
-            return new HashSet<Word>(result);
+            if (!string.IsNullOrEmpty(Name))
+            {
+                return InitializeDictionary;
+            }
+            return InitializeDictionary;
+
         }
 
         public bool InsertCache(HashSet<string> elements, string query)

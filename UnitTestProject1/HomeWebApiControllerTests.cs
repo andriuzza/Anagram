@@ -14,12 +14,10 @@ namespace UnitTestProject1
         public void TestInit() {
 
             // Arrange
-            /*var repository = new Mock<IWordRepository<string>>();
-            var solver = new Mock<IAnagramSolver<string>>();
+            var repository = new Mock<IWordRepository<string>>();
+            var solver = new Mock<IAnagramSolver>();
             solver.Setup(x => x.GetAnagram("TESTING")).Returns(new HashSet<string>());
-            var factory = new Mock<IAnagramFactoryManager>();
-            factory.Setup(x => x.GetInstance(repository.Object)).Returns(solver.Object);
-            SystemUnderTest = new Web.Controllers.api.WordController(repository.Object, factory.Object);*/
+            SystemUnderTest = new Web.Controllers.api.WordController(repository.Object, solver.Object);
         }
 
         [TestMethod]

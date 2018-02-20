@@ -1,9 +1,9 @@
 ﻿@model Web.Models.Anagram
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Search";
 }
 
-<h2>Create</h2>
+<h2>Search for anagrams</h2>
 
 @using (Html.BeginForm("Create", "Word", FormMethod.Post))
 {
@@ -11,6 +11,8 @@
     <br />
     <input type="submit" value="Submit" class="btn btn-success btn-lg" />
 }
+<br />
+@Html.ActionLink("GetDictionary", "GetDictionary", "Word", new { area = "" }, new { @class = "btn btn-danger" })
 @if (ViewBag.Model != null)
 {
     <ul>
@@ -20,8 +22,12 @@
         }
     </ul>
 }
+else
+{
+    <h3>No anagrams yet!</h3>
+}
 @if (ViewBag.Limit != null)
 {
     <p>@ViewBag.Limit</p>
 }
-@Html.ActionLink("GetDictionary", "GetDictionary", "Word")
+<br />

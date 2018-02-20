@@ -10,6 +10,6 @@ namespace Anagrams.Interfaces.EntityInterfaces
         void Add(T model);
         void Delete(string searchField);
         void Update(T model, string searchField);
-        T GetEntity(string searchField);
+        T GetEntityDto(string searchField);
     }
 }

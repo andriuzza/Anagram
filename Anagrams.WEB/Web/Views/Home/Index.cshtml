@@ -1,8 +1,18 @@
 ﻿@model IEnumerable<string>
+
 <div class="row">
     <h1>Welcome to Anagram Generator</h1>
+    <hr />
 
-    <h3>Word: @ViewBag.CookieName</h3>
+    @if (@ViewBag.CookieName == null)
+    {
+        <h3>Word:No word has been searched</h3>
+    }
+    else
+    {
+        <h3>Word: @ViewBag.CookieName</h3>
+    }
+
     @if (Model != null)
     {
         <ul>
@@ -16,14 +26,12 @@
         var countOfAnagrams = Model.Count();
         if (countOfAnagrams == 0)
         {
-            <h3>No anagrams found!</h3>
+            <h4>No anagrams found!</h4>
         }
     }
- 
-
-    @Html.ActionLink("Create", "Create", "Word")
-    @Html.ActionLink("GetDictionary", "GetDictionary", "Word")
-    @{ 
+    <br />
+    <h3>Cookies section</h3>
+    @{
         string val = "COOKIES NOT FOUND";
 
         if (Request.Cookies[ViewBag.CookieName] != null)
@@ -31,9 +39,12 @@
             val = Request.Cookies[ViewBag.CookieName].Value;
         }
         <h4>How many times the user searched the word - @val</h4>
-     }
+    }
+    <br />
+    <h3>Operations to start, for getting free searches(Max - 3 searches per 3 minutes)</h3>
+    <hr />
     <input type="button" class="btn btn-success" value="Update" onclick="location.href='@Url.Action("UpdateWord", "FreeSearch", new { Word = ViewBag.CookieName})'" />
     <input type="button" class="btn btn-dark" value="Add" onclick="location.href='@Url.Action("AddWord", "FreeSearch")'" />
     <input type="button" class="btn btn-danger" value="Delete" onclick="location.href='@Url.Action("RemoveWord", "FreeSearch", new { searchName = ViewBag.CookieName})'" />
-    
+
 </div>

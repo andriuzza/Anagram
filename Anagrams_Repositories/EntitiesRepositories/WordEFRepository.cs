@@ -34,7 +34,7 @@ namespace Anagrams_Repositories.EntitiesRepositories
                 .SingleOrDefault(s => s.Name.Equals(searchField));
         }
 
-        public WordDto GetEntity(string searchField)
+        public WordDto GetEntityDto(string searchField)
         {
             var result = GetModel(searchField);
 

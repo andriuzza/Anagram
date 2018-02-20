@@ -24,7 +24,8 @@ namespace Services
 
         public HashSet<string> GetAnagram(string Name)
         {
-            DictionaryHashSet = _repository.GetData(Name).Select(a=>a.Name) as HashSet<string>;
+            DictionaryHashSet = _repository.GetData(Name);
+            Results.Clear();
 
             for (var i = 0; i < Name.Length; i++)
             {
