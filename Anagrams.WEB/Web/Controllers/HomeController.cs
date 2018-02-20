@@ -1,23 +1,23 @@
 ﻿using Anagrams.Interfaces;
-using Anagrams.Interfaces.FactoryInterface;
 using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 using Services.Helpers;
+using Anagrams.EFCF.Core.Models;
 
 namespace Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IWordRepository<string> _repository;
-        private readonly IAnagramSolver<string> _solver;
+        private readonly IWordRepository<Word> _repository;
+        private readonly IAnagramSolver _solver;
 
-        public HomeController(IWordRepository<string> repository,
-            IAnagramFactoryManager factory)
+        public HomeController(IWordRepository<Word> repository,
+            IAnagramSolver solver)
         {
             _repository = repository;
-            _solver = factory.GetInstance(repository);
+            _solver = solver;
         }
 
         public ActionResult Index(string query)

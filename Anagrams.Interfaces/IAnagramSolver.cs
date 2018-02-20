@@ -2,9 +2,9 @@
 
 namespace Anagrams.Interfaces
 {
-    public interface IAnagramSolver<T>
+    public interface IAnagramSolver
     {
         HashSet<string> GetAnagram(string Name);
-        HashSet<T> GetResultsOfAnagram();
+        HashSet<string> GetResultsOfAnagram();
     }
 }

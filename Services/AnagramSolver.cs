@@ -1,17 +1,18 @@
-﻿using Anagrams.Interfaces;
+﻿using Anagrams.EFCF.Core.Models;
+using Anagrams.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Services
 {
-    public class AnagramSolver : IAnagramSolver<string>
+    public class AnagramSolver : IAnagramSolver
     {
-        private readonly IWordRepository<string> _repository;
+        private readonly IWordRepository<Word> _repository;
         private HashSet<string> DictionaryHashSet { get; set; }
         private HashSet<string> Results = new HashSet<string>();
 
-        public AnagramSolver(IWordRepository<string> repository)
+        public AnagramSolver(IWordRepository<Word> repository)
         {
             _repository = repository;
         }
@@ -23,7 +24,7 @@ namespace Services
 
         public HashSet<string> GetAnagram(string Name)
         {
-            DictionaryHashSet = _repository.GetData(Name);
+            DictionaryHashSet = _repository.GetData(Name).Select(a=>a.Name) as HashSet<string>;
 
             for (var i = 0; i < Name.Length; i++)
             {

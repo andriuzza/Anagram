@@ -1,9 +1,5 @@
-﻿using Anagrams.Interfaces;
-using Anagrams.Interfaces.FactoryInterface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Anagrams.EFCF.Core.Models;
+using Anagrams.Interfaces;
 using System.Web.Mvc;
 
 namespace Web.Controllers
@@ -12,14 +8,14 @@ namespace Web.Controllers
     {
         // GET: LogUserIP
 
-        private readonly IWordRepository<string> _repository;
-        private IAnagramSolver<string> _solver;
+        private readonly IWordRepository<Word> _repository;
+        private readonly IAnagramSolver _solver;
 
-        public LogUserIPController(IWordRepository<string> repository,
-            IAnagramFactoryManager factory)
+        public LogUserIPController(IWordRepository<Word> repository,
+            IAnagramSolver solver)
         {
             _repository = repository;
-            _solver = factory.GetInstance(repository); // //factory design pattern
+            _solver = solver; 
         }
 
         public ActionResult Index()

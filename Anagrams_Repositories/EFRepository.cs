@@ -9,7 +9,7 @@ using Anagrams.EFCF.Core.Models;
 
 namespace Anagrams_Repositories
 {
-    public class EFRepository : IWordRepository<string>
+    public class EFRepository : IWordRepository<Word>
     {
         private readonly ManagerContext _context;
 
@@ -18,16 +18,14 @@ namespace Anagrams_Repositories
             _context = new ManagerContext();
         }
 
-        public HashSet<string> Contains(string Name)
+        public HashSet<Word> Contains(string Name)
         {
             if (!string.IsNullOrEmpty(Name))
             {
                 var result = _context.Words.
-                    Where(b=>b.Name.Contains(Name))
-                    .Select(a => a.Name)
-                    .ToList();
+                    Where(b => b.Name.Contains(Name));
 
-                return new HashSet<string>(result);
+                return new HashSet<Word>(result);
             }
             return GetData(Name);
         }
@@ -73,10 +71,10 @@ namespace Anagrams_Repositories
 
         }
 
-        public HashSet<string> GetData(string Name = null)
+        public HashSet<Word> GetData(string Name = null)
         {
-            var result = _context.Words.Select(a => a.Name);
-            return new HashSet<string>(result);
+            var result = _context.Words;
+            return new HashSet<Word>(result);
         }
 
         public bool InsertCache(HashSet<string> elements, string query)
@@ -139,7 +137,7 @@ namespace Anagrams_Repositories
             foreach (var item in strings.ToList())
             {
                 var data = GetCachedData(item.SortedWord);
-                var anagrams = data == null ? new HashSet<string>() : data;
+                var anagrams = data ?? new HashSet<string>();
                 list.Add(new TimeResultModel
                 {
                     Time = item.Time,
@@ -177,7 +175,7 @@ namespace Anagrams_Repositories
 
         private List<string> UnconcatWords(string Name)
         {
-            List<string> list = new List<string>();
+            var list = new List<string>();
             string newStr = "";
             for (var i = 0; i < Name.Length; i++)
             {

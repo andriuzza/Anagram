@@ -1,26 +1,18 @@
 ﻿using Anagrams.Interfaces;
-using Anagrams.Interfaces.FactoryInterface;
-using Services;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.ExceptionHandling;
-using Web.FactoryDesignPatternForLogic;
 
 namespace Web.Controllers.api
 {
     public class WordController : ApiController
     {
         private readonly IWordRepository<string> _repository;
-        private IAnagramSolver<string> _solver;
+        private IAnagramSolver _solver;
 
-        public WordController(IWordRepository<string> repository, IAnagramFactoryManager factory)
+        public WordController(IWordRepository<string> repository, IAnagramSolver solver)
         {
             _repository = repository; 
-            _solver = factory.GetInstance(_repository); // //factory design pattern
+            _solver = solver; // //factory design pattern
         }
 
         /*It is not entity framework!!!! mapping entity from parameters, actually does asp.net itself  */

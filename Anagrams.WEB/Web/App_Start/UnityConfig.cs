@@ -1,9 +1,11 @@
+using Anagrams.EFCF.Core.Models;
 using Anagrams.Interfaces;
 using Anagrams.Interfaces.DtoModel;
 using Anagrams.Interfaces.EntityInterfaces;
-using Anagrams.Interfaces.FactoryInterface;
 using Anagrams.Interfaces.WebServices;
+using Anagrams_Repositories;
 using Anagrams_Repositories.EntitiesRepositories;
+using Services;
 using System;
 using System.Web.Configuration;
 using Unity;
@@ -49,21 +51,21 @@ namespace Web
 
             var connectionSrting = WebConfigurationManager.AppSettings["connectionString"];
 
-            container.RegisterType<IAnagramFactoryManager, AnagramFactoryManager>
-               (new ContainerControlledLifetimeManager(),
-                    new InjectionConstructor());
 
-            container.RegisterType<IWordRepository<string>, Anagrams_Repositories.EFRepository>
-                (new ContainerControlledLifetimeManager(),
-                     new InjectionConstructor());
+            //container.Re<IWordRepository<Word>, EFRepository>();
+
+            container.RegisterType<IAnagramSolver, AnagramSolver>
+             (new ContainerControlledLifetimeManager());
+
+            container.RegisterType<IWordRepository<Word>, EFRepository>
+                (new ContainerControlledLifetimeManager());
 
             container.RegisterType<IDictionaryRepository<WordDto>, WordEFRepository>
-                (new ContainerControlledLifetimeManager(),
-                     new InjectionConstructor());
+                (new ContainerControlledLifetimeManager());
 
             container.RegisterType<IAdditionalSearchService, AdditionalSearchService>
                 (new ContainerControlledLifetimeManager(),
-                     new InjectionConstructor(new ClickEFRepository()));
+                     new InjectionConstructor(new ClickEFRepository(), new WordEFRepository()));
 
 
             //container.RegisterType<ICookiesManager, CookiesManager>(new InjectionConstructor(HttpContext.Current.Request));

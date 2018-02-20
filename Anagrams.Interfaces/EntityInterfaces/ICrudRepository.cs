@@ -9,8 +9,6 @@ namespace Anagrams.Interfaces.EntityInterfaces
         void Delete(object seachField);
         void Edit(T entity, string updateField);
         void Add(T entity);
-        T GetByString(object searchField); //get by id
-        //get all
-        int Save();
+        T GetByKey(object searchField); //get by id
     }
 }

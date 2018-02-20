@@ -32,20 +32,23 @@ namespace Anagrams_Repositories
 
              cn.Open();
 
-             SqlCommand insert = new SqlCommand();
-             insert.Connection = cn;
+            SqlCommand insert = new SqlCommand
+            {
+                Connection = cn,
 
-             insert.CommandType = System.Data.CommandType.Text;
-             insert.CommandText = "INSERT INTO WORDS (Name) VALUES(@FN)";
+                CommandType = System.Data.CommandType.Text,
+                CommandText = "INSERT INTO WORDS (Name) VALUES(@FN)"
+            };
 
-             insert.Parameters
+            insert.Parameters
                  .Add(new SqlParameter("@FN", System.Data.SqlDbType.NVarChar, 255, "Name"));
 
-             SqlDataAdapter adapter = new SqlDataAdapter("SELECT Id, Name FROM Words", cn);
+            SqlDataAdapter adapter = new SqlDataAdapter("SELECT Id, Name FROM Words", cn)
+            {
+                InsertCommand = insert
+            };
 
-             adapter.InsertCommand = insert;
-
-             DataSet ds = new DataSet();
+            DataSet ds = new DataSet();
              adapter.Fill(ds, "Words");
 
             foreach (var word in WordsList)

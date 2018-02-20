@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Anagrams_Repositories.IPClickRepo
+namespace Anagrams_Repositories.GenericRepository
 {
     public abstract class GenericRepository<T> : ICrudRepository<T> where T : class
     {
@@ -38,9 +38,5 @@ namespace Anagrams_Repositories.IPClickRepo
             return _context.Set<T>().Find(searchField);
         }
 
-        public virtual int Save()
-        {
-           return _context.SaveChanges();
-        }
     }
 }

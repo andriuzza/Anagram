@@ -4,18 +4,18 @@ using System.Collections.Generic;
 
 namespace Anagrams.Interfaces
 {
-    public interface IWordRepository<T> : ICacheManager<T>
+    public interface IWordRepository<T> : ICacheManager where T : class
     {
        HashSet<T> GetData(string Name = null);
        HashSet<T> Contains(string Name);
     }
 
-    public interface ICacheManager<T>
+    public interface ICacheManager
     {
         bool InsertLogUser(long TIME, string ip, string query); 
-        HashSet<T> GetCachedData(string Name); 
+        HashSet<string> GetCachedData(string Name); 
         List<TimeResultModel> ReturnIPSearches(string IP);
-        bool InsertCache(HashSet<T> elements, string query);
+        bool InsertCache(HashSet<string> elements, string query);
     }
 
 }

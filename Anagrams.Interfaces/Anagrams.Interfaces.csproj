@@ -4,4 +4,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Anagrams.EFCF.Core\Anagrams.EFCF.Core.csproj" />
+  </ItemGroup>
+
 </Project>

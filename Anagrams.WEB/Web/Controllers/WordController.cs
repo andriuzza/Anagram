@@ -1,5 +1,4 @@
 ﻿using Anagrams.Interfaces;
-using Anagrams.Interfaces.FactoryInterface;
 using PagedList;
 using System;
 using System.Collections.Generic;
@@ -8,21 +7,22 @@ using Web.Models;
 using Services.Helpers;
 using System.Diagnostics;
 using Anagrams.Interfaces.WebServices;
+using Anagrams.EFCF.Core.Models;
 
 namespace Web.Controllers
 {
     public class WordController : Controller
     {
-        private readonly IWordRepository<string> _repository;
-        private IAnagramSolver<string> _solver;
+        private readonly IWordRepository<Word> _repository;
+        private IAnagramSolver _solver;
         private readonly IAdditionalSearchService _services;
 
-        public WordController(IWordRepository<string> repository,
-            IAnagramFactoryManager factory,
+        public WordController(IWordRepository<Word> repository,
+            IAnagramSolver solver,
             IAdditionalSearchService services)
         {
             _repository = repository;
-            _solver = factory.GetInstance(repository); // //factory design pattern
+            _solver = solver; 
             _services = services;
         }
 
@@ -39,9 +39,8 @@ namespace Web.Controllers
         [HttpPost]
         public ActionResult Create(Anagram anagram)
         {
-            string ip = GetIp();
 
-            var result = _services.IfAllowedToSearch(ip);
+            var result = _services.IfAllowedToSearch();
             if (result)
             {
                 ViewBag.Model = _repository.GetCachedData(anagram.Name); // list of concated strings
@@ -50,7 +49,7 @@ namespace Web.Controllers
 
                 if (ModelState.IsValid && ViewBag.Model == null)
                 {
-                    FetchData(wordWithoutSpaces, ip, anagram);
+                    FetchData(wordWithoutSpaces, _services.GetIpAddress(), anagram);
 
                     return View();
                 }
@@ -82,7 +81,7 @@ namespace Web.Controllers
             }
 
             ViewBag.CurrentFilter = searchString;
-            HashSet<string> dictionary = new HashSet<string>();
+            HashSet<Word> dictionary = new HashSet<Word>();
 
             if (!string.IsNullOrEmpty(searchString))
             {

@@ -7,35 +7,28 @@ using System.Web.Mvc;
 namespace Web.Controllers
 {
     public class FreeSearchController : Controller
-    {
-        private readonly IDictionaryRepository<WordDto> _wordsRepo;
+    {  
         private readonly IAdditionalSearchService _services;
 
-        private string ip = System.Net.Dns
-                .GetHostEntry(System.Net.Dns.GetHostName())
-                .AddressList[1].ToString();
-
-        public FreeSearchController(IDictionaryRepository<WordDto> wordsRepo,
-                                        IAdditionalSearchService services)
+        public FreeSearchController(IAdditionalSearchService services)
         {
-            _wordsRepo = wordsRepo;
             _services = services;
         }
 
-        //[HttpDelete]
         public ActionResult RemoveWord(string searchName)
         {
             try
             {
                 //call methods
+                _services.DeleteWord(searchName);
             }
             catch (Exception ex)
             {
+                return Content("Wrong something with db");
                 //log error
                 //show error page
             }
-            _wordsRepo.Delete(searchName);
-            _services.AdditionalSearches(ip);
+          
 
             return Content("Successfuly removed!");
         }
@@ -43,8 +36,8 @@ namespace Web.Controllers
 
         public ActionResult UpdateWord(string Word)
         {
-            var result = _wordsRepo.GetEntity(Word);
-            return View(result);
+            /*var result = _wordsRepo.GetEntity(Word);*/
+            return View(/*result*/);
         }
 
         [HttpPost]
@@ -52,13 +45,8 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_wordsRepo.IsExist(Word))
-                {
-                    _wordsRepo.Update(updatedWord, Word);
-                    _services.AdditionalSearches(ip);
-                    return Content("Success!");
-                }
-
+                _services.UpdateWord(updatedWord, Word);
+                return Content("Success!");
             }
 
             return Content("Somewthing wrong");
@@ -74,9 +62,7 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _wordsRepo.Add(word);
-
-                _services.AdditionalSearches(ip);
+                _services.AddWord(word);
 
                 return Content("Successfuly addded to db!");
             }

@@ -1,6 +1,8 @@
 ﻿@model IEnumerable<string>
 <div class="row">
     <h1>Welcome to Anagram Generator</h1>
+
+    <h3>Word: @ViewBag.CookieName</h3>
     @if (Model != null)
     {
         <ul>
@@ -10,10 +12,14 @@
                 <li>@anagram</li>
             }
         </ul>
-    } else
-    {
-        <h3>No anagrams found!</h3>
+
+        var countOfAnagrams = Model.Count();
+        if (countOfAnagrams == 0)
+        {
+            <h3>No anagrams found!</h3>
+        }
     }
+ 
 
     @Html.ActionLink("Create", "Create", "Word")
     @Html.ActionLink("GetDictionary", "GetDictionary", "Word")
@@ -24,7 +30,7 @@
         {
             val = Request.Cookies[ViewBag.CookieName].Value;
         }
-        <p>How many times the user searched the word - @val</p>
+        <h4>How many times the user searched the word - @val</h4>
      }
     <input type="button" class="btn btn-success" value="Update" onclick="location.href='@Url.Action("UpdateWord", "FreeSearch", new { Word = ViewBag.CookieName})'" />
     <input type="button" class="btn btn-dark" value="Add" onclick="location.href='@Url.Action("AddWord", "FreeSearch")'" />

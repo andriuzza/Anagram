@@ -1,10 +1,5 @@
-﻿using Anagrams.EFCF.Core.Models;
-using Anagrams.Interfaces.EntityInterfaces;
+﻿using Anagrams.Interfaces.EntityInterfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Anagrams.Interfaces.WebServices;
 namespace Web.Services
 {

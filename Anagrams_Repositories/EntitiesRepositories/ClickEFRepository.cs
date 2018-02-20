@@ -1,13 +1,8 @@
-﻿using Anagrams.EFCF.Core;
-using Anagrams.EFCF.Core.Models;
+﻿using Anagrams.EFCF.Core.Models;
 using Anagrams.Interfaces.DtoModel;
 using Anagrams.Interfaces.EntityInterfaces;
-using Anagrams_Repositories.IPClickRepo;
-using System;
-using System.Collections.Generic;
+using Anagrams_Repositories.GenericRepository;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Anagrams_Repositories.EntitiesRepositories
 {
@@ -17,7 +12,8 @@ namespace Anagrams_Repositories.EntitiesRepositories
         public void Add(string ip)
         {
             base.Add(new IPClick(ip));
-            base.Save();
+
+            _context.SaveChanges();
         }
 
         public IPClickDto GetEntity(string IP)

@@ -1,18 +1,11 @@
-﻿using Anagrams.EFCF.DelegateTask;
-using Anagrams.EFCF.GenericTask;
-using Anagrams.EFCF.GenericTask.Enums;
-using Anagrams_Repositories;
+﻿using Anagrams_Repositories;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Anagrams.EFCF
 {
-  
+
     class Program
     {
         
@@ -40,11 +33,11 @@ namespace Anagrams.EFCF
              ap.FormattedPrint((arg) => GetFirstUpperLetter(arg), "labas");*/
 
             /*//------------- HANDLING EVENTS------------ // */
-            DisplayWithEvents ap = new DisplayWithEvents();
+           /* DisplayWithEvents ap = new DisplayWithEvents();
 
 
             ap.HandlingPrint += PrintToCommandLine;
-            ap.HandlingPrint += PrintToFile;
+            ap.HandlingPrint += PrintToFile;*/
         }
 
         public static void PrintToCommandLine()

@@ -28,14 +28,14 @@ namespace Anagrams
 
             var sw = Stopwatch.StartNew();
 
-            AnagramSolver Service = new AnagramSolver(new WordRepository());
+            /*AnagramSolver Service = new AnagramSolver(new WordRepository());
             Service.GetAnagram(line);
             foreach (var anagram in Service.GetResultsOfAnagram())
             {
                 Console.WriteLine(anagram);
             }
             sw.Stop();
-            Console.WriteLine(sw.ElapsedMilliseconds);
+            Console.WriteLine(sw.ElapsedMilliseconds);*/
         }
         static async void MainAsync()
         {
