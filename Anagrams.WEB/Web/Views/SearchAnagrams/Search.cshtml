@@ -1,11 +1,11 @@
-﻿@model Web.Models.Anagram
+﻿@model Anagrams.EFCF.Core.Models.Word
 @{
     ViewBag.Title = "Search";
 }
 
 <h2>Search for anagrams</h2>
 
-@using (Html.BeginForm("Create", "Word", FormMethod.Post))
+@using (Html.BeginForm("Search", "SearchAnagrams", FormMethod.Post))
 {
     @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = "Name" })
     <br />
@@ -18,7 +18,7 @@
     <ul>
         @foreach (var anagram in ViewBag.Model)
         {
-            <li>@anagram</li>
+            <li style="font-size:medium;">@anagram</li>
         }
     </ul>
 }

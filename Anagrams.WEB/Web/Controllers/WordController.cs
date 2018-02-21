@@ -31,11 +31,6 @@ namespace Web.Controllers
             return View();
         }
 
-        public ActionResult Create()
-        {
-            return View();
-        }
-
 
         public ActionResult PostToDictionary(string Name)
         {
@@ -77,11 +72,6 @@ namespace Web.Controllers
               string fileName = "dictionary.txt";
               return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);*/
             return View();
-        }
-
-        public static implicit operator WordController(api.WordController v)
-        {
-            throw new NotImplementedException();
         }
 
     }

@@ -2,10 +2,12 @@ using Anagrams.EFCF.Core.Models;
 using Anagrams.Interfaces;
 using Anagrams.Interfaces.DtoModel;
 using Anagrams.Interfaces.EntityInterfaces;
+using Anagrams.Interfaces.Services;
 using Anagrams.Interfaces.WebServices;
 using Anagrams_Repositories;
 using Anagrams_Repositories.EntitiesRepositories;
 using Services;
+using Services.ManageService;
 using System;
 using System.Web.Configuration;
 using Unity;
@@ -51,8 +53,7 @@ namespace Web
 
             var connectionSrting = WebConfigurationManager.AppSettings["connectionString"];
 
-
-            //container.Re<IWordRepository<Word>, EFRepository>();
+            container.RegisterType<ITimingService, TimingService>();
 
             container.RegisterType<IAnagramSolver, AnagramSolver>
              (new ContainerControlledLifetimeManager());
@@ -67,7 +68,7 @@ namespace Web
                 (new ContainerControlledLifetimeManager(),
                      new InjectionConstructor(new ClickEFRepository(), new WordEFRepository()));
 
-
+           
             //container.RegisterType<ICookiesManager, CookiesManager>(new InjectionConstructor(HttpContext.Current.Request));
 
             // NOTE: To load from web.config uncomment the line below.

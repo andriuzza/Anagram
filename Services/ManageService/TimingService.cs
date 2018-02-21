@@ -1,5 +1,6 @@
 ﻿using Anagrams.EFCF.Core.Models;
 using Anagrams.Interfaces;
+using Anagrams.Interfaces.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace Services.ManageService
 {
-    public class TimingService
+    public class TimingService : ITimingService
     {
         private readonly IWordRepository<Word> _repository;
         private readonly IAnagramSolver _solver;
@@ -23,8 +24,6 @@ namespace Services.ManageService
             var wt = Stopwatch.StartNew();
             var list = _solver.GetAnagram(wordWithoutSpaces);
             wt.Stop();
-
-            ViewBag.Model = list; /*Not sure yet if I can create ViewBag in void function */
 
             var time = wt.ElapsedMilliseconds;
 
