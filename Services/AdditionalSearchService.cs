@@ -2,6 +2,8 @@
 using System;
 using Anagrams.Interfaces.WebServices;
 using Anagrams.Interfaces.DtoModel;
+using Anagrams.EFCF.Core.Models;
+using Anagrams.Interfaces.Helpers;
 
 namespace Services
 {
@@ -11,13 +13,13 @@ namespace Services
         private const int MaxTimeInMinutes = 3;
 
         private readonly IClickRepository _clickRepo;
-        private readonly IDictionaryRepository<WordDto> _wordsRepo;
+        private readonly IDictionaryRepository<Word> _wordsRepo;
 
         private string ip = System.Net.Dns
                .GetHostEntry(System.Net.Dns.GetHostName())
                .AddressList[1].ToString();
 
-        public AdditionalSearchService(IClickRepository clickRepo, IDictionaryRepository<WordDto> wordsRepo)
+        public AdditionalSearchService(IClickRepository clickRepo, IDictionaryRepository<Word> wordsRepo)
         {
             _clickRepo = clickRepo;
             _wordsRepo = wordsRepo;
@@ -31,26 +33,24 @@ namespace Services
 
         public void UpdateWord(WordDto updatedWord, string Word)
         {
-            if(_wordsRepo.IsExist(Word))
+            if (_wordsRepo.IsExist(Word))
             {
-                _wordsRepo.Update(updatedWord, Word);
+                _wordsRepo.Update(updatedWord.ToEntity(), Word);
                 AdditionalSearches(ip);
             }
-
-            throw new Exception("The word is not defined yet");
+            else
+            {
+                throw new Exception("The word is not defined yet");
+            }
   
         }
 
         public void AddWord(WordDto word)
         {
-            _wordsRepo.Add(word);
+            _wordsRepo.Add(word.ToEntity());
             AdditionalSearches(ip);
         }
 
-        public void AddNewIpAddress(string ip)
-        {
-            throw new NotImplementedException();
-        }
 
         public void AdditionalSearches(string ip)
         {

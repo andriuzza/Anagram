@@ -6,19 +6,9 @@ using System.Linq;
 
 namespace Anagrams_Repositories.EntitiesRepositories
 {
-    public class WordEFRepository : GenericRepository<WordDto>, IDictionaryRepository<WordDto>
+    public class WordEFRepository : GenericRepository<Word>, IDictionaryRepository<Word>
     {
-
-        public new void Add(WordDto model)
-        {
-            _context.Words.Add(new Word
-            {
-                Name = model.Name
-            });
-
-            _context.SaveChanges();
-        }
-
+       
         public void Delete(string searchField)
         {
             var result = GetByString(searchField);
@@ -34,14 +24,11 @@ namespace Anagrams_Repositories.EntitiesRepositories
                 .SingleOrDefault(s => s.Name.Equals(searchField));
         }
 
-        public WordDto GetEntityDto(string searchField)
+        public Word GetEntityDto(string searchField)
         {
             var result = GetModel(searchField);
 
-            return new WordDto
-            {
-                Name = result.Name
-            };
+            return result;
         }
 
         public bool IsExist(string Name)
@@ -49,7 +36,7 @@ namespace Anagrams_Repositories.EntitiesRepositories
             return _context.Words.Any(s => s.Name.Equals(Name));
         }
 
-        public void Update(WordDto model, string searchField)
+        public void Update(Word model, string searchField)
         {
             var result = GetModel(searchField);
             result.Name = model.Name;

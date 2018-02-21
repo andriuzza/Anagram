@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Web.Models.Album.Album>
+@{
+    ViewBag.Title = "GetAlbums";
+}
+
+<h2>GetAlbums</h2>
+
+@foreach (var item in Model)
+{
+    <p><strong>UserId:</strong> @item.UserId</p>
+    <p><strong>Id:</strong> @item.Id</p>
+    <p><strong>Title:</strong> @item.Title</p>
+    <hr />
+}
+

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Services.Helpers
 {
-    public static class GetWordWitoutSpaces
+    public static class TextHelpers
     {
         public static string GetWithoutWhiteSpace(this string line)
         {

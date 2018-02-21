@@ -61,7 +61,7 @@ namespace Web
             container.RegisterType<IWordRepository<Word>, EFRepository>
                 (new ContainerControlledLifetimeManager());
 
-            container.RegisterType<IDictionaryRepository<WordDto>, WordEFRepository>
+            container.RegisterType<IDictionaryRepository<Word>, WordEFRepository>
                 (new ContainerControlledLifetimeManager());
 
             container.RegisterType<IAdditionalSearchService, AdditionalSearchService>

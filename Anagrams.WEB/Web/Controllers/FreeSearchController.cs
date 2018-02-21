@@ -1,4 +1,5 @@
-﻿using Anagrams.Interfaces.DtoModel;
+﻿using Anagrams.EFCF.Core.Models;
+using Anagrams.Interfaces.DtoModel;
 using Anagrams.Interfaces.EntityInterfaces;
 using Anagrams.Interfaces.WebServices;
 using System;
@@ -9,10 +10,13 @@ namespace Web.Controllers
     public class FreeSearchController : Controller
     {  
         private readonly IAdditionalSearchService _services;
+        private readonly IDictionaryRepository<Word> _wordsRepo;
 
-        public FreeSearchController(IAdditionalSearchService services)
+        public FreeSearchController(IAdditionalSearchService services
+                                        , IDictionaryRepository<Word> wordsRepo)
         {
             _services = services;
+            _wordsRepo = wordsRepo;
         }
 
         public ActionResult RemoveWord(string searchName)
@@ -24,7 +28,7 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
-                return Content("Wrong something with db");
+                return Content("Wrong something with db" + ex);
                 //log error
                 //show error page
             }
@@ -36,8 +40,14 @@ namespace Web.Controllers
 
         public ActionResult UpdateWord(string Word)
         {
-            /*var result = _wordsRepo.GetEntity(Word);*/
-            return View(/*result*/);
+            var result = _wordsRepo.GetEntityDto(Word);
+
+            var dto = new WordDto
+            {
+                Name = result.Name
+            };
+
+            return View(dto);
         }
 
         [HttpPost]
@@ -45,6 +55,7 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                //var instance = new Word { Name = updatedWord.Name };
                 _services.UpdateWord(updatedWord, Word);
                 return Content("Success!");
             }
