@@ -4,6 +4,8 @@ using Anagrams.Interfaces.WebServices;
 using Anagrams.Interfaces.DtoModel;
 using Anagrams.EFCF.Core.Models;
 using Anagrams.Interfaces.Helpers;
+using Anagrams.Interfaces;
+using System.Threading.Tasks;
 
 namespace Services
 {
@@ -14,29 +16,34 @@ namespace Services
 
         private readonly IClickRepository _clickRepo;
         private readonly IDictionaryRepository<Word> _wordsRepo;
+        private readonly IWordRepository<Word> _initRepo;
 
         private string ip = System.Net.Dns
                .GetHostEntry(System.Net.Dns.GetHostName())
                .AddressList[1].ToString();
 
-        public AdditionalSearchService(IClickRepository clickRepo, IDictionaryRepository<Word> wordsRepo)
+        public AdditionalSearchService(IClickRepository clickRepo, IDictionaryRepository<Word> wordsRepo,
+                                               IWordRepository<Word> initRepo)
         {
             _clickRepo = clickRepo;
             _wordsRepo = wordsRepo;
+            _initRepo = initRepo;
         }
 
-        public void DeleteWord(string nameField)
+        public async Task DeleteWord(string nameField)
         {
-            _wordsRepo.Delete(nameField);
+            await _wordsRepo.Delete(nameField);
             AdditionalSearches(ip);
+            await _initRepo.RefrehDictionaryAsync();
         }
 
-        public void UpdateWord(WordDto updatedWord, string Word)
+        public async Task UpdateWord(WordDto updatedWord, string Word)
         {
-            if (_wordsRepo.IsExist(Word))
+            if (await _wordsRepo.IsExist(Word))
             {
-                _wordsRepo.Update(updatedWord.ToEntity(), Word);
-                AdditionalSearches(ip);
+               await _wordsRepo.Update(updatedWord.ToEntity(), Word);
+                    AdditionalSearches(ip);
+                await _initRepo.RefrehDictionaryAsync();
             }
             else
             {
@@ -45,10 +52,11 @@ namespace Services
   
         }
 
-        public void AddWord(WordDto word)
+        public async Task AddWord(WordDto word)
         {
             _wordsRepo.Add(word.ToEntity());
             AdditionalSearches(ip);
+            await _initRepo.RefrehDictionaryAsync();
         }
 
 
@@ -58,6 +66,7 @@ namespace Services
             getModel.Count--;
 
             _clickRepo.Update(getModel);
+         
         }
 
 
@@ -102,5 +111,6 @@ namespace Services
         {
             return ip;
         }
+
     }   
 }

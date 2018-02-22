@@ -3,51 +3,57 @@ using Anagrams.Interfaces.DtoModel;
 using Anagrams.Interfaces.EntityInterfaces;
 using Anagrams_Repositories.GenericRepository;
 using System.Linq;
-
+using System.Threading.Tasks;
+using System.Data.Entity;
 namespace Anagrams_Repositories.EntitiesRepositories
 {
     public class WordEFRepository : GenericRepository<Word>, IDictionaryRepository<Word>
     {
        
-        public void Delete(string searchField)
+        public async Task Delete(string searchField)
         {
             var result = GetByString(searchField);
 
-            _context.Words.Remove(result);
+            var resDelete = await result;
 
-            _context.SaveChanges();
+            _context.Words.Remove(resDelete);
+
+          await _context.SaveChangesAsync();
         }
 
-        private Word GetByString(string searchField)
+        private async Task<Word> GetByString(string searchField)
         {
-            return _context.Words
-                .SingleOrDefault(s => s.Name.Equals(searchField));
+            return await _context.Words
+                .SingleOrDefaultAsync(s => s.Name.Equals(searchField));
         }
 
-        public Word GetEntityDto(string searchField)
+        public  async Task<Word> GetEntityDto(string searchField)
         {
-            var result = GetModel(searchField);
+            var result = await GetModel(searchField);
 
             return result;
         }
 
-        public bool IsExist(string Name)
+        public async Task<bool> IsExist(string Name)
         {
-            return _context.Words.Any(s => s.Name.Equals(Name));
+            var result = await _context.Words.AnyAsync(s => s.Name.Equals(Name));
+
+            return result;
         }
 
-        public void Update(Word model, string searchField)
+        public async Task Update(Word model, string searchField)
         {
-            var result = GetModel(searchField);
+            var result = await GetModel(searchField);
             result.Name = model.Name;
-            _context.SaveChanges();
+           await _context.SaveChangesAsync();
 
         }
 
-        private Word GetModel(string searchField)
+        private async Task<Word> GetModel(string searchField)
         {
-           return  _context.Words
-                   .SingleOrDefault(s => s.Name.Equals(searchField));
+           return await _context.Words
+                   .SingleOrDefaultAsync(s => s.Name.Equals(searchField));
+
         }
     }
 }

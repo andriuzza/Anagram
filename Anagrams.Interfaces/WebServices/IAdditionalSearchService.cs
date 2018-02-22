@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Anagrams.Interfaces.WebServices
 {
@@ -11,11 +12,11 @@ namespace Anagrams.Interfaces.WebServices
 
        bool IfAllowedToSearch();
 
-       void DeleteWord(string nameField);
+       Task DeleteWord(string nameField);
 
-       void UpdateWord(WordDto updatedWord, string Word);
+       Task UpdateWord(WordDto updatedWord, string Word);
 
-       void AddWord(WordDto word);
+       Task AddWord(WordDto word);
 
        string GetIpAddress();
     }

@@ -64,9 +64,10 @@ namespace Web
             container.RegisterType<IDictionaryRepository<Word>, WordEFRepository>
                 (new ContainerControlledLifetimeManager());
 
+            container.RegisterType<IClickRepository,ClickEFRepository>();
+
             container.RegisterType<IAdditionalSearchService, AdditionalSearchService>
-                (new ContainerControlledLifetimeManager(),
-                     new InjectionConstructor(new ClickEFRepository(), new WordEFRepository()));
+                (new ContainerControlledLifetimeManager());
 
            
             //container.RegisterType<ICookiesManager, CookiesManager>(new InjectionConstructor(HttpContext.Current.Request));

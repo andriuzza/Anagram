@@ -1,8 +1,10 @@
 ﻿using Anagrams.EFCF.Core.Models;
+using Anagrams.Interfaces;
 using Anagrams.Interfaces.DtoModel;
 using Anagrams.Interfaces.EntityInterfaces;
 using Anagrams.Interfaces.WebServices;
 using System;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace Web.Controllers
@@ -11,6 +13,7 @@ namespace Web.Controllers
     {  
         private readonly IAdditionalSearchService _services;
         private readonly IDictionaryRepository<Word> _wordsRepo;
+        
 
         public FreeSearchController(IAdditionalSearchService services
                                         , IDictionaryRepository<Word> wordsRepo)
@@ -19,28 +22,38 @@ namespace Web.Controllers
             _wordsRepo = wordsRepo;
         }
 
-        public ActionResult RemoveWord(string searchName)
+        public async Task<ActionResult> RemoveWord(string searchName)
         {
             try
             {
                 //call methods
-                _services.DeleteWord(searchName);
+                await _services.DeleteWord(searchName);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return Content("Wrong something with db" + ex);
+              
+                return Content("wrong anagram's name");
                 //log error
                 //show error page
             }
-          
 
             return Content("Successfuly removed!");
         }
 
 
-        public ActionResult UpdateWord(string Word)
+        public async Task<ActionResult> UpdateWord(string Word)
         {
-            var result = _wordsRepo.GetEntityDto(Word);
+            Word result = null;
+
+            try
+            {
+                result = await _wordsRepo.GetEntityDto(Word);
+
+            }
+            catch (Exception)
+            {
+                RedirectToAction("GetDictionary", "Word");
+            }
 
             var dto = new WordDto
             {
@@ -51,12 +64,12 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateWord(WordDto updatedWord, string Word)
+        public async Task<ActionResult> UpdateWord(WordDto updatedWord, string Word)
         {
             if (ModelState.IsValid)
             {
-                //var instance = new Word { Name = updatedWord.Name };
-                _services.UpdateWord(updatedWord, Word);
+                await _services.UpdateWord(updatedWord, Word);
+
                 return Content("Success!");
             }
 
@@ -69,11 +82,11 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddWord(WordDto word)
+        public async Task<ActionResult> AddWord(WordDto word)
         {
             if (ModelState.IsValid)
             {
-                _services.AddWord(word);
+                await _services.AddWord(word);
 
                 return Content("Successfuly addded to db!");
             }

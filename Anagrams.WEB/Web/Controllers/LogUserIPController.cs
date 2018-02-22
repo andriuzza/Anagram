@@ -25,13 +25,15 @@ namespace Web.Controllers
 
         public ActionResult GetLogData()
         {
-            string ip = System.Net.Dns
-                .GetHostEntry(System.Net.Dns.GetHostName())
-                .AddressList[1].ToString();
-
-            var result = _repository.ReturnIPSearches(ip);
+            var result = _repository.ReturnIPSearches(IpGet());
 
             return View(result);
+        }
+        public string IpGet()
+        {
+           return System.Net.Dns
+             .GetHostEntry(System.Net.Dns.GetHostName())
+             .AddressList[1].ToString();
         }
     }
 }

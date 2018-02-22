@@ -6,6 +6,8 @@ using Anagrams.Interfaces.Models;
 using Anagrams.EFCF.Core;
 using Services.Helpers;
 using Anagrams.EFCF.Core.Models;
+using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace Anagrams_Repositories
 {
@@ -17,7 +19,12 @@ namespace Anagrams_Repositories
         public EFRepository()
         {
             _context = new ManagerContext();
-            InitializeDictionary = new HashSet<string>(_context.Words.Select(a=>a.Name).ToList());
+            RefrehDictionary();
+        }
+
+        public void RefrehDictionary()
+        {
+            InitializeDictionary = new HashSet<string>(_context.Words.Select(a => a.Name).ToList());
         }
 
         public HashSet<string> Contains(string Name)
@@ -199,6 +206,12 @@ namespace Anagrams_Repositories
             }
             list.Add(newStr);
             return list;
+        }
+
+        public async Task RefrehDictionaryAsync()
+        {
+            var result = await _context.Words.Select(a => a.Name).ToListAsync();
+            InitializeDictionary = new HashSet<string>(result);
         }
     }
 }

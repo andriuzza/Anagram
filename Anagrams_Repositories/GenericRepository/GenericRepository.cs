@@ -20,22 +20,32 @@ namespace Anagrams_Repositories.GenericRepository
         public void Add(T entity)
         {
             _context.Entry(entity).State = EntityState.Added;
+            Save();
+            
         }
 
         public void Delete(object searchField)
         {
             T exsitng = _context.Set<T>().Find(searchField);
             _context.Set<T>().Remove(exsitng);
+
+            Save();
         }
 
         public void Edit(T entity, string updateField)
         {
             _context.Entry(entity).State = EntityState.Modified;
+
+            Save();
         }
 
         public T GetByKey(object searchField)
         {
             return _context.Set<T>().Find(searchField);
+        }
+        private void Save()
+        {
+            _context.SaveChanges();
         }
 
     }

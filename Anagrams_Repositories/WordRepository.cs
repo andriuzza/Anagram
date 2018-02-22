@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Anagrams.Interfaces.Models;
+using System.Threading.Tasks;
 
 namespace Anagrams_Repositories
 {
@@ -172,6 +173,16 @@ namespace Anagrams_Repositories
         }
 
         public bool InsertCache(HashSet<string> elements, string query)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RefrehDictionary()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RefrehDictionaryAsync()
         {
             throw new NotImplementedException();
         }

@@ -7,6 +7,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+
 namespace Anagrams_Repositories
 {
     public class DbRepository : IWordRepository<string>
@@ -41,6 +43,7 @@ namespace Anagrams_Repositories
 
             return FillHashSet(dataSet);
         }
+
         public List<TimeResultModel> ReturnIPSearches(string IP)
         {
             List<TimeResultModel> vw = new List<TimeResultModel>();
@@ -443,6 +446,16 @@ namespace Anagrams_Repositories
             }
 
             return dtr;
+        }
+
+        public void RefrehDictionary()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RefrehDictionaryAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }
