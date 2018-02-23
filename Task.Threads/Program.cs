@@ -22,7 +22,7 @@ namespace Task.Threads
             Thread T1 = new Thread(() =>
             {
                 Console.WriteLine(ap.GetHashCode());
-                ap.CURRENT.Value = true;
+                //ap.CURRENT.Value = true;
                 Console.WriteLine(Thread.CurrentThread.ManagedThreadId);
                 ap.ChangeArea(15);
             });
@@ -33,7 +33,7 @@ namespace Task.Threads
             Console.WriteLine("---");
             Console.WriteLine(Thread.CurrentThread.ManagedThreadId);
 
-            ap.CURRENT.Value = true;
+            //ap.CURRENT.Value = true;
             ap.ChangeArea(20);
 
             /*  Thread T2 = new Thread(() =>
@@ -44,10 +44,7 @@ namespace Task.Threads
              T2.Start();*/
 
             //  Thread.Sleep(1000);
-
-
             ap.Get();
-
         }
         
         public static void MoveManyFiles()
@@ -66,13 +63,15 @@ namespace Task.Threads
     }
     public class Apartment
     {
-        public ThreadLocal<bool> CURRENT = new ThreadLocal<bool>(() =>
-        {
-            return false;
-        });
+        public ThreadLocal<bool> CURRENT = new ThreadLocal<bool>();
 
 
         private int Area;
+
+        public Apartment()
+        {
+            CURRENT.Value = true;
+        }
 
         public void ChangeArea(int number)
         {

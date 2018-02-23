@@ -15,7 +15,7 @@ namespace Anagrams_Repositories.EntitiesRepositories
             var result = GetByString(searchField);
 
             var resDelete = await result;
-
+     
             _context.Words.Remove(resDelete);
 
           await _context.SaveChangesAsync();

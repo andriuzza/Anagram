@@ -55,8 +55,10 @@ namespace Services
         public async Task AddWord(WordDto word)
         {
             _wordsRepo.Add(word.ToEntity());
-            AdditionalSearches(ip);
+           
             await _initRepo.RefrehDictionaryAsync();
+
+            AdditionalSearches(ip);
         }
 
 

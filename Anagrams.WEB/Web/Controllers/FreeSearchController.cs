@@ -43,8 +43,8 @@ namespace Web.Controllers
 
         public async Task<ActionResult> UpdateWord(string Word)
         {
+           
             Word result = null;
-
             try
             {
                 result = await _wordsRepo.GetEntityDto(Word);

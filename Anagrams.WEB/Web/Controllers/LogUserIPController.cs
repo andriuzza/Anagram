@@ -9,13 +9,10 @@ namespace Web.Controllers
         // GET: LogUserIP
 
         private readonly IWordRepository<Word> _repository;
-        private readonly IAnagramSolver _solver;
 
-        public LogUserIPController(IWordRepository<Word> repository,
-            IAnagramSolver solver)
+        public LogUserIPController(IWordRepository<Word> repository)
         {
             _repository = repository;
-            _solver = solver; 
         }
 
         public ActionResult Index()
